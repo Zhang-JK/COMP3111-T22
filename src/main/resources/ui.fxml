@@ -44,21 +44,7 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="719.0">
                            <children>
                               <Label layoutX="79.0" layoutY="44.0" />
-                              <TextArea layoutX="96.0" layoutY="24.0" prefHeight="42.0" prefWidth="335.0" text="Generate a brief report in response to the queries on the most popular names registered at birth over a given period." wrapText="true" />
-                              <Label layoutX="96.0" layoutY="100.0" text="Top N (N&gt;=1): " />
-                              <TextField layoutX="178.0" layoutY="96.0" prefHeight="26.0" prefWidth="27.0" text="10" />
-                              <Label layoutX="253.0" layoutY="100.0" text="Gender: " />
-                              <RadioButton layoutX="308.0" layoutY="100.0" mnemonicParsing="false" selected="true" text="Male">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="T1" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton layoutX="360.0" layoutY="100.0" mnemonicParsing="false" text="Female" toggleGroup="$T1" />
-                              <Label layoutX="96.0" layoutY="132.0" text="Period (1880 - 2019): " />
-                              <TextField layoutX="276.0" layoutY="126.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
-                              <TextField layoutX="210.0" layoutY="126.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
-                              <Label layoutX="258.0" layoutY="130.0" text="to" />
-                              <Button layoutX="96.0" layoutY="169.0" mnemonicParsing="false" text="REPORT (yet to be implemented)" />
+                              <TextArea layoutX="96.0" layoutY="24.0" prefHeight="99.0" prefWidth="398.0" text="Task #1: Most Popular Names (data reporting)&#10;&#10;Generate a report in response to the queries on the most popular names in a given year.&#10;" wrapText="true" />
                            </children>
                         </AnchorPane>
                     </content>
