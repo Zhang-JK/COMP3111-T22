@@ -1,6 +1,13 @@
-# COMP 3111 Group22
+# COMP 3111 T22
+Team Repo: https://github.com/Zhang-JK/COMP3111-T22
+
 
 ## People
-- [ZHANG Jiekai](jzhanger@connect.ust.hk) Task #1 #4
-- [Liang Houdong](hliangam@connect.ust.hk) Task #2 #5
-- [Cheng Yiren](ychengaz@connect.ust.hk) Task #3 #6
+### 1. ZHANG Jiekai
+> email: jzhanger@connect.ust.hk  
+> github: Zhang-JK  
+> branch: [JK_feature_test](https://github.com/Zhang-JK/COMP3111-T22/tree/JK_feature_test) [JK_dev]()
+
+### 2.
+
+### 3.
