@@ -9,6 +9,10 @@ Team Repo: https://github.com/Zhang-JK/COMP3111-T22
 > Assigned Task: #1 #4  
 > branch: [JK_dev](https://github.com/Zhang-JK/COMP3111-T22/tree/JK_dev)  
 
-### 2.
+### 2. CHENG Yiren
+> email: yrcheng.dylan@gmail.com
+> github: [yrchengdylan](https://github.com/yrchengdylan)
+> Assigned Task: #3 #6
+> branch: [dylan_branch](https://github.com/Zhang-JK/COMP3111-T22/tree/dylan_branch)
 
 ### 3.
