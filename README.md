@@ -15,4 +15,9 @@ Team Repo: https://github.com/Zhang-JK/COMP3111-T22
 > Assigned Task: #3 #6
 > branch: [dylan_branch](https://github.com/Zhang-JK/COMP3111-T22/tree/dylan_branch)
 
-### 3.
+### 3. LIANG Houdong
+> email: hliangam@connect.ust.hk
+> email for the GitHub account: houdongliang84@gmail.com  
+> github: [dongdong3272](https://github.com/dongdong3272)  
+> Assigned Task: #2 #5  
+> branch: [dong_](https://github.com/Zhang-JK/COMP3111-T22/tree/dong_)
