@@ -14,6 +14,11 @@ import java.util.List;
  */
 public class FileReader {
 
+    /**
+     * To read the file line by line and get the CSV data
+     * @param year the target file
+     * @return the CSV data
+     */
     private static CSVParser getFileParser(int year) {
         FileResource fr = new FileResource(String.format("dataset/yob%s.csv", year));
         return fr.getCSVParser(false);
