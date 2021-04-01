@@ -21,3 +21,6 @@ Team Repo: https://github.com/Zhang-JK/COMP3111-T22
 > github: [dongdong3272](https://github.com/dongdong3272)  
 > Assigned Task: #2 #5  
 > branch: [dong_](https://github.com/Zhang-JK/COMP3111-T22/tree/dong_)
+
+## Documentation
+Click [HERE](./doc/Activity1.pdf) to visit our Activity1 submission, including class diagram and use-case diagram.
