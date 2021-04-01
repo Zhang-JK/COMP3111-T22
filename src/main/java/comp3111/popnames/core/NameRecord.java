@@ -31,7 +31,7 @@ public class NameRecord {
     NameRecord(CSVRecord rec) {
         this.name = rec.get(0);
         this.gender = rec.get(1).equals("M") ? 0 : 1;
-        this.occurrence = Integer.parseInt(rec.get(1));
+        this.occurrence = Integer.parseInt(rec.get(2));
     }
 
     /**

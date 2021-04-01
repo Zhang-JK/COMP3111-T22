@@ -1,6 +1,7 @@
 package comp3111.popnames.core;
 
 import edu.duke.FileResource;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.util.ArrayList;
@@ -13,15 +14,19 @@ import java.util.List;
  */
 public class FileReader {
 
+    private static CSVParser getFileParser(int year) {
+        FileResource fr = new FileResource(String.format("dataset/yob%s.csv", year));
+        return fr.getCSVParser(false);
+    }
+
     /**
      * Get all the data from a file return in the list
      * @param year the target year to get the data
      * @return all the data in a year's file, in form of list
      */
-    static List<NameRecord> getFileByYear(int year) {
-        FileResource fr = new FileResource(String.format("dataset/yob%s.csv", year));
+    public static List<NameRecord> getFileByYear(int year) {
         List<NameRecord> result = new ArrayList<>();
-        for (CSVRecord rec : fr.getCSVParser()) {
+        for (CSVRecord rec : getFileParser(year)) {
             result.add(new NameRecord(rec));
         }
         return result;
@@ -34,11 +39,10 @@ public class FileReader {
      * @param gender the target gender, 0 for Male, 1 for Female
      * @return top N popular names in a list
      */
-    static List<NameRecord> TopNNamesByYear(int year, int n, int gender) {
-        FileResource fr = new FileResource(String.format("dataset/yob%s.csv", year));
+    public static List<NameRecord> getTopNNamesByYear(int year, int n, int gender) {
         List<NameRecord> result = new ArrayList<>();
         int counter = 0;
-        for (CSVRecord rec : fr.getCSVParser()) {
+        for (CSVRecord rec : getFileParser(year)) {
             if (rec.get(1).equals(gender==1 ? "F" : "M")) {
                 result.add(new NameRecord(rec));
                 if (counter == n) break;
@@ -54,10 +58,9 @@ public class FileReader {
      * @param gender the target gender, 0 for Male, 1 for Female
      * @return total number of births
      */
-    static int getTotalBirthsByYear(int year, int gender) {
-        FileResource fr = new FileResource(String.format("dataset/yob%s.csv", year));
+    public static int getTotalBirthsByYear(int year, int gender) {
         int counter = 0;
-        for (CSVRecord rec : fr.getCSVParser()) {
+        for (CSVRecord rec : getFileParser(year)) {
             if (rec.get(1).equals(gender==1 ? "F" : "M"))
                 counter += Integer.parseInt(rec.get(2));
         }
@@ -71,10 +74,9 @@ public class FileReader {
      * @param gender the target gender
      * @return rank, 0 for NOT FOUND
      */
-    static int getRankByYearAndName(String name, int year, int gender) {
-        FileResource fr = new FileResource(String.format("dataset/yob%s.csv", year));
+    public static int getRankByYearAndName(String name, int year, int gender) {
         int rank = 0;
-        for (CSVRecord rec : fr.getCSVParser()) {
+        for (CSVRecord rec : getFileParser(year)) {
             if (rec.get(1).equals(gender==1 ? "F" : "M")) {
                 rank++;
                 if(rec.get(0).equals(name)) return rank;
