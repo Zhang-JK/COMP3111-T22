@@ -39,7 +39,7 @@ public class AnalyzeNames {
 		oReport += String.format("***Baby Girls = %,d\n", totalGirls);
 		oReport += String.format("***Baby Boys = %,d\n", totalBoys);
 		
-		oReport += String.format("Total Number of Unique Names = %,d\n", totalNames);
+		oReport += String.format("Total Number of Unique Names is %,d\n", totalNames);
 		oReport += String.format("***Unique Names (baby girls) = %,d\n", uniqueGirls);
 		oReport += String.format("***Unique Names (baby boys) = %,d\n", uniqueBoys);
 		
