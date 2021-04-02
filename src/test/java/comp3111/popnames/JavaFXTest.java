@@ -45,7 +45,7 @@ public class JavaFXTest extends ApplicationTest {
 	
 	
 	@Test
-	public void testButtonRankFalse() {	
+	public void testButtonRankFalse() {
 		//clickOn("#tabTaskZero");
 		clickOn("#buttonRankM");
 		//sleep(1000);
