@@ -13,7 +13,7 @@ Team Repo: https://github.com/Zhang-JK/COMP3111-T22
 > email: yrcheng.dylan@gmail.com  
 > github: [yrchengdylan](https://github.com/yrchengdylan)  
 > Assigned Task: #3 #6  
-> branch: [dylan_branch](https://github.com/Zhang-JK/COMP3111-T22/tree/dylan_branch)  
+> branch: [dylan_branch](https://github.com/Zhang-JK/COMP3111-T22/tree/dylan_branch) 
 
 ### 3. LIANG Houdong
 > email: hliangam@connect.ust.hk
