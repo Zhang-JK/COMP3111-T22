@@ -49,13 +49,37 @@ public class FileReader {
         int counter = 0;
         for (CSVRecord rec : getFileParser(year)) {
             if (rec.get(1).equals(gender==1 ? "F" : "M")) {
-                result.add(new NameRecord(rec));
                 if (counter == n) break;
-                else counter++;
+                else {
+                	result.add(new NameRecord(rec));
+                	counter++;
+                	}
             }
         }
         return result;
     }
+    
+    /**
+     * Find the top Nth popular names in a year and in a gender
+     * @param year the target year to get the data
+     * @param n rank of the name that you want
+     * @param gender the target gender, 0 for Male, 1 for Female
+     * @return Nth popular names in a NameRecord 
+     */
+    @SuppressWarnings("resource")
+	public static NameRecord getNthNamesByYear(int year, int n, int gender) {
+        int counter = 0;
+        for (CSVRecord rec : getFileParser(year)) {
+            if (rec.get(1).equals(gender==1 ? "F" : "M")) {
+            	counter++;
+                if (counter < n) continue;
+                NameRecord result = new NameRecord(rec);
+                return result;
+            }
+        }
+        return null;
+    }
+    
 
     /**
      * get the total number of births of a year and gender
@@ -79,7 +103,8 @@ public class FileReader {
      * @param gender the target gender
      * @return rank, 0 for NOT FOUND
      */
-    public static int getRankByYearAndName(String name, int year, int gender) {
+    @SuppressWarnings("resource")
+	public static int getRankByYearAndName(String name, int year, int gender) {
         int rank = 0;
         for (CSVRecord rec : getFileParser(year)) {
             if (rec.get(1).equals(gender==1 ? "F" : "M")) {
