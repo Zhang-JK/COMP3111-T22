@@ -9,6 +9,7 @@ import comp3111.popnames.core.*;
 import java.util.*;
 
 public class FileReaderTest {
+
     @Test
     public void testGetFileByYear() {
         List<NameRecord> recordList = FileReader.getFileByYear(2019);
@@ -30,7 +31,7 @@ public class FileReaderTest {
         assertEquals(gender, 0);
         assertEquals(times, 19048);
     }
-    
+
     @Test
     public void testGetTopNNamesByYear2() {
         List<NameRecord> recordList = FileReader.getTopNNamesByYear(2019, 3, 1);
@@ -63,7 +64,7 @@ public class FileReaderTest {
         assertEquals(gender, 1);
         assertEquals(times, 12862);
     }
-    
+
 
     @Test
     public void testGetTotalBirthsByYear1() {
@@ -94,4 +95,5 @@ public class FileReaderTest {
         int rank = FileReader.getRankByYearAndName("zhangjiekai", 2019, 0);
         assertEquals(rank, 0);
     }
+
 }

@@ -23,7 +23,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Controller {
+
+    ObservableList<String> genderChoice = FXCollections.observableArrayList("M","F");
+    ObservableList<String> ageChoice = FXCollections.observableArrayList("Young","Old");
+    ObservableList<String> algorithmChoice = FXCollections.observableArrayList("T5X1","T5X2");
 
     @FXML
     private Tab tabTaskZero;
@@ -86,6 +91,24 @@ public class Controller {
     private ToggleGroup T11;
 
     @FXML
+    private TextArea task2IntroBox;
+
+    @FXML
+    private TextField task2Year1TextField;
+
+    @FXML
+    private TextField task2Year2TextField;
+
+    @FXML
+    private TextField task2KTextField;
+
+    @FXML
+    private ChoiceBox task2GenderChoiceBox;
+
+    @FXML
+    private Button task2GenerateButton;
+
+    @FXML
     private Tab tabReport3;
 
     @FXML
@@ -96,6 +119,30 @@ public class Controller {
 
     @FXML
     private Tab tabApp2;
+
+    @FXML
+    private TextArea task5IntroBox;
+
+    @FXML
+    private TextField task5iNameTextField;
+
+    @FXML
+    private ChoiceBox task5iGenderChoiceBox;
+
+    @FXML
+    private TextField task5iAgeTextField;
+
+    @FXML
+    private ChoiceBox task5iGenderMateChoiceBox;
+
+    @FXML
+    private ChoiceBox task5iPreferenceChoiceBox;
+
+    @FXML
+    private ChoiceBox task5AlgorithmChoiceBox;
+
+    @FXML
+    private Button task5GenerateButton;
 
     @FXML
     private Tab tabApp3;
@@ -404,6 +451,61 @@ public class Controller {
     }
 
     // ----------------------------- Task2 Function ------------------------//
+  
+    	String oReport = "";
+    	final int topN = 5;
+    	int iYear = Integer.parseInt(textfieldYear.getText());
+    	oReport = String.format("Top %d most popular names (male) in the year %d:\n", topN, iYear);
+    	for (int i=1; i<=topN; i++)
+    		oReport += String.format("#%d: %s\n", i, AnalyzeNames.getName(iYear, i, "M"));
+    	textAreaConsole.setText(oReport);
+    }
+
+    /**
+     *  Task Two
+     *  Initialize the content of the task2GenderChoiceBox
+     *
+     */
+    @FXML
+    void initialize() {
+        task2GenderChoiceBox.setValue("M");
+        task2GenderChoiceBox.setItems(genderChoice);
+        task5iGenderChoiceBox.setValue("M");
+        task5iGenderChoiceBox.setItems(genderChoice);
+        task5iGenderMateChoiceBox.setValue("M");
+        task5iGenderMateChoiceBox.setItems(genderChoice);
+        task5iPreferenceChoiceBox.setValue("Young");
+        task5iPreferenceChoiceBox.setItems(ageChoice);
+        task5AlgorithmChoiceBox.setValue("T5X1");
+        task5AlgorithmChoiceBox.setItems(algorithmChoice);
+    }
+    /**
+     *  Task Two
+     *  To be triggered by the "Generate Report" button on the Task Two Tab
+     *
+     */
+    @FXML
+    void task2GenerateReport(ActionEvent event) {
+        String oReport = "generate report for task2";
+        textAreaConsole.setText(oReport);
+    }
+
+    // ----------------------------- Task5 Function ------------------------//
+
+    /**
+     *  Task Five
+     *  To be triggered by the "Generate Report" button on the Task Five Tab
+     *
+     */
+    @FXML
+    void task5GenerateReport(ActionEvent event) {
+        String oReport = "generate report for task5";
+        textAreaConsole.setText(oReport);
+    }
 
 }
+
+
+
+
 
