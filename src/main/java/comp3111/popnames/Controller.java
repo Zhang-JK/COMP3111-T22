@@ -13,6 +13,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 
 
 public class Controller {
@@ -76,7 +77,19 @@ public class Controller {
     private ChoiceBox task2GenderChoiceBox;
 
     @FXML
-    private Button task2GenerateButton;
+    private Button task2SubmitButton;
+
+    @FXML
+    private Label task2Year1ErrorLabel;
+
+    @FXML
+    private Label task2Year2ErrorLabel;
+
+    @FXML
+    private Label task2KErrorLabel;
+
+    @FXML
+    private Button task2ResetButton;
 
     @FXML
     private Tab tabReport3;
@@ -112,7 +125,10 @@ public class Controller {
     private ChoiceBox task5AlgorithmChoiceBox;
 
     @FXML
-    private Button task5GenerateButton;
+    private Button task5SubmitButton;
+
+    @FXML
+    private Button task5ResetButton;
 
     @FXML
     private Tab tabApp3;
@@ -229,7 +245,7 @@ public class Controller {
      *
      */
     @FXML
-    void task2GenerateReport(ActionEvent event) {
+    void task2SubmitData(ActionEvent event) {
         String oReport = "";
         int Year1 = Integer.parseInt(task2Year1TextField.getText());
         int Year2 = Integer.parseInt(task2Year2TextField.getText());
@@ -238,16 +254,19 @@ public class Controller {
         //doTask2YearCheck();
         //doTask2KCheck();
 
-        oReport = KthPopularName.generateTask2Report(Year1, Year2, k, gender);
-        textAreaConsole.setText(oReport);
+        //oReport = KthPopularName.generateTask2Report(Year1, Year2, k, gender);
+        //textAreaConsole.setText(oReport);
     }
     /*
 
+
     boolean hasErrorTask2 = false;
     @FXML
-    void doTask2YearCheck(int year1, int year2) {
+    void doTask2YearCheck() {
         boolean hasError = false;
-        if (yearFieldText.isBlank()) {
+        String year1 = task2Year1TextField.getText();
+        String year2 = task2Year2TextField.getText();
+        if (year1.isBlank()) {
             p1YearErrorLabel.setText("Please Enter a Year Number");
             hasError = true;
         }
@@ -283,7 +302,7 @@ public class Controller {
      *
      */
     @FXML
-    void task5GenerateReport(ActionEvent event) {
+    void task5SubmitData(ActionEvent event) {
         String oReport = "generate report for task5";
         textAreaConsole.setText(oReport);
     }

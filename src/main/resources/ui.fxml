@@ -65,7 +65,23 @@
                                     <TextField fx:id="task2KTextField" layoutX="72.0" layoutY="243.0" />
                                     <Text layoutX="291.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
                                     <ChoiceBox fx:id="task2GenderChoiceBox" layoutX="346.0" layoutY="243.0" prefWidth="150.0" />
-                                    <Button fx:id="task2GenerateButton" layoutX="536.0" layoutY="285.0" mnemonicParsing="false" onAction="#task2GenerateReport" text="Generate Report" />
+                                    <Button fx:id="task2SubmitButton" defaultButton="true" layoutX="596.0" layoutY="284.0" mnemonicParsing="false" onAction="#task2SubmitData" prefHeight="26.0" prefWidth="59.0" text="Submit" textAlignment="CENTER" />
+                                    <Label fx:id="task2Year1ErrorLabel" layoutX="72.0" layoutY="218.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="task2Year2ErrorLabel" layoutX="341.0" layoutY="217.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="task2KErrorLabel" layoutX="72.0" layoutY="269.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="task2ResetButton" layoutX="523.0" layoutY="284.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="56.0" text="Reset" textAlignment="CENTER" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -98,34 +114,35 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea fx:id="task5IntroBox" editable="false" layoutX="39.0" layoutY="14.0" prefHeight="139.0" prefWidth="611.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Provide an online service using empirical data to help make informed decisions on predicting names for compatible pairs.&#10;&#10;Please input the following information:&#10;Personal information: iName, iGender, iYOB&#10;Gender of your compatible pairs ('M' for Male, 'F' for Female)&#10;Age preference: Young or Old&#10;Algorithm: T5X1 or T5X2&#10;" wrapText="true" />
-                              <Text layoutX="39.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information:">
+                              <TextArea fx:id="task5IntroBox" editable="false" layoutX="39.0" layoutY="14.0" prefHeight="116.0" prefWidth="611.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Provide an online service using empirical data to help make informed decisions on predicting names for compatible pairs.&#10;&#10;" wrapText="true" />
+                              <Text layoutX="37.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information:">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="39.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-                              <TextField fx:id="task5iNameTextField" layoutX="86.0" layoutY="187.0" />
-                              <Text layoutX="258.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
-                              <ChoiceBox fx:id="task5iGenderChoiceBox" layoutX="312.0" layoutY="187.0" prefHeight="26.0" prefWidth="82.0" />
-                              <Text layoutX="415.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
-                              <TextField fx:id="task5iAgeTextField" layoutX="453.0" layoutY="188.0" />
-                              <Text layoutX="39.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target Preference:">
+                              <Text layoutX="42.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                              <TextField fx:id="task5iNameTextField" layoutX="91.0" layoutY="154.0" />
+                              <Text layoutX="258.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
+                              <ChoiceBox fx:id="task5iGenderChoiceBox" layoutX="313.0" layoutY="154.0" prefHeight="26.0" prefWidth="82.0" />
+                              <Text layoutX="417.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
+                              <TextField fx:id="task5iAgeTextField" layoutX="452.0" layoutY="154.0" />
+                              <Text layoutX="39.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target Preference:">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="39.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
-                              <ChoiceBox fx:id="task5iGenderMateChoiceBox" layoutX="96.0" layoutY="240.0" prefHeight="26.0" prefWidth="75.0" />
-                              <Text layoutX="233.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
-                              <ChoiceBox fx:id="task5iPreferenceChoiceBox" layoutX="271.0" layoutY="241.0" prefHeight="26.0" prefWidth="83.0" />
-                              <Text layoutX="39.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm:">
+                              <Text layoutX="38.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
+                              <ChoiceBox fx:id="task5iGenderMateChoiceBox" layoutX="96.0" layoutY="221.0" prefHeight="26.0" prefWidth="75.0" />
+                              <Text layoutX="238.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
+                              <ChoiceBox fx:id="task5iPreferenceChoiceBox" layoutX="272.0" layoutY="222.0" prefHeight="26.0" prefWidth="83.0" />
+                              <Text layoutX="39.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm:">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />
                                  </font>
                               </Text>
-                              <ChoiceBox fx:id="task5AlgorithmChoiceBox" layoutX="120.0" layoutY="277.0" prefHeight="26.0" prefWidth="106.0" />
-                              <Button fx:id="task5GenerateButton" layoutX="543.0" layoutY="277.0" mnemonicParsing="false" onAction="#task5GenerateReport" text="Generate Report" />
+                              <ChoiceBox fx:id="task5AlgorithmChoiceBox" layoutX="118.0" layoutY="264.0" prefHeight="26.0" prefWidth="106.0" />
+                              <Button fx:id="task5SubmitButton" defaultButton="true" layoutX="578.0" layoutY="271.0" mnemonicParsing="false" onAction="#task5SubmitData" prefHeight="26.0" prefWidth="72.0" text="Submit" />
+                              <Button fx:id="task5ResetButton" layoutX="504.0" layoutY="271.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" text="Reset" />
                            </children>
                         </AnchorPane>
                     </content>
