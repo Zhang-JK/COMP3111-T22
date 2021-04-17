@@ -5,6 +5,8 @@ package comp3111.popnames;
 
 import comp3111.popnames.core.ChartSetter;
 import comp3111.popnames.core.FileReader;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -451,15 +453,6 @@ public class Controller {
     }
 
     // ----------------------------- Task2 Function ------------------------//
-  
-    	String oReport = "";
-    	final int topN = 5;
-    	int iYear = Integer.parseInt(textfieldYear.getText());
-    	oReport = String.format("Top %d most popular names (male) in the year %d:\n", topN, iYear);
-    	for (int i=1; i<=topN; i++)
-    		oReport += String.format("#%d: %s\n", i, AnalyzeNames.getName(iYear, i, "M"));
-    	textAreaConsole.setText(oReport);
-    }
 
     /**
      *  Task Two
