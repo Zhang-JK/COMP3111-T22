@@ -3,16 +3,25 @@
  */
 package comp3111.popnames;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import comp3111.popnames.core.ChartSetter;
+import comp3111.popnames.core.FileReader;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Controller {
@@ -47,9 +56,30 @@ public class Controller {
 
     @FXML
     private Button buttonSummary;
-    
+
     @FXML
     private Tab tabReport1;
+
+    @FXML
+    private TextArea p1DescriputionBox;
+
+    @FXML
+    private TextField p1YearField;
+
+    @FXML
+    private TextField p1NField;
+
+    @FXML
+    private Button p1ResetButton;
+
+    @FXML
+    private Button p1SubmitButton;
+
+    @FXML
+    private Label p1YearErrorLabel;
+
+    @FXML
+    private Label p1NErrorLabel;
 
     @FXML
     private ToggleGroup T1;
@@ -119,83 +149,309 @@ public class Controller {
 
     @FXML
     private TextArea textAreaConsole;
-    
+
+    @FXML
+    private TableView<?> outputTable;
+
+    @FXML
+    private BarChart<String, Number> outputBarChart1;
+
+    @FXML
+    private BarChart<String, Number> outputBarChart2;
+
+    @FXML
+    private PieChart outputPieChart1;
+
+    @FXML
+    private PieChart outputPieChart2;
+
+    @FXML
+    private LineChart<Integer, Integer> outputLineChart1;
+
+    @FXML
+    private LineChart<Integer, Integer> outputLineChart2;
+
+    @FXML
+    private Button summaryButton;
+
+    @FXML
+    private Button tableButton;
+
+    @FXML
+    private Button barButton;
+
+    @FXML
+    private Button pieButton;
+
+    @FXML
+    private Button lineButton;
+
+    @FXML
+    private AnchorPane outputPanel;
+
+    // ----------------------------- Task0 Functions ------------------------//
 
     /**
-     *  Task Zero
-     *  To be triggered by the "Summary" button on the Task Zero Tab 
-     *  
+     * Task Zero
+     * To be triggered by the "Summary" button on the Task Zero Tab
      */
     @FXML
     void doSummary() {
-    	int year = Integer.parseInt(textfieldYear.getText());
-    	String oReport = AnalyzeNames.getSummary(year);
-    	textAreaConsole.setText(oReport);
+        int year = Integer.parseInt(textfieldYear.getText());
+        String oReport = AnalyzeNames.getSummary(year);
+        textAreaConsole.setText(oReport);
     }
 
-  
+
     /**
-     *  Task Zero
-     *  To be triggered by the "Rank (female)" button on the Task Zero Tab
-     *  
+     * Task Zero
+     * To be triggered by the "Rank (female)" button on the Task Zero Tab
      */
     @FXML
     void doRankF() {
-    	String oReport = "";
-    	String iNameF = textfieldNameF.getText();
-    	int iYear = Integer.parseInt(textfieldYear.getText());
-    	int oRank = AnalyzeNames.getRank(iYear, iNameF, "F");
-    	if (oRank == -1)
-    		oReport = String.format("The name %s (female) has not been ranked in the year %d.\n", iNameF, iYear);
-    	else
-    		oReport = String.format("Rank of %s (female) in year %d is #%d.\n", iNameF, iYear, oRank);
-    	textAreaConsole.setText(oReport);
+        String oReport = "";
+        String iNameF = textfieldNameF.getText();
+        int iYear = Integer.parseInt(textfieldYear.getText());
+        int oRank = AnalyzeNames.getRank(iYear, iNameF, "F");
+        if (oRank == -1)
+            oReport = String.format("The name %s (female) has not been ranked in the year %d.\n", iNameF, iYear);
+        else
+            oReport = String.format("Rank of %s (female) in year %d is #%d.\n", iNameF, iYear, oRank);
+        textAreaConsole.setText(oReport);
     }
 
-  
+
     /**
-     *  Task Zero
-     *  To be triggered by the "Rank (male)" button on the Task Zero Tab
-     *  
+     * Task Zero
+     * To be triggered by the "Rank (male)" button on the Task Zero Tab
      */
     @FXML
     void doRankM() {
-    	String oReport = "";
-    	String iNameM = textfieldNameM.getText();
-    	int iYear = Integer.parseInt(textfieldYear.getText());
-    	int oRank = AnalyzeNames.getRank(iYear, iNameM, "M");
-    	if (oRank == -1)
-    		oReport = String.format("The name %s (male) has not been ranked in the year %d.\n", iNameM, iYear);
-    	else
-    		oReport = String.format("Rank of %s (male) in year %d is #%d.\n", iNameM, iYear, oRank);
-    	textAreaConsole.setText(oReport);
+        String oReport = "";
+        String iNameM = textfieldNameM.getText();
+        int iYear = Integer.parseInt(textfieldYear.getText());
+        int oRank = AnalyzeNames.getRank(iYear, iNameM, "M");
+        if (oRank == -1)
+            oReport = String.format("The name %s (male) has not been ranked in the year %d.\n", iNameM, iYear);
+        else
+            oReport = String.format("Rank of %s (male) in year %d is #%d.\n", iNameM, iYear, oRank);
+        textAreaConsole.setText(oReport);
     }
 
 
     /**
-     *  Task Zero
-     *  To be triggered by the "Top 5 (female)" button on the Task Zero Tab
-     *  
+     * Task Zero
+     * To be triggered by the "Top 5 (female)" button on the Task Zero Tab
      */
     @FXML
     void doTopF() {
-    	String oReport = "";
-    	final int topN = 5;
-    	int iYear = Integer.parseInt(textfieldYear.getText());
-    	oReport = String.format("Top %d most popular names (female) in the year %d:\n", topN, iYear);
-    	for (int i=1; i<=topN; i++)
-    		oReport += String.format("#%d: %s\n", i, AnalyzeNames.getName(iYear, i, "F"));
-    	textAreaConsole.setText(oReport);
+        String oReport = "";
+        final int topN = 5;
+        int iYear = Integer.parseInt(textfieldYear.getText());
+        oReport = String.format("Top %d most popular names (female) in the year %d:\n", topN, iYear);
+        for (int i = 1; i <= topN; i++)
+            oReport += String.format("#%d: %s\n", i, AnalyzeNames.getName(iYear, i, "F"));
+        textAreaConsole.setText(oReport);
     }
 
 
     /**
-     *  Task Zero
-     *  To be triggered by the "Top 5 (male)" button on the Task Zero Tab
-     *  
+     * Task Zero
+     * To be triggered by the "Top 5 (male)" button on the Task Zero Tab
      */
     @FXML
     void doTopM() {
+        String oReport = "";
+        final int topN = 5;
+        int iYear = Integer.parseInt(textfieldYear.getText());
+        oReport = String.format("Top %d most popular names (male) in the year %d:\n", topN, iYear);
+        for (int i = 1; i <= topN; i++)
+            oReport += String.format("#%d: %s\n", i, AnalyzeNames.getName(iYear, i, "M"));
+        textAreaConsole.setText(oReport);
+    }
+
+    // ----------------------------- General Terminal UI Interface ------------------------//
+
+    /**
+     * Used to record which button is selected
+     */
+    Button selectedButton = null;
+
+    /**
+     * switch between different buttons and set up UI
+     * @param nowSelected the current selected button
+     */
+    void switchButton(Button nowSelected) {
+        if(selectedButton == null) selectedButton = summaryButton;
+        if(nowSelected == selectedButton) return;
+        selectedButton.setDefaultButton(false);
+        VBox.setMargin(selectedButton, new Insets(0, 0, 5, 10));
+        nowSelected.setDefaultButton(true);
+        VBox.setMargin(nowSelected, new Insets(0, 0, 5, 0));
+        selectedButton = nowSelected;
+    }
+
+    /**
+     * set all charts to invisible, used when switching buttons
+     */
+    void setAllChartsInvisible() {
+        for(Node node : outputPanel.getChildren()) {
+            node.setVisible(false);
+        }
+    }
+
+    /**
+     * clean the console, used when switch between tabs(tasks)
+     */
+    void clearAllCharts() {
+        textAreaConsole.clear();
+        outputTable.getColumns().clear();
+        outputBarChart1.getData().clear();
+        outputBarChart2.getData().clear();
+        outputPieChart1.getData().clear();
+        outputPieChart2.getData().clear();
+        outputLineChart1.getData().clear();
+        outputLineChart2.getData().clear();
+    }
+
+    /**
+     * when summary is clicked
+     */
+    @FXML
+    void clickSummary() {
+        switchButton(summaryButton);
+        setAllChartsInvisible();
+        textAreaConsole.setVisible(true);
+    }
+
+    /**
+     * when table is clicked
+     */
+    @FXML
+    void clickTable() {
+        switchButton(tableButton);
+        setAllChartsInvisible();
+        outputTable.setVisible(true);
+    }
+
+    /**
+     * when bar chart is clicked
+     */
+    @FXML
+    void clickBar() {
+        switchButton(barButton);
+        setAllChartsInvisible();
+        outputBarChart1.setVisible(true);
+        outputBarChart2.setVisible(true);
+    }
+
+    /**
+     * when pie chart is clicked
+     */
+    @FXML
+    void clickPie() {
+        switchButton(pieButton);
+        setAllChartsInvisible();
+        outputPieChart1.setVisible(true);
+        outputPieChart2.setVisible(true);
+    }
+
+    /**
+     * when line chart is clicked
+     */
+    @FXML
+    void clickLine() {
+        switchButton(lineButton);
+        setAllChartsInvisible();
+        outputLineChart1.setVisible(true);
+        outputLineChart2.setVisible(true);
+    }
+
+    // ----------------------------- Task1 Function ------------------------//
+
+    /**
+     * record if there's any error in user's input
+     */
+    boolean hasErrorTask1 = false;
+
+    /**
+     * check year input
+     */
+    @FXML
+    void doP1YearCheck() {
+        String yearFieldText = p1YearField.getText();
+        boolean hasError = false;
+        if (yearFieldText.isBlank()) {
+            p1YearErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(yearFieldText) || Integer.parseInt(yearFieldText) > 2019 || Integer.parseInt(yearFieldText) < 1880) {
+            p1YearErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        p1YearErrorLabel.setVisible(hasError);
+        hasErrorTask1 = hasError;
+    }
+
+    /**
+     * check n input
+     */
+    @FXML
+    void doP1NCheck() {
+        String nFieldText = p1NField.getText();
+        boolean hasError = false;
+        if (nFieldText.isBlank()) {
+            p1NErrorLabel.setText("Please Enter an N number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(nFieldText) || Integer.parseInt(nFieldText) > 10 || Integer.parseInt(nFieldText) < 1) {
+            p1NErrorLabel.setText("Please Enter a Number Between 1 and 10");
+            hasError = true;
+        }
+        p1NErrorLabel.setVisible(hasError);
+        hasErrorTask1 = hasError;
+    }
+
+    /**
+     * when click the submit button, check data and output result
+     */
+    @FXML
+    void doP1Submit() {
+        doP1YearCheck();
+        doP1NCheck();
+        if(hasErrorTask1) return;
+
+        String yearFieldText = p1YearField.getText();
+        String nFieldText = p1NField.getText();
+        List<String> testX = new ArrayList<>(Arrays.asList("1","2","3","4","5","6"));
+        List<Integer> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
+
+        MostPopularNames task1 = new MostPopularNames();
+        if(!task1.setData(Integer.parseInt(yearFieldText), Integer.parseInt(nFieldText)))
+            return;
+
+        ChartSetter.BarChartSetter(outputBarChart1, "Male", "Name", "Occurrence", "number of babies", task1.getMaleList());
+        ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
+        ChartSetter.PieChartSetter(outputPieChart1, "Male", task1.getMaleList());
+        ChartSetter.PieChartSetter(outputPieChart2, "Female", task1.getFemaleList());
+    }
+
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void doP1Reset() {
+        p1YearField.clear();
+        p1NField.clear();
+        p1YearErrorLabel.setText("");
+        p1YearErrorLabel.setVisible(false);
+        p1NErrorLabel.setText("");
+        p1NErrorLabel.setVisible(false);
+        clearAllCharts();
+    }
+
+    // ----------------------------- Task2 Function ------------------------//
+  
     	String oReport = "";
     	final int topN = 5;
     	int iYear = Integer.parseInt(textfieldYear.getText());
@@ -234,6 +490,8 @@ public class Controller {
         textAreaConsole.setText(oReport);
     }
 
+    // ----------------------------- Task5 Function ------------------------//
+
     /**
      *  Task Five
      *  To be triggered by the "Generate Report" button on the Task Five Tab
@@ -244,7 +502,6 @@ public class Controller {
         String oReport = "generate report for task5";
         textAreaConsole.setText(oReport);
     }
-    
 
 }
 
