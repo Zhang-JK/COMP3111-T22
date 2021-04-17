@@ -142,6 +142,8 @@ public class Controller {
     @FXML
     private AnchorPane outputPanel;
 
+    // ----------------------------- Task0 Functions ------------------------//
+
     /**
      * Task Zero
      * To be triggered by the "Summary" button on the Task Zero Tab
@@ -221,10 +223,17 @@ public class Controller {
         textAreaConsole.setText(oReport);
     }
 
+    // ----------------------------- General Terminal UI Interface ------------------------//
+
     /**
-     * General Terminal UI Interface
+     * Used to record which button is selected
      */
     Button selectedButton = null;
+
+    /**
+     * switch between different buttons and set up UI
+     * @param nowSelected the current selected button
+     */
     void switchButton(Button nowSelected) {
         if(selectedButton == null) selectedButton = summaryButton;
         if(nowSelected == selectedButton) return;
@@ -235,12 +244,18 @@ public class Controller {
         selectedButton = nowSelected;
     }
 
+    /**
+     * set all charts to invisible, used when switching buttons
+     */
     void setAllChartsInvisible() {
         for(Node node : outputPanel.getChildren()) {
             node.setVisible(false);
         }
     }
 
+    /**
+     * clean the console, used when switch between tabs(tasks)
+     */
     void clearAllCharts() {
         textAreaConsole.clear();
         outputTable.getColumns().clear();
@@ -252,49 +267,69 @@ public class Controller {
         outputLineChart2.getData().clear();
     }
 
+    /**
+     * when summary is clicked
+     */
     @FXML
-    void clickSummary(ActionEvent event) {
+    void clickSummary() {
         switchButton(summaryButton);
         setAllChartsInvisible();
         textAreaConsole.setVisible(true);
     }
 
+    /**
+     * when table is clicked
+     */
     @FXML
-    void clickTable(ActionEvent event) {
+    void clickTable() {
         switchButton(tableButton);
         setAllChartsInvisible();
         outputTable.setVisible(true);
     }
 
+    /**
+     * when bar chart is clicked
+     */
     @FXML
-    void clickBar(ActionEvent event) {
+    void clickBar() {
         switchButton(barButton);
         setAllChartsInvisible();
         outputBarChart1.setVisible(true);
         outputBarChart2.setVisible(true);
     }
 
+    /**
+     * when pie chart is clicked
+     */
     @FXML
-    void clickPie(ActionEvent event) {
+    void clickPie() {
         switchButton(pieButton);
         setAllChartsInvisible();
         outputPieChart1.setVisible(true);
         outputPieChart2.setVisible(true);
     }
 
+    /**
+     * when line chart is clicked
+     */
     @FXML
-    void clickLine(ActionEvent event) {
+    void clickLine() {
         switchButton(lineButton);
         setAllChartsInvisible();
         outputLineChart1.setVisible(true);
         outputLineChart2.setVisible(true);
     }
 
+    // ----------------------------- Task1 Function ------------------------//
+
     /**
-     * Task One
-     * To be triggered by the "Submit" button on the Task #1 Tab
+     * record if there's any error in user's input
      */
     boolean hasErrorTask1 = false;
+
+    /**
+     * check year input
+     */
     @FXML
     void doP1YearCheck() {
         String yearFieldText = p1YearField.getText();
@@ -311,6 +346,9 @@ public class Controller {
         hasErrorTask1 = hasError;
     }
 
+    /**
+     * check n input
+     */
     @FXML
     void doP1NCheck() {
         String nFieldText = p1NField.getText();
@@ -327,8 +365,11 @@ public class Controller {
         hasErrorTask1 = hasError;
     }
 
+    /**
+     * when click the submit button, check data and output result
+     */
     @FXML
-    void doP1Submit(ActionEvent event) {
+    void doP1Submit() {
         doP1YearCheck();
         doP1NCheck();
         if(hasErrorTask1) return;
@@ -339,7 +380,8 @@ public class Controller {
         List<Integer> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
 
         MostPopularNames task1 = new MostPopularNames();
-        task1.setData(Integer.parseInt(yearFieldText), Integer.parseInt(nFieldText));
+        if(!task1.setData(Integer.parseInt(yearFieldText), Integer.parseInt(nFieldText)))
+            return;
 
         ChartSetter.BarChartSetter(outputBarChart1, "Male", "Name", "Occurrence", "number of babies", task1.getMaleList());
         ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
@@ -347,6 +389,9 @@ public class Controller {
         ChartSetter.PieChartSetter(outputPieChart2, "Female", task1.getFemaleList());
     }
 
+    /**
+     * when click reset button, clear input box and output console
+     */
     @FXML
     void doP1Reset() {
         p1YearField.clear();
@@ -355,7 +400,10 @@ public class Controller {
         p1YearErrorLabel.setVisible(false);
         p1NErrorLabel.setText("");
         p1NErrorLabel.setVisible(false);
+        clearAllCharts();
     }
+
+    // ----------------------------- Task2 Function ------------------------//
 
 }
 

@@ -9,8 +9,8 @@ import java.util.List;
 
 /**
  * This class is used for reading data from the source file
- * @author ZHANG Jiekai
- * @version 1.0
+ * @author ZHANG Jiekai, LIANG Houdong, CHENG Yiren
+ * @version 1.1
  */
 public class FileReader {
 
