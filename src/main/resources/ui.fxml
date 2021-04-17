@@ -62,7 +62,7 @@
                                     <Text layoutX="295.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year2:" />
                                     <TextField fx:id="task2Year2TextField" layoutX="341.0" layoutY="191.0" />
                                     <Text layoutX="27.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="k:" wrappingWidth="29.6103515625" />
-                                    <TextField fx:id="task2KTestFiled" layoutX="72.0" layoutY="243.0" />
+                                    <TextField fx:id="task2KTextField" layoutX="72.0" layoutY="243.0" />
                                     <Text layoutX="291.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
                                     <ChoiceBox fx:id="task2GenderChoiceBox" layoutX="346.0" layoutY="243.0" prefWidth="150.0" />
                                     <Button fx:id="task2GenerateButton" layoutX="536.0" layoutY="285.0" mnemonicParsing="false" onAction="#task2GenerateReport" text="Generate Report" />

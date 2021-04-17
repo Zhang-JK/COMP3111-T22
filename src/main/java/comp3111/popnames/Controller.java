@@ -225,14 +225,57 @@ public class Controller {
     }
     /**
      *  Task Two
-     *  To be triggered by the "Generate Report" button on the Task Two Tab
+     *  To be triggered by the "Generate Report" button on the Task #2 Tab
      *
      */
     @FXML
     void task2GenerateReport(ActionEvent event) {
-        String oReport = "generate report for task2";
+        String oReport = "";
+        int Year1 = Integer.parseInt(task2Year1TextField.getText());
+        int Year2 = Integer.parseInt(task2Year2TextField.getText());
+        int k = Integer.parseInt(task2KTextField.getText());
+        String gender = task2GenderChoiceBox.getValue().toString();
+        //doTask2YearCheck();
+        //doTask2KCheck();
+
+        oReport = KthPopularName.generateTask2Report(Year1, Year2, k, gender);
         textAreaConsole.setText(oReport);
     }
+    /*
+
+    boolean hasErrorTask2 = false;
+    @FXML
+    void doTask2YearCheck(int year1, int year2) {
+        boolean hasError = false;
+        if (yearFieldText.isBlank()) {
+            p1YearErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(yearFieldText) || Integer.parseInt(yearFieldText) > 2019 || Integer.parseInt(yearFieldText) < 1880) {
+            p1YearErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        p1YearErrorLabel.setVisible(hasError);
+        hasErrorTask1 = hasError;
+    }
+
+    @FXML
+    void doTask2KCheck() {
+        String nFieldText = p1NField.getText();
+        boolean hasError = false;
+        if (nFieldText.isBlank()) {
+            p1NErrorLabel.setText("Please Enter an N number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(nFieldText) || Integer.parseInt(nFieldText) > 10 || Integer.parseInt(nFieldText) < 1) {
+            p1NErrorLabel.setText("Please Enter a Number Between 1 and 10");
+            hasError = true;
+        }
+        p1NErrorLabel.setVisible(hasError);
+        hasErrorTask1 = hasError;
+    }
+
+    @FXML
 
     /**
      *  Task Five
