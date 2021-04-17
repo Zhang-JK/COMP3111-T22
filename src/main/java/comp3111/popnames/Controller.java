@@ -105,10 +105,22 @@ public class Controller {
     private TextField task2KTextField;
 
     @FXML
+    private Label task2Year1ErrorLabel;
+
+    @FXML
+    private Label task2Year2ErrorLabel;
+
+    @FXML
+    private Label task2KErrorLabel;
+
+    @FXML
     private ChoiceBox task2GenderChoiceBox;
 
     @FXML
-    private Button task2GenerateButton;
+    private Button task2SubmitButton;
+
+    @FXML
+    private Button task2ResetButton;
 
     @FXML
     private Tab tabReport3;
@@ -144,7 +156,16 @@ public class Controller {
     private ChoiceBox task5AlgorithmChoiceBox;
 
     @FXML
-    private Button task5GenerateButton;
+    private Button task5SubmitButton;
+
+    @FXML
+    private Label task5iNameErrorLabel;
+
+    @FXML
+    private Label task5iAgeErrorLabel;
+
+    @FXML
+    private Button task5ResetButton;
 
     @FXML
     private Tab tabApp3;
@@ -271,6 +292,31 @@ public class Controller {
             oReport += String.format("#%d: %s\n", i, AnalyzeNames.getName(iYear, i, "M"));
         textAreaConsole.setText(oReport);
     }
+
+
+
+    // ----------------------------- Initialization of UI ------------------------//
+    /**
+     *  Initialize the content of all the ChoiceBox
+     *
+     */
+    @FXML
+    void initialize() {
+        // -------------------------- Task2 Initialization ------------------------//
+        task2GenderChoiceBox.setValue("M");
+        task2GenderChoiceBox.setItems(genderChoice);
+        // -------------------------- Task5 Initialization ------------------------//
+        task5iGenderChoiceBox.setValue("M");
+        task5iGenderChoiceBox.setItems(genderChoice);
+        task5iGenderMateChoiceBox.setValue("M");
+        task5iGenderMateChoiceBox.setItems(genderChoice);
+        task5iPreferenceChoiceBox.setValue("Young");
+        task5iPreferenceChoiceBox.setItems(ageChoice);
+        task5AlgorithmChoiceBox.setValue("T5X1");
+        task5AlgorithmChoiceBox.setItems(algorithmChoice);
+    }
+
+
 
     // ----------------------------- General Terminal UI Interface ------------------------//
 
@@ -455,45 +501,202 @@ public class Controller {
     // ----------------------------- Task2 Function ------------------------//
 
     /**
-     *  Task Two
-     *  Initialize the content of the task2GenderChoiceBox
-     *
+     * record if there's any error in user's input
      */
-    @FXML
-    void initialize() {
-        task2GenderChoiceBox.setValue("M");
-        task2GenderChoiceBox.setItems(genderChoice);
-        task5iGenderChoiceBox.setValue("M");
-        task5iGenderChoiceBox.setItems(genderChoice);
-        task5iGenderMateChoiceBox.setValue("M");
-        task5iGenderMateChoiceBox.setItems(genderChoice);
-        task5iPreferenceChoiceBox.setValue("Young");
-        task5iPreferenceChoiceBox.setItems(ageChoice);
-        task5AlgorithmChoiceBox.setValue("T5X1");
-        task5AlgorithmChoiceBox.setItems(algorithmChoice);
-    }
+    boolean hasErrorTask2 = false;
+
     /**
-     *  Task Two
-     *  To be triggered by the "Generate Report" button on the Task Two Tab
-     *
+     * check year1 input
      */
     @FXML
-    void task2GenerateReport(ActionEvent event) {
-        String oReport = "generate report for task2";
-        textAreaConsole.setText(oReport);
+    void doTask2Year1Check() {
+        String year1Text = task2Year1TextField.getText();
+        boolean hasError = false;
+        if (year1Text.isBlank() || !StringUtils.isNumeric(year1Text)) {
+            task2Year1ErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(year1Text) > 2019 || Integer.parseInt(year1Text) < 1880) {
+            task2Year1ErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        task2Year1ErrorLabel.setVisible(hasError);
+        hasErrorTask2 = hasError;
     }
 
+    /**
+     * check year2 input
+     */
+    @FXML
+    void doTask2Year2Check() {
+        String year2Text = task2Year2TextField.getText();
+        boolean hasError = false;
+        if (year2Text.isBlank() || !StringUtils.isNumeric(year2Text) ) {
+            task2Year2ErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(year2Text) > 2019 || Integer.parseInt(year2Text) < 1880) {
+            task2Year2ErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        task2Year2ErrorLabel.setVisible(hasError);
+        hasErrorTask2 = hasError;
+    }
+
+    /**
+     * check whether year1 <= year2
+     */
+    @FXML
+    void doTask2YearRelationCheck() {
+        String year1Text = task2Year1TextField.getText();
+        String year2Text = task2Year2TextField.getText();
+        int year1 = Integer.parseInt(year1Text);
+        int year2 = Integer.parseInt(year2Text);
+        boolean hasError = false;
+        if (year1 > year2) {
+            task2Year2ErrorLabel.setText("Year2 should be larger than or equal to Year1");
+            hasError = true;
+        }
+        task2Year2ErrorLabel.setVisible(hasError);
+        hasErrorTask2 = hasError;
+    }
+
+    /**
+     * check k input
+     */
+    @FXML
+    void doTask2KCheck() {
+        String kText = task2KTextField.getText();
+        boolean hasError = false;
+        if (kText.isBlank() || !StringUtils.isNumeric(kText) ) {
+            task2KErrorLabel.setText("Please Enter an k number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(kText) < 1) {
+            task2KErrorLabel.setText("Please Enter a Positive Integer");
+            hasError = true;
+        }
+        task2KErrorLabel.setVisible(hasError);
+        hasErrorTask2 = hasError;
+    }
+
+    /**
+     *  Task Two
+     *  To be triggered by the "Submit" button on the Task #2 Tab
+     *
+     */
+    @FXML
+    void task2SubmitData(ActionEvent event) {
+        doTask2Year1Check();
+        doTask2Year2Check();
+        doTask2KCheck();
+        if(hasErrorTask2) return;
+
+        doTask2YearRelationCheck();
+        if(hasErrorTask2) return;
+
+        /*
+
+        String yearFieldText = p1YearField.getText();
+        String nFieldText = p1NField.getText();
+        List<String> testX = new ArrayList<>(Arrays.asList("1","2","3","4","5","6"));
+        List<Integer> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
+
+        MostPopularNames task1 = new MostPopularNames();
+        if(!task1.setData(Integer.parseInt(yearFieldText), Integer.parseInt(nFieldText)))
+            return;
+
+        ChartSetter.BarChartSetter(outputBarChart1, "Male", "Name", "Occurrence", "number of babies", task1.getMaleList());
+        ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
+        ChartSetter.PieChartSetter(outputPieChart1, "Male", task1.getMaleList());
+        ChartSetter.PieChartSetter(outputPieChart2, "Female", task1.getFemaleList());
+        */
+    }
+
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void task2Reset() {
+        task2Year1TextField.clear();
+        task2Year2TextField.clear();
+        task2KTextField.clear();
+        task2Year1ErrorLabel.setText("");
+        task2Year1ErrorLabel.setVisible(false);
+        task2Year2ErrorLabel.setText("");
+        task2Year2ErrorLabel.setVisible(false);
+        task2KErrorLabel.setText("");
+        task2KErrorLabel.setVisible(false);
+        clearAllCharts();
+    }
+
+
+
     // ----------------------------- Task5 Function ------------------------//
+    /**
+     * record if there's any error in user's input
+     */
+    boolean hasErrorTask5 = false;
+
+    /**
+     * check iName input
+     */
+    @FXML
+    void doTask5iNameCheck() {
+        String iName = task5iNameTextField.getText();
+        boolean hasError = false;
+        if ( iName.isBlank() ) {
+            task5iNameErrorLabel.setText("Please Enter a Name");
+            hasError = true;
+        }
+        task5iNameErrorLabel.setVisible(hasError);
+        hasErrorTask5 = hasError;
+    }
+
+    /**
+     * check iAge input
+     */
+    @FXML
+    void doTask5iAgeCheck() {
+        String iAgeText = task5iAgeTextField.getText();
+        boolean hasError = false;
+        if ( iAgeText.isBlank() || !StringUtils.isNumeric(iAgeText) ) {
+            task5iAgeErrorLabel.setText("Please Enter an age number");
+            hasError = true;
+        }
+        else if ( Integer.parseInt(iAgeText) < 1){
+            task5iAgeErrorLabel.setText("Please Enter a Positive Integer");
+            hasError = true;
+        }
+        task5iAgeErrorLabel.setVisible(hasError);
+        hasErrorTask5 = hasError;
+    }
 
     /**
      *  Task Five
-     *  To be triggered by the "Generate Report" button on the Task Five Tab
+     *  To be triggered by the "Submit" button on the Task#5 Tab
      *
      */
     @FXML
-    void task5GenerateReport(ActionEvent event) {
-        String oReport = "generate report for task5";
-        textAreaConsole.setText(oReport);
+    void task5SubmitData(ActionEvent event) {
+        doTask5iNameCheck();
+        doTask5iAgeCheck();
+        if(hasErrorTask5) return;
+
+    }
+
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void task5Reset() {
+        task5iNameTextField.clear();
+        task5iAgeTextField.clear();
+        task5iNameErrorLabel.setText("");
+        task5iNameErrorLabel.setVisible(false);
+        task5iAgeErrorLabel.setText("");
+        task5iAgeErrorLabel.setVisible(false);
+        clearAllCharts();
     }
 
 }
