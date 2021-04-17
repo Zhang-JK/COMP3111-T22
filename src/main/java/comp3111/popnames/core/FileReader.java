@@ -50,7 +50,7 @@ public class FileReader {
         for (CSVRecord rec : getFileParser(year)) {
             if (rec.get(1).equals(gender==1 ? "F" : "M")) {
                 result.add(new NameRecord(rec));
-                if (counter == n) break;
+                if (counter == n-1) break;
                 else counter++;
             }
         }
