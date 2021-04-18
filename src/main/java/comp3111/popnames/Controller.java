@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -213,6 +214,19 @@ public class Controller {
     private AnchorPane outputPanel;
 
     // ----------------------------- Task0 Functions ------------------------//
+    /**
+     * record if user is now using Task#0 Tab
+     */
+    boolean workingOnTask0 = false;
+
+    /**
+     * do when user select task#0 tab
+     */
+    @FXML
+    void openTab0() {
+        workingOnTask0 = true;
+        workingOnTask2=workingOnTask1=workingOnTask3=workingOnTask4=workingOnTask5=workingOnTask6=false;
+    }
 
     /**
      * Task Zero
@@ -390,7 +404,7 @@ public class Controller {
         switchButton(barButton);
         setAllChartsInvisible();
         outputBarChart1.setVisible(true);
-        outputBarChart2.setVisible(true);
+        if(!workingOnTask2) outputBarChart2.setVisible(true);
     }
 
     /**
@@ -401,7 +415,7 @@ public class Controller {
         switchButton(pieButton);
         setAllChartsInvisible();
         outputPieChart1.setVisible(true);
-        outputPieChart2.setVisible(true);
+        if(!workingOnTask2) outputPieChart2.setVisible(true);
     }
 
     /**
@@ -412,15 +426,28 @@ public class Controller {
         switchButton(lineButton);
         setAllChartsInvisible();
         outputLineChart1.setVisible(true);
-        outputLineChart2.setVisible(true);
+        if(!workingOnTask2) outputLineChart2.setVisible(true);
     }
 
     // ----------------------------- Task1 Function ------------------------//
 
     /**
+     * record if user is now using Task#2 Tab
+     */
+    boolean workingOnTask1 = false;
+    /**
      * record if there's any error in user's input
      */
     boolean hasErrorTask1 = false;
+    /**
+     * do when user select task#1 tab
+     */
+    @FXML
+    void openTab1() {
+        leaveTab2();
+        workingOnTask1 = true;
+        workingOnTask0=workingOnTask2=workingOnTask3=workingOnTask4=workingOnTask5=workingOnTask6=false;
+    }
 
     /**
      * check year input
@@ -501,9 +528,22 @@ public class Controller {
     // ----------------------------- Task2 Function ------------------------//
 
     /**
+     * record if user is now using Task#2 Tab
+     */
+    boolean workingOnTask2 = false;
+    /**
      * record if there's any error in user's input
      */
     boolean hasErrorTask2 = false;
+
+    /**
+     * do when user select task#2 tab
+     */
+    @FXML
+    void openTab2() {
+        workingOnTask2 = true;
+        workingOnTask0=workingOnTask1=workingOnTask3=workingOnTask4=workingOnTask5=workingOnTask6=false;
+    }
 
     /**
      * check year1 input
@@ -595,22 +635,53 @@ public class Controller {
         doTask2YearRelationCheck();
         if(hasErrorTask2) return;
 
-        /*
+        int year1 = Integer.parseInt(task2Year1TextField.getText());
+        int year2 = Integer.parseInt(task2Year2TextField.getText());
+        int k = Integer.parseInt(task2KTextField.getText());
+        String gender = task2GenderChoiceBox.getValue().toString();
 
-        String yearFieldText = p1YearField.getText();
-        String nFieldText = p1NField.getText();
         List<String> testX = new ArrayList<>(Arrays.asList("1","2","3","4","5","6"));
-        List<Integer> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
+        List<Number> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
 
-        MostPopularNames task1 = new MostPopularNames();
-        if(!task1.setData(Integer.parseInt(yearFieldText), Integer.parseInt(nFieldText)))
+        KthPopularName task2 = new KthPopularName();
+        if(! task2.setData(year1, year2, k, gender ) )
             return;
 
-        ChartSetter.BarChartSetter(outputBarChart1, "Male", "Name", "Occurrence", "number of babies", task1.getMaleList());
-        ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
-        ChartSetter.PieChartSetter(outputPieChart1, "Male", task1.getMaleList());
-        ChartSetter.PieChartSetter(outputPieChart2, "Female", task1.getFemaleList());
-        */
+        String barTitle = "";
+        barTitle += String.format("%d-th popular %s names over the period from %d to %d\n", k, (gender.equals("M")?"Male":"Female"), year1, year2);
+
+        ChartSetter.BarChartSetter(outputBarChart1, barTitle, "Name", "Occurrence", "number of babies", task2.getModifiedList() );
+        ChartSetter.PieChartSetter(outputPieChart1, barTitle, task2.getModifiedList() );
+        outputBarChart1.setPrefWidth(600);
+        outputBarChart2.setVisible(false);
+        outputPieChart1.setPrefWidth(600);
+        outputPieChart2.setVisible(false);
+
+    }
+    /**
+     * do when leave the Task#2 Tab
+     */
+    @FXML
+    void leaveTab2() {
+        task2Year1TextField.clear();
+        task2Year2TextField.clear();
+        task2KTextField.clear();
+        task2Year1ErrorLabel.setText("");
+        task2Year1ErrorLabel.setVisible(false);
+        task2Year2ErrorLabel.setText("");
+        task2Year2ErrorLabel.setVisible(false);
+        task2KErrorLabel.setText("");
+        task2KErrorLabel.setVisible(false);
+        clearAllCharts();
+        outputBarChart1.setTitle("");
+        outputBarChart1.setPrefWidth(307);
+        outputPieChart1.setTitle("");
+        outputPieChart1.setPrefWidth(307);
+        outputLineChart1.setTitle("");
+        outputLineChart1.setPrefWidth(307);
+        outputBarChart2.setVisible(true);
+        outputPieChart2.setVisible(true);
+        outputLineChart2.setVisible(true);
     }
 
     /**
@@ -631,12 +702,66 @@ public class Controller {
     }
 
 
+    // ----------------------------- Task3 Function ------------------------//
+    /**
+     * record if user is now using Task#3 Tab
+     */
+    boolean workingOnTask3 = false;
+
+    /**
+     * do when user select task#3 tab
+     */
+    @FXML
+    void openTab3() {
+        workingOnTask3 = true;
+        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask4=workingOnTask5=workingOnTask6=false;
+    }
+
+
+
+
+
+
+    // ----------------------------- Task4 Function ------------------------//
+    /**
+     * record if user is now using Task#4 Tab
+     */
+    boolean workingOnTask4 = false;
+
+    /**
+     * do when user select task#4 tab
+     */
+    @FXML
+    void openTab4() {
+        workingOnTask4 = true;
+        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask3=workingOnTask5=workingOnTask6=false;
+    }
+
+
+
+
+
+
 
     // ----------------------------- Task5 Function ------------------------//
+    /**
+     * record if user is now using Task#5 Tab
+     */
+    boolean workingOnTask5 = false;
+
     /**
      * record if there's any error in user's input
      */
     boolean hasErrorTask5 = false;
+
+    /**
+     * do when user select task#5 tab
+     */
+    @FXML
+    void openTab5() {
+        workingOnTask5 = true;
+        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask3=workingOnTask4=workingOnTask6=false;
+    }
 
     /**
      * check iName input
@@ -697,6 +822,23 @@ public class Controller {
         task5iAgeErrorLabel.setText("");
         task5iAgeErrorLabel.setVisible(false);
         clearAllCharts();
+    }
+
+
+
+    // ----------------------------- Task6 Function ------------------------//
+    /**
+     * record if user is now using Task#6 Tab
+     */
+    boolean workingOnTask6 = false;
+
+    /**
+     * do when user select task#6 tab
+     */
+    @FXML
+    void openTab6() {
+        workingOnTask6 = true;
+        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask3=workingOnTask4=workingOnTask5=false;
     }
 
 }

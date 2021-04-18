@@ -27,7 +27,7 @@
       <children>
             <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="322.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="tabTaskZero" text="Task Zero">
+                <Tab fx:id="tabTaskZero" onSelectionChanged="#openTab0" text="Task Zero">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="719.0">
                            <children>
@@ -48,7 +48,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabReport1" text="Reporting 1">
+                  <Tab fx:id="tabReport1" onSelectionChanged="#openTab1" text="Reporting 1">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="719.0">
                            <children>
@@ -82,7 +82,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                <Tab fx:id="tabReport2" text="Reporting 2">
+                <Tab fx:id="tabReport2" onSelectionChanged="#openTab2" text="Reporting 2">
                   <content>
                         <AnchorPane>
                            <children>
@@ -120,7 +120,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabReport3" text="Reporting 3">
+                  <Tab fx:id="tabReport3" onSelectionChanged="#openTab3" text="Reporting 3">
                     <content>
                         <AnchorPane>
                            <children>
@@ -133,7 +133,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp1" text="Application1">
+                  <Tab fx:id="tabApp1" onSelectionChanged="#openTab4" text="Application1">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="719.0">
                            <children>
@@ -142,7 +142,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp2" text="Application 2">
+                  <Tab fx:id="tabApp2" onSelectionChanged="#openTab5" text="Application 2">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -189,7 +189,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp3" text="Application 3">
+                  <Tab fx:id="tabApp3" onSelectionChanged="#openTab6" text="Application 3">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
