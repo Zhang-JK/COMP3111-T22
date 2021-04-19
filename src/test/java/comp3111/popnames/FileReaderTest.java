@@ -9,6 +9,7 @@ import comp3111.popnames.core.*;
 import java.util.*;
 
 public class FileReaderTest {
+
     @Test
     public void testGetFileByYear() {
         List<NameRecord> recordList = FileReader.getFileByYear(2019);
@@ -21,7 +22,7 @@ public class FileReaderTest {
     }
 
     @Test
-    public void testGetTopNNamesByYear() {
+    public void testGetTopNNamesByYear1() {
         List<NameRecord> recordList = FileReader.getTopNNamesByYear(2019, 5, 0);
         String name = recordList.get(1).getName();
         int gender = recordList.get(1).getGender();
@@ -30,6 +31,40 @@ public class FileReaderTest {
         assertEquals(gender, 0);
         assertEquals(times, 19048);
     }
+
+    @Test
+    public void testGetTopNNamesByYear2() {
+        List<NameRecord> recordList = FileReader.getTopNNamesByYear(2019, 3, 1);
+        String name = recordList.get(2).getName();
+        int gender = recordList.get(2).getGender();
+        int times = recordList.get(2).getOccurrence();
+        assertEquals(name, "Ava");
+        assertEquals(gender, 1);
+        assertEquals(times, 14440);
+    }
+    
+    @Test
+    public void testGetNthNamesByYear1() {
+        NameRecord record = FileReader.getNthNamesByYear(2019, 9, 0);
+        String name = record.getName();
+        int gender = record.getGender();
+        int times = record.getOccurrence();
+        assertEquals(name, "Mason");
+        assertEquals(gender, 0);
+        assertEquals(times, 11408);
+    }
+    
+    @Test
+    public void testGetNthNamesByYear2() {
+        NameRecord record = FileReader.getNthNamesByYear(2019, 7, 1);
+        String name = record.getName();
+        int gender = record.getGender();
+        int times = record.getOccurrence();
+        assertEquals(name, "Amelia");
+        assertEquals(gender, 1);
+        assertEquals(times, 12862);
+    }
+
 
     @Test
     public void testGetTotalBirthsByYear1() {
@@ -60,4 +95,5 @@ public class FileReaderTest {
         int rank = FileReader.getRankByYearAndName("zhangjiekai", 2019, 0);
         assertEquals(rank, 0);
     }
+
 }

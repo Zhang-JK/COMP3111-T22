@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
+<VBox prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="437.0" prefWidth="719.0">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="298.0" prefWidth="719.0">
       <children>
-            <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="322.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="tabTaskZero" text="Task Zero">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="221.0" prefWidth="719.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="719.0">
                            <children>
                               <Label layoutX="98.0" layoutY="67.0" prefHeight="18.0" prefWidth="87.0" text="Name (female)" />
                               <Label layoutX="98.0" layoutY="98.0" text="Year of Interest" />
@@ -39,10 +50,34 @@
                 </Tab>
                   <Tab fx:id="tabReport1" text="Reporting 1">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="719.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="719.0">
                            <children>
                               <Label layoutX="79.0" layoutY="44.0" />
-                              <TextArea layoutX="96.0" layoutY="24.0" prefHeight="99.0" prefWidth="398.0" text="Task #1: Most Popular Names (data reporting)&#10;&#10;Generate a report in response to the queries on the most popular names in a given year.&#10;" wrapText="true" />
+                              <TextArea fx:id="p1DescriputionBox" editable="false" layoutY="3.0" prefHeight="88.0" prefWidth="719.0" scrollLeft="10.0" text="Task #1: Most Popular Names &#10;Group22, ZHANG Jiekai&#10;Welcome to check Task #1,&#10;please input the the year and the number of top names you want to research!" wrapText="true" />
+                              <Label layoutX="150.0" layoutY="113.0" text="Year">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="158.0" layoutY="172.0" text="N">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="p1YearField" layoutX="227.0" layoutY="110.0" onKeyTyped="#doP1YearCheck" prefHeight="26.0" prefWidth="200.0" promptText="Integer, from 1880 to 2019" />
+                              <TextField fx:id="p1NField" layoutX="225.0" layoutY="169.0" onKeyTyped="#doP1NCheck" prefHeight="26.0" prefWidth="200.0" promptText="Integer, from 1 to 10" />
+                              <Button fx:id="p1ResetButton" layoutX="269.0" layoutY="220.0" mnemonicParsing="false" onAction="#doP1Reset" prefHeight="34.0" prefWidth="70.0" style="-fx-background-color: #77D9FA;" text="Reset" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="p1SubmitButton" layoutX="365.0" layoutY="220.0" mnemonicParsing="false" onAction="#doP1Submit" prefHeight="34.0" prefWidth="85.0" style="-fx-background-color: #3786F0;" text="Submit" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="p1YearErrorLabel" layoutX="227.0" layoutY="136.0" prefHeight="18.0" prefWidth="344.0" text="Label" textFill="#f04a20" visible="false" />
+                              <Label fx:id="p1NErrorLabel" layoutX="228.0" layoutY="195.0" prefHeight="18.0" prefWidth="366.0" text="Label" textFill="#f04a20" visible="false" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -53,7 +88,32 @@
                            <children>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="722.0">
                                  <children>
-                                    <TextArea layoutX="109.0" layoutY="33.0" prefHeight="102.0" prefWidth="383.0" text="Task #2: K-th Popular Names (data reporting)&#10;&#10;Generate a report in response to the queries on the K-th popular names over a given period.&#10;" wrapText="true" />
+                                    <TextArea fx:id="task2IntroBox" editable="false" layoutX="27.0" layoutY="14.0" prefHeight="106.0" prefWidth="628.0" text="Task #2: K-th Popular Names &#10;Generate a report in response to the queries on the K-th popular names over a given period.&#10;&#10;Please input the following information: &#10;Year1 : the starting year to be calculated&#10;Year2: the ending year to be calculated &#10;k: the rank of interest&#10;Gender: the gender to be focused ('M' for Male, 'F' for Female)&#10;&#10;" wrapText="true" />
+                                    <TextField fx:id="task2Year1TextField" layoutX="72.0" layoutY="142.0" onKeyTyped="#doTask2Year1Check" />
+                                    <Text layoutX="27.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year1:" wrappingWidth="45.0" />
+                                    <Text layoutX="295.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year2:" />
+                                    <TextField fx:id="task2Year2TextField" layoutX="341.0" layoutY="142.0" onKeyTyped="#doTask2Year2Check" />
+                                    <Text layoutX="35.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="k:" wrappingWidth="29.6103515625" />
+                                    <TextField fx:id="task2KTextField" layoutX="72.0" layoutY="195.0" onKeyTyped="#doTask2KCheck" />
+                                    <Text layoutX="291.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
+                                    <ChoiceBox fx:id="task2GenderChoiceBox" layoutX="351.0" layoutY="195.0" prefWidth="150.0" />
+                                    <Button fx:id="task2SubmitButton" defaultButton="true" layoutX="596.0" layoutY="243.0" mnemonicParsing="false" onAction="#task2SubmitData" prefHeight="26.0" prefWidth="59.0" text="Submit" textAlignment="CENTER" />
+                                    <Label fx:id="task2Year1ErrorLabel" layoutX="72.0" layoutY="168.0" prefHeight="15.0" prefWidth="222.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="task2Year2ErrorLabel" layoutX="341.0" layoutY="168.0" prefHeight="15.0" prefWidth="225.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="task2KErrorLabel" layoutX="72.0" layoutY="225.0" prefHeight="15.0" prefWidth="203.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="task2ResetButton" layoutX="524.0" layoutY="243.0" mnemonicParsing="false" onAction="#task2Reset" prefHeight="26.0" prefWidth="56.0" text="Reset" textAlignment="CENTER" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -86,7 +146,45 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea layoutX="40.0" layoutY="27.0" prefHeight="115.0" prefWidth="509.0" text="Task #5: Prediction on Names for Compatible Pairs (application)&#10;&#10;Develop and implement an online service using empirical data to help make informed decisions on predicting names for compatible pairs&#10;" wrapText="true" />
+                              <TextArea fx:id="task5IntroBox" editable="false" layoutX="39.0" layoutY="14.0" prefHeight="93.0" prefWidth="611.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Provide an online service using empirical data to help make informed decisions on predicting names for compatible pairs.&#10;&#10;" wrapText="true" />
+                              <Text layoutX="37.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information:">
+                                 <font>
+                                    <Font name="Arial Bold" size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="41.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                              <TextField fx:id="task5iNameTextField" layoutX="91.0" layoutY="141.0" onKeyTyped="#doTask5iNameCheck" />
+                              <Text layoutX="263.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
+                              <ChoiceBox fx:id="task5iGenderChoiceBox" layoutX="314.0" layoutY="141.0" prefHeight="26.0" prefWidth="82.0" />
+                              <Text layoutX="417.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
+                              <TextField fx:id="task5iAgeTextField" layoutX="454.0" layoutY="141.0" onKeyTyped="#doTask5iAgeCheck" />
+                              <Text layoutX="39.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target Preference:">
+                                 <font>
+                                    <Font name="Arial Bold" size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="37.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
+                              <ChoiceBox fx:id="task5iGenderMateChoiceBox" layoutX="96.0" layoutY="213.0" prefHeight="26.0" prefWidth="75.0" />
+                              <Text layoutX="238.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
+                              <ChoiceBox fx:id="task5iPreferenceChoiceBox" layoutX="273.0" layoutY="213.0" prefHeight="26.0" prefWidth="83.0" />
+                              <Text layoutX="39.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm:">
+                                 <font>
+                                    <Font name="Arial Bold" size="13.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="task5AlgorithmChoiceBox" layoutX="118.0" layoutY="250.0" prefHeight="26.0" prefWidth="106.0" />
+                              <Button fx:id="task5SubmitButton" defaultButton="true" layoutX="578.0" layoutY="250.0" mnemonicParsing="false" onAction="#task5SubmitData" prefHeight="26.0" prefWidth="72.0" text="Submit" />
+                              <Button fx:id="task5ResetButton" layoutX="503.0" layoutY="250.0" mnemonicParsing="false" onAction="#task5Reset" prefHeight="26.0" prefWidth="61.0" text="Reset" />
+                              <Label fx:id="task5iNameErrorLabel" layoutX="90.0" layoutY="167.0" text="Wrong format" textFill="RED" visible="false">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="task5iAgeErrorLabel" layoutX="454.0" layoutY="165.0" text="Wrong format" textFill="RED" visible="false">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                     </content>
@@ -95,7 +193,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea layoutX="40.0" layoutY="39.0" prefHeight="105.0" prefWidth="450.0" text="Task #6: Prediction on Scores for Compatible Pairs (application)&#10;&#10;Develop and implement an online service using empirical data to help make informed decisions on predicting scores for compatible pairs.&#10;" wrapText="true" />
+                              <TextArea layoutX="40.0" layoutY="39.0" prefHeight="105.0" prefWidth="450.0" text="Task #6: Prediction on Scores for Compatible Pairs (application)&#10;&#10;Develop and implement an online service using empirical data to help make informed decisions on predicting scores for compatible pairs." wrapText="true" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -104,11 +202,87 @@
             </TabPane>
       </children>
     </AnchorPane>
-      <Label text="Console" />
-      <ScrollPane prefHeight="387.0" prefWidth="719.0">
-         <content>
-            <TextArea fx:id="textAreaConsole" prefHeight="300.0" prefWidth="718.0" />
-         </content>
-      </ScrollPane>
+      <SplitPane dividerPositions="0.13528591352859135" prefHeight="358.0" prefWidth="719.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox layoutY="1.0" prefHeight="356.0" prefWidth="101.0">
+                     <children>
+                        <Button fx:id="summaryButton" defaultButton="true" mnemonicParsing="false" onAction="#clickSummary" prefWidth="100.0" text="Summary">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Button>
+                        <Button fx:id="tableButton" mnemonicParsing="false" onAction="#clickTable" prefWidth="100.0" text="Table">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" />
+                           </VBox.margin></Button>
+                        <Button fx:id="barButton" mnemonicParsing="false" onAction="#clickBar" prefWidth="100.0" text="Bar Chart">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" />
+                           </VBox.margin></Button>
+                        <Button fx:id="pieButton" mnemonicParsing="false" onAction="#clickPie" prefWidth="100.0" text="Pie Chart">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="lineButton" mnemonicParsing="false" onAction="#clickLine" prefWidth="100.0" text="Line Chart">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="5.0" top="15.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane fx:id="outputPanel" minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="644.0">
+               <children>
+                  <TextArea fx:id="textAreaConsole" disable="true" editable="false" prefHeight="356.0" prefWidth="624.0" />
+                  <BarChart fx:id="outputBarChart1" alternativeColumnFillVisible="true" layoutX="-1.0" prefHeight="356.0" prefWidth="307.0" visible="false">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" visible="false" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+                  <BarChart fx:id="outputBarChart2" alternativeColumnFillVisible="true" layoutX="306.0" layoutY="1.0" prefHeight="356.0" prefWidth="307.0" visible="false">
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
+                  </BarChart>
+                  <PieChart fx:id="outputPieChart1" layoutX="1.0" layoutY="1.0" prefHeight="356.0" prefWidth="299.0" visible="false" />
+                  <PieChart fx:id="outputPieChart2" layoutX="307.0" layoutY="1.0" prefHeight="356.0" prefWidth="338.0" visible="false" />
+                  <LineChart fx:id="outputLineChart1" layoutY="-1.0" prefHeight="356.0" prefWidth="307.0" visible="false">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <LineChart fx:id="outputLineChart2" layoutX="307.0" prefHeight="356.0" prefWidth="338.0" visible="false">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <TableView fx:id="outputTable" layoutX="14.0" layoutY="14.0" prefHeight="322.0" prefWidth="590.0" visible="false">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
   </children>
 </VBox>

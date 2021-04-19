@@ -30,7 +30,7 @@ public class JavaFXTest extends ApplicationTest {
 		t = (TextArea)s.lookup("#textAreaConsole");
 	}
 
-    
+
 	@Test
 	public void testButtonRankTrue() {	
 		//clickOn("#tabTaskZero");
@@ -43,7 +43,7 @@ public class JavaFXTest extends ApplicationTest {
 		assertTrue(s1.equals(s2));
 	}
 	
-	
+
 	@Test
 	public void testButtonRankFalse() {
 		//clickOn("#tabTaskZero");
@@ -55,7 +55,7 @@ public class JavaFXTest extends ApplicationTest {
 		String s2 = t.getText();
 		assertFalse(s1.equals(s2));
 	}
-	
+
 	
 	@Test
 	public void testTextAreaConsole() {	
@@ -63,5 +63,6 @@ public class JavaFXTest extends ApplicationTest {
 		String s = t.getText();
 		assertTrue(s.equals("David"));
 	}
+
 		
 }
