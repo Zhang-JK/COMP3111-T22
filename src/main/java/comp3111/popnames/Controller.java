@@ -990,8 +990,14 @@ public class Controller {
     }
 
     // ----------------------------- Task4 Function ------------------------//
+    /**
+     * indicates whether there's any mistake in the user input
+     */
     boolean hasErrorTask4 = false;
 
+    /**
+     * check the dad name input
+     */
     @FXML
     void p4DadNameCheck() {
         String name = p4DadName.getText();
@@ -1004,6 +1010,9 @@ public class Controller {
         hasErrorTask4 = hasError;
     }
 
+    /**
+     * check the dad YOB input
+     */
     @FXML
     void p4DadYobCheck() {
         String year = p4DadYob.getText();
@@ -1020,6 +1029,9 @@ public class Controller {
         hasErrorTask4 = hasError;
     }
 
+    /**
+     * check the mom name input
+     */
     @FXML
     void p4MomNameCheck() {
         String name = p4MomName.getText();
@@ -1032,6 +1044,9 @@ public class Controller {
         hasErrorTask4 = hasError;
     }
 
+    /**
+     * check the mom YOB input
+     */
     @FXML
     void p4MomYobCheck() {
         String year = p4MomYob.getText();
@@ -1048,6 +1063,9 @@ public class Controller {
         hasErrorTask4 = hasError;
     }
 
+    /**
+     * display additional information is second algorithm is selected
+     */
     @FXML
     void p4AlgoCheck() {
         String algo = p4AlgoChoiceBox.getValue().toString();

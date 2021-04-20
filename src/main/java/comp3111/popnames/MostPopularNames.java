@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * This class is for task1, find the most popular names
  * @author ZHANG Jiekai
- * @version 1.0
+ * @version 1.1
  */
 public class MostPopularNames {
     /**
@@ -50,6 +50,10 @@ public class MostPopularNames {
         return true;
     }
 
+    /**
+     * get the summary to display
+     * @return summary of the report
+     */
     public String getSummary() {
         if(maleList.size() == 0) return null;
         DecimalFormat format = new DecimalFormat("0.00000");
