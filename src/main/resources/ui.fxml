@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
+<VBox prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="298.0" prefWidth="719.0">
       <children>
@@ -126,7 +126,27 @@
                            <children>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="719.0">
                                  <children>
-                                    <TextArea layoutX="112.0" layoutY="26.0" prefHeight="111.0" prefWidth="362.0" text="Task #3: Popularity of Names (data reporting)&#10;&#10;Generate a report in response to the queries on the popularity of a name over a given period.&#10;&#10;" wrapText="true" />
+                                    <Label fx:id="task3Year1ErrorLabel" layoutX="113.0" layoutY="181.0" prefHeight="15.0" prefWidth="225.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <TextArea fx:id="task3IntroBox" layoutX="57.0" layoutY="14.0" prefHeight="111.0" prefWidth="568.0" text="Task #3: Popularity of Names&#10;Generate a report in response to the queries on the popularity of a name over a given period.&#10;&#10;Group22, CHENG Yiren&#10;Welcome to check Task #3,&#10;please input the the year period, name and gender you want to research!&#10;" wrapText="true" />
+                                    <TextField fx:id="task3Year1TextField" layoutX="113.0" layoutY="148.0" />
+                                    <TextField fx:id="task3NameTextField" layoutX="375.0" layoutY="147.0" />
+                                    <TextField fx:id="task3Year2TextField" layoutX="113.0" layoutY="205.0" />
+                                    <ChoiceBox fx:id="task3GenderChoiceBox" layoutX="375.0" layoutY="205.0" prefWidth="150.0" />
+                                    <Text layoutX="57.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year 1:" />
+                                    <Text layoutX="321.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                                    <Text layoutX="57.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year 2:" />
+                                    <Text layoutX="321.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" />
+                                    <Button fx:id="task3ResetButton" layoutX="546.0" layoutY="243.0" mnemonicParsing="false" onAction="#task3Reset" text="Reset" />
+                                    <Button fx:id="task3SubmitButton" layoutX="625.0" layoutY="243.0" mnemonicParsing="false" onAction="#task3SubmitData" text="Submit" textFill="#b94a4a" />
+                                    <Label fx:id="task3Year2ErrorLabel" layoutX="113.0" layoutY="235.0" prefHeight="15.0" prefWidth="225.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </children>
