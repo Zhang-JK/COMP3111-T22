@@ -5,6 +5,7 @@ package comp3111.popnames;
 
 import comp3111.popnames.core.ChartSetter;
 import comp3111.popnames.core.FileReader;
+import comp3111.popnames.core.OccurrenceRecord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -127,6 +128,36 @@ public class Controller {
 
     @FXML
     private ToggleGroup T111;
+    
+    @FXML
+    private TextArea task3IntroBox;
+
+    @FXML
+    private TextField task3Year1TextField;
+
+    @FXML
+    private TextField task3Year2TextField;
+
+    @FXML
+    private TextField task3NameTextField;
+
+    @FXML
+    private Label task3Year1ErrorLabel;
+
+    @FXML
+    private Label task3Year2ErrorLabel;
+
+    @FXML
+    private Label task3NameErrorLabel;
+
+    @FXML
+    private ChoiceBox task3GenderChoiceBox;
+
+    @FXML
+    private Button task3SubmitButton;
+
+    @FXML
+    private Button task3ResetButton;
 
     @FXML
     private Tab tabApp1;
@@ -305,6 +336,9 @@ public class Controller {
         // -------------------------- Task2 Initialization ------------------------//
         task2GenderChoiceBox.setValue("M");
         task2GenderChoiceBox.setItems(genderChoice);
+        // -------------------------- Task3 Initialization ------------------------//
+        task3GenderChoiceBox.setValue("M");
+        task3GenderChoiceBox.setItems(genderChoice);
         // -------------------------- Task5 Initialization ------------------------//
         task5iGenderChoiceBox.setValue("M");
         task5iGenderChoiceBox.setItems(genderChoice);
@@ -630,6 +664,124 @@ public class Controller {
         clearAllCharts();
     }
 
+    // ----------------------------- Task3 Function ------------------------//
+    /**
+     * record if there's any error in user's input
+     */
+    boolean hasErrorTask3 = false;
+
+    /**
+     * check year1 input
+     */
+    @FXML
+    void doTask3Year1Check() {
+        String year1Text = task3Year1TextField.getText();
+        boolean hasError = false;
+        if (year1Text.isBlank() || !StringUtils.isNumeric(year1Text)) {
+            task3Year1ErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(year1Text) > 2019 || Integer.parseInt(year1Text) < 1880) {
+            task3Year1ErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        task3Year1ErrorLabel.setVisible(hasError);
+        hasErrorTask3 = hasError;
+    }
+
+    /**
+     * check year2 input
+     */
+    @FXML
+    void doTask3Year2Check() {
+        String year2Text = task3Year2TextField.getText();
+        boolean hasError = false;
+        if (year2Text.isBlank() || !StringUtils.isNumeric(year2Text) ) {
+            task3Year2ErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(year2Text) > 2019 || Integer.parseInt(year2Text) < 1880) {
+            task3Year2ErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        task3Year2ErrorLabel.setVisible(hasError);
+        hasErrorTask3 = hasError;
+    }
+
+    /**
+     * check whether year1 <= year2
+     */
+    @FXML
+    void doTask3YearRelationCheck() {
+        String year1Text = task3Year1TextField.getText();
+        String year2Text = task3Year2TextField.getText();
+        int year1 = Integer.parseInt(year1Text);
+        int year2 = Integer.parseInt(year2Text);
+        boolean hasError = false;
+        if (year1 > year2) {
+            task3Year2ErrorLabel.setText("Year2 should be larger than or equal to Year1");
+            hasError = true;
+        }
+        task3Year2ErrorLabel.setVisible(hasError);
+        hasErrorTask3 = hasError;
+    }
+
+    /**
+     *  Task Three
+     *  To be triggered by the "Submit" button on the Task #2 Tab
+     *
+     */       
+    @FXML
+    void task3SubmitData() {
+        String report = "";
+    	
+    	doTask3Year1Check();
+        doTask3Year2Check();
+        if(hasErrorTask3) return;
+
+        doTask3YearRelationCheck();
+        if(hasErrorTask3) return;
+        
+    	int year1 = Integer.parseInt(task3Year1TextField.getText());
+    	int year2 = Integer.parseInt(task3Year2TextField.getText());
+    	String name = task3NameTextField.getText();
+    	String gender = (String) task3GenderChoiceBox.getValue();
+    	
+    	PopularityOfNames task3 = new PopularityOfNames();
+    	task3.setData(year1, year2, name, gender);
+    	task3.findMaxYear();
+    	int maxYear = task3.getYear();
+    	int maxRank = task3.getRank();
+    	int occurrences = task3.getOccurrence();
+    	String percentage = task3.getPercentage();
+    	
+    	report += String.format("The year when the name %s was most popular is %d at rank %d.\n"
+				+ "In that year, the number of occurrences is %d,\n"
+				+ "which represents %s of total %s births in %d.",
+				name, maxYear, maxRank, occurrences, percentage, 
+				gender.equals("M")?"male":"female", maxYear);
+    	
+    	textAreaConsole.setText(report);
+    	ChartSetter.BarChartSetter2(outputBarChart1, "Popularity of name", "Year", "Occurrence", "number of babies", task3.getList());
+    	ChartSetter.LineChartSetter(outputLineChart1,"Popularity of name", "Year", "Occurrence", "number of babies", task3.getList());
+    }
+    
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void task3Reset() {
+        task3Year1TextField.clear();
+        task3Year2TextField.clear();
+        task3NameTextField.clear();
+        task3Year1ErrorLabel.setText("");
+        task3Year1ErrorLabel.setVisible(false);
+        task3Year2ErrorLabel.setText("");
+        task3Year2ErrorLabel.setVisible(false);
+        task3NameErrorLabel.setText("");
+        task3NameErrorLabel.setVisible(false);
+        clearAllCharts();
+    }
 
 
     // ----------------------------- Task5 Function ------------------------//
