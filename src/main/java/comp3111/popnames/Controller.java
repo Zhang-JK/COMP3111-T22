@@ -398,6 +398,10 @@ public class Controller {
 //        textAreaConsole.setVisible(true);
     }
 
+    /**
+     * clean all the user input
+     * please add your input text box here
+     */
     void clearAllInputBox() {
         // task1
         p1YearField.clear();
@@ -509,11 +513,17 @@ public class Controller {
             }
     }
 
+    /**
+     * prevent drag split panel
+     */
     @FXML
     void dragSplitWindow() {
         splitWindow.setDividerPosition(0,0.135);
     }
 
+    /**
+     * when switch to tab0
+     */
     @FXML
     void tab0Selected() {
         if(textAreaConsole == null) return;
@@ -527,6 +537,9 @@ public class Controller {
         selectedTask = 0;
     }
 
+    /**
+     * when switch to tab1
+     */
     @FXML
     void tab1Selected() {
         clearAllInputBox();
@@ -539,18 +552,27 @@ public class Controller {
         selectedTask = 1;
     }
 
+    /**
+     * when switch to tab2
+     */
     @FXML
     void tab2Selected() {
 
         selectedTask = 2;
     }
 
+    /**
+     * when switch to tab3
+     */
     @FXML
     void tab3Selected() {
 
         selectedTask = 3;
     }
 
+    /**
+     * when switch to tab4
+     */
     @FXML
     void tab4Selected() {
         clearAllCharts();
@@ -562,12 +584,18 @@ public class Controller {
         selectedTask = 4;
     }
 
+    /**
+     * when switch to tab5
+     */
     @FXML
     void tab5Selected() {
 
         selectedTask = 5;
     }
 
+    /**
+     * when switch to tab6
+     */
     @FXML
     void tab6Selected() {
 
@@ -906,6 +934,8 @@ public class Controller {
         task3NameErrorLabel.setVisible(false);
         clearAllCharts();
     }
+
+    // ----------------------------- Task4 Function ------------------------//
 
 
     // ----------------------------- Task5 Function ------------------------//
