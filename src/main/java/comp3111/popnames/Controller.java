@@ -4,8 +4,6 @@
 package comp3111.popnames;
 
 import comp3111.popnames.core.ChartSetter;
-import comp3111.popnames.core.FileReader;
-import comp3111.popnames.core.OccurrenceRecord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,15 +14,9 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class Controller {
@@ -32,6 +24,8 @@ public class Controller {
     ObservableList<String> genderChoice = FXCollections.observableArrayList("M","F");
     ObservableList<String> ageChoice = FXCollections.observableArrayList("Young","Old");
     ObservableList<String> algorithmChoice = FXCollections.observableArrayList("T5X1","T5X2");
+    ObservableList<String> p4AlgorithmChoice = FXCollections.observableArrayList("T4X1","T4X2");
+    ObservableList<String> p4TypeChoice = FXCollections.observableArrayList("Popular","Unique");
 
     @FXML
     private Tab tabTaskZero;
@@ -246,6 +240,48 @@ public class Controller {
     @FXML
     private SplitPane splitWindow;
 
+    @FXML
+    private TextField p4DadName;
+
+    @FXML
+    private TextField p4MomName;
+
+    @FXML
+    private TextField p4DadYob;
+
+    @FXML
+    private TextField p4MomYob;
+
+    @FXML
+    private ChoiceBox<String> p4AlgoChoiceBox;
+
+    @FXML
+    private Label p4DadNameError;
+
+    @FXML
+    private Label p4MomNameError;
+
+    @FXML
+    private Label p4DadYobError;
+
+    @FXML
+    private Label p4MomYobError;
+
+    @FXML
+    private Label p4AlgoError;
+
+    @FXML
+    private Button p4SubmitButton;
+
+    @FXML
+    private Button p4ResetButton;
+
+    @FXML
+    private Label p4TypeLabel;
+
+    @FXML
+    private ChoiceBox<String> p4TypeChoiceBox;
+
     // ----------------------------- Task0 Functions ------------------------//
 
     /**
@@ -349,6 +385,11 @@ public class Controller {
         // -------------------------- Task3 Initialization ------------------------//
         task3GenderChoiceBox.setValue("M");
         task3GenderChoiceBox.setItems(genderChoice);
+        // -------------------------- Task4 Initialization ------------------------//
+        p4AlgoChoiceBox.setItems(p4AlgorithmChoice);
+        p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
+        p4TypeChoiceBox.setItems(p4TypeChoice);
+        p4TypeChoiceBox.setValue(p4TypeChoice.get(0));
         // -------------------------- Task5 Initialization ------------------------//
         task5iGenderChoiceBox.setValue("M");
         task5iGenderChoiceBox.setItems(genderChoice);
@@ -411,6 +452,18 @@ public class Controller {
         // task2
         // task3
         // task4
+        p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
+        p4DadName.clear();
+        p4DadYob.clear();
+        p4MomName.clear();
+        p4MomYob.clear();
+        p4AlgoError.setVisible(false);
+        p4DadNameError.setVisible(false);
+        p4DadYobError.setVisible(false);
+        p4MomNameError.setVisible(false);
+        p4MomYobError.setVisible(false);
+        p4TypeChoiceBox.setVisible(false);
+        p4TypeLabel.setVisible(false);
         // task5
         // task6
     }
@@ -461,7 +514,7 @@ public class Controller {
         switchButton(barButton);
         setAllChartsInvisible();
         if(outputBarChart1.getData().size() != 0)
-            if(selectedTask == 1) {
+            if(selectedTask == 1 || selectedTask == 4) {
                 outputBarChart1.setVisible(true);
                 outputBarChart1.setPrefWidth(outputPanel.getWidth()/2);
                 outputBarChart2.setVisible(true);
@@ -481,7 +534,7 @@ public class Controller {
         switchButton(pieButton);
         setAllChartsInvisible();
         if(outputPieChart1.getData().size() != 0)
-            if(selectedTask == 1) {
+            if(selectedTask == 1 || selectedTask == 4) {
                 outputPieChart1.setVisible(true);
                 outputPieChart1.setPrefWidth(outputPanel.getWidth()/2);
                 outputPieChart2.setVisible(true);
@@ -501,7 +554,7 @@ public class Controller {
         switchButton(lineButton);
         setAllChartsInvisible();
         if(outputLineChart1.getData().size() != 0)
-            if(selectedTask == 1) {
+            if(selectedTask == 1 || selectedTask == 4) {
                 outputLineChart1.setVisible(true);
                 outputLineChart1.setPrefWidth(outputPanel.getWidth()/2);
                 outputLineChart2.setVisible(true);
@@ -579,8 +632,8 @@ public class Controller {
         summaryButton.setVisible(true);
         tableButton.setVisible(true);
         barButton.setVisible(true);
-        pieButton.setVisible(true);
-        lineButton.setVisible(true);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
         selectedTask = 4;
     }
 
@@ -668,6 +721,7 @@ public class Controller {
         ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
         ChartSetter.PieChartSetter(outputPieChart1, "Male", task1.getMaleList());
         ChartSetter.PieChartSetter(outputPieChart2, "Female", task1.getFemaleList());
+        // TODO
     }
 
     /**
@@ -936,7 +990,137 @@ public class Controller {
     }
 
     // ----------------------------- Task4 Function ------------------------//
+    boolean hasErrorTask4 = false;
 
+    @FXML
+    void p4DadNameCheck() {
+        String name = p4DadName.getText();
+        boolean hasError = false;
+        if (name.isBlank() || StringUtils.isNumeric(name)) {
+            p4DadNameError.setText("Please Enter a Name");
+            hasError = true;
+        }
+        p4DadNameError.setVisible(hasError);
+        hasErrorTask4 = hasError;
+    }
+
+    @FXML
+    void p4DadYobCheck() {
+        String year = p4DadYob.getText();
+        boolean hasError = false;
+        if (year.isBlank()) {
+            p4DadYobError.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(year) || Integer.parseInt(year) > 2019 || Integer.parseInt(year) < 1880) {
+            p4DadYobError.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        p4DadYobError.setVisible(hasError);
+        hasErrorTask4 = hasError;
+    }
+
+    @FXML
+    void p4MomNameCheck() {
+        String name = p4MomName.getText();
+        boolean hasError = false;
+        if (name.isBlank() || StringUtils.isNumeric(name)) {
+            p4MomNameError.setText("Please Enter a Name");
+            hasError = true;
+        }
+        p4MomNameError.setVisible(hasError);
+        hasErrorTask4 = hasError;
+    }
+
+    @FXML
+    void p4MomYobCheck() {
+        String year = p4MomYob.getText();
+        boolean hasError = false;
+        if (year.isBlank()) {
+            p4MomYobError.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(year) || Integer.parseInt(year) > 2019 || Integer.parseInt(year) < 1880) {
+            p4MomYobError.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        p4MomYobError.setVisible(hasError);
+        hasErrorTask4 = hasError;
+    }
+
+    @FXML
+    void p4AlgoCheck() {
+        String algo = p4AlgoChoiceBox.getValue().toString();
+//        boolean hasError = false;
+//        if ( !( algo.equals(p4AlgorithmChoice.get(0)) || algo.equals(p4AlgorithmChoice.get(1)) ) ) {
+//            p4AlgoError.setText("Please Select an algorithm");
+//            hasError = true;
+//        }
+//        p4AlgoError.setVisible(hasError);
+//        hasErrorTask4 = hasError;
+        p4TypeChoiceBox.setVisible(algo.equals(p4AlgorithmChoice.get(1)));
+        p4TypeLabel.setVisible(algo.equals(p4AlgorithmChoice.get(1)));
+    }
+
+    /**
+     * when click the submit button, check data and output result
+     */
+    @FXML
+    void doP4Submit() {
+        p4AlgoCheck();
+        p4DadNameCheck();
+        p4DadYobCheck();
+        p4MomNameCheck();
+        p4MomYobCheck();
+        if(hasErrorTask4) return;
+
+        String dadName = p4DadName.getText();
+        String momName = p4MomName.getText();
+        int dadYob = Integer.parseInt(p4DadYob.getText());
+        int momYob = Integer.parseInt(p4MomYob.getText());
+        boolean isAlgo1 = p4AlgoChoiceBox.getValue().equals(p4AlgorithmChoice.get(0));
+        int type = isAlgo1 ? 0 : p4TypeChoiceBox.getValue().equals(p4TypeChoice.get(0)) ? 1 : 2;
+
+        RecommendationOnNames task4 = new RecommendationOnNames();
+        task4.setData(dadName, momName, dadYob, momYob, isAlgo1, type);
+        if (isAlgo1) {
+            pieButton.setVisible(false);
+            lineButton.setVisible(false);
+            textAreaConsole.setText(task4.getSummaryAlgo1());
+            ChartSetter.BarChartSetter(outputBarChart1, "Boy's most popular names", "Name", "Occurrence", String.valueOf(dadYob), task4.getBoyRecommendList());
+            ChartSetter.BarChartSetter(outputBarChart2, "Girl's most popular names", "Name", "Occurrence", String.valueOf(momYob), task4.getGirlRecommendList());
+            // TODO
+        }
+        else {
+            pieButton.setVisible(true);
+            lineButton.setVisible(true);
+            textAreaConsole.setText(task4.getSummaryAlgo2());
+            // TODO
+        }
+    }
+
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void doP4Reset() {
+        p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
+        p4DadName.clear();
+        p4DadYob.clear();
+        p4MomName.clear();
+        p4MomYob.clear();
+        p4AlgoError.setVisible(false);
+        p4DadNameError.setVisible(false);
+        p4DadYobError.setVisible(false);
+        p4MomNameError.setVisible(false);
+        p4MomYobError.setVisible(false);
+        p4TypeChoiceBox.setVisible(false);
+        p4TypeLabel.setVisible(false);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
+
+        clearAllCharts();
+    }
 
     // ----------------------------- Task5 Function ------------------------//
     /**

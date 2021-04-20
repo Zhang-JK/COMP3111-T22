@@ -52,14 +52,13 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="719.0">
                            <children>
-                              <Label layoutX="79.0" layoutY="44.0" />
-                              <TextArea fx:id="p1DescriputionBox" editable="false" layoutY="3.0" prefHeight="88.0" prefWidth="719.0" scrollLeft="10.0" text="Task #1: Most Popular Names &#10;Group22, ZHANG Jiekai&#10;Welcome to check Task #1,&#10;please input the the year and the number of top names you want to research!" wrapText="true" />
-                              <Label layoutX="150.0" layoutY="113.0" text="Year">
+                              <TextArea fx:id="p1DescriputionBox" editable="false" layoutY="-3.0" prefHeight="96.0" prefWidth="719.0" scrollLeft="10.0" text="Task #1: Most Popular Names&#10; &#10;Group22, ZHANG Jiekai&#10;Welcome to check Task #1,&#10;please input the year and the number of top names you want to research!" wrapText="true" />
+                              <Label layoutX="150.0" layoutY="113.0" prefHeight="20.0" prefWidth="45.0" text="Year">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="158.0" layoutY="172.0" text="N">
+                              <Label layoutX="158.0" layoutY="172.0" prefHeight="20.0" prefWidth="21.0" text="N">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -155,9 +154,68 @@
                   </Tab>
                   <Tab fx:id="tabApp1" onSelectionChanged="#tab4Selected" text="Application1">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="719.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" onMouseMoved="#p4AlgoCheck" prefHeight="412.0" prefWidth="719.0">
                            <children>
-                              <TextArea layoutX="40.0" layoutY="26.0" prefHeight="106.0" prefWidth="538.0" text="Task #4: Recommendation on Names for Newborn Babies (application)&#10;&#10;Develop and implement an online service using empirical data to help make informed decisions on naming their newborn babies.&#10;" wrapText="true" />
+                              <TextArea layoutY="-3.0" prefHeight="95.0" prefWidth="719.0" text="Task #4: Recommendation on Names for Newborn Babies&#10;&#10;Group22, ZHANG Jiekai&#10;Welcome to check Task #4,&#10;please input the following infomation and we will recommand a name for both boy and girl based on that." wrapText="true" />
+                              <Label layoutX="34.0" layoutY="111.0" prefHeight="26.0" prefWidth="107.0" text="Dad's name">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="34.0" layoutY="168.0" prefHeight="26.0" prefWidth="119.0" text="Mom's name">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="343.0" layoutY="111.0" prefHeight="26.0" prefWidth="136.0" text="Dad's birth year">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="343.0" layoutY="168.0" prefHeight="26.0" prefWidth="145.0" text="Mom's birth year">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="p4DadName" layoutX="153.0" layoutY="107.0" onKeyTyped="#p4DadNameCheck" prefHeight="32.0" prefWidth="155.0" promptText="Baby dad's name" />
+                              <TextField fx:id="p4MomName" layoutX="153.0" layoutY="164.0" onKeyTyped="#p4MomNameCheck" prefHeight="32.0" prefWidth="156.0" promptText="Baby mom's name" />
+                              <TextField fx:id="p4DadYob" layoutX="490.0" layoutY="107.0" onKeyTyped="#p4DadYobCheck" prefHeight="32.0" prefWidth="202.0" promptText="Integer, from 1880 to 2019" />
+                              <TextField fx:id="p4MomYob" layoutX="490.0" layoutY="164.0" onKeyTyped="#p4MomYobCheck" prefHeight="32.0" prefWidth="202.0" promptText="Integer, from 1880 to 2019" />
+                              <Label layoutX="34.0" layoutY="226.0" prefHeight="26.0" prefWidth="93.0" text="Algorithm">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="p4AlgoChoiceBox" layoutX="153.0" layoutY="226.0" onMouseClicked="#p4AlgoCheck" onMouseMoved="#p4AlgoCheck" prefHeight="32.0" prefWidth="69.0" />
+                              <Label fx:id="p4DadNameError" layoutX="153.0" layoutY="139.0" prefHeight="16.0" prefWidth="180.0" text="Label" textFill="#f04a20" visible="false" />
+                              <Label fx:id="p4MomNameError" layoutX="153.0" layoutY="196.0" prefHeight="16.0" prefWidth="180.0" text="Label" textFill="#f04a20" visible="false" />
+                              <Label fx:id="p4DadYobError" layoutX="487.0" layoutY="139.0" prefHeight="17.0" prefWidth="222.0" text="Label" textAlignment="CENTER" textFill="#f04a20" visible="false" wrapText="true">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="p4MomYobError" layoutX="487.0" layoutY="196.0" prefHeight="18.0" prefWidth="223.0" text="Label" textAlignment="CENTER" textFill="#f04a20" visible="false" wrapText="true">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="p4AlgoError" layoutX="153.0" layoutY="259.0" prefHeight="16.0" prefWidth="180.0" text="Label" textFill="#f04a20" visible="false" />
+                              <Button fx:id="p4SubmitButton" layoutX="607.0" layoutY="225.0" mnemonicParsing="false" onAction="#doP4Submit" prefHeight="34.0" prefWidth="85.0" style="-fx-background-color: #3786F0;" text="Submit" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="p4ResetButton" layoutX="513.0" layoutY="227.0" mnemonicParsing="false" onAction="#doP4Reset" prefHeight="34.0" prefWidth="70.0" style="-fx-background-color: #77D9FA;" text="Reset" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="p4TypeLabel" layoutX="250.0" layoutY="229.0" prefHeight="26.0" prefWidth="119.0" text="Type of name" visible="false">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="p4TypeChoiceBox" layoutX="377.0" layoutY="227.0" onKeyTyped="#p4AlgoCheck" onMouseClicked="#p4AlgoCheck" prefHeight="32.0" prefWidth="86.0" visible="false" />
                            </children>
                         </AnchorPane>
                     </content>
