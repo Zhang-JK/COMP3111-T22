@@ -21,13 +21,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
+<VBox onDragDetected="#dragSplitWindow" prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="298.0" prefWidth="719.0">
       <children>
             <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="322.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="tabTaskZero" text="Task Zero">
+                <Tab fx:id="tabTaskZero" onSelectionChanged="#tab0Selected" text="Task Zero">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="719.0">
                            <children>
@@ -48,7 +48,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabReport1" text="Reporting 1">
+                  <Tab fx:id="tabReport1" onSelectionChanged="#tab1Selected" text="Reporting 1">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="719.0">
                            <children>
@@ -82,7 +82,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                <Tab fx:id="tabReport2" text="Reporting 2">
+                <Tab fx:id="tabReport2" onSelectionChanged="#tab2Selected" text="Reporting 2">
                   <content>
                         <AnchorPane>
                            <children>
@@ -120,7 +120,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabReport3" text="Reporting 3">
+                  <Tab fx:id="tabReport3" onSelectionChanged="#tab3Selected" text="Reporting 3">
                     <content>
                         <AnchorPane>
                            <children>
@@ -153,7 +153,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp1" text="Application1">
+                  <Tab fx:id="tabApp1" onSelectionChanged="#tab4Selected" text="Application1">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="719.0">
                            <children>
@@ -162,7 +162,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp2" text="Application 2">
+                  <Tab fx:id="tabApp2" onSelectionChanged="#tab5Selected" text="Application 2">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -209,7 +209,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp3" text="Application 3">
+                  <Tab fx:id="tabApp3" onSelectionChanged="#tab6Selected" text="Application 3">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -222,7 +222,7 @@
             </TabPane>
       </children>
     </AnchorPane>
-      <SplitPane dividerPositions="0.13528591352859135" prefHeight="358.0" prefWidth="719.0">
+      <SplitPane fx:id="splitWindow" dividerPositions="0.135" onMouseDragged="#dragSplitWindow" onMouseMoved="#dragSplitWindow" onSwipeLeft="#dragSplitWindow" onSwipeRight="#dragSplitWindow" prefHeight="358.0" prefWidth="719.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -259,7 +259,7 @@
             </AnchorPane>
           <AnchorPane fx:id="outputPanel" minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="644.0">
                <children>
-                  <TextArea fx:id="textAreaConsole" disable="true" editable="false" prefHeight="356.0" prefWidth="624.0" />
+                  <TextArea fx:id="textAreaConsole" editable="false" prefHeight="356.0" prefWidth="624.0" wrapText="true" />
                   <BarChart fx:id="outputBarChart1" alternativeColumnFillVisible="true" layoutX="-1.0" prefHeight="356.0" prefWidth="307.0" visible="false">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" visible="false" />

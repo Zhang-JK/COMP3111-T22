@@ -243,6 +243,9 @@ public class Controller {
     @FXML
     private AnchorPane outputPanel;
 
+    @FXML
+    private SplitPane splitWindow;
+
     // ----------------------------- Task0 Functions ------------------------//
 
     /**
@@ -333,6 +336,13 @@ public class Controller {
      */
     @FXML
     void initialize() {
+        // ----------------------- General UI Initialization ------------------------//
+        summaryButton.setVisible(true);
+        tableButton.setVisible(false);
+        barButton.setVisible(false);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
+        selectedTask = 0;
         // -------------------------- Task2 Initialization ------------------------//
         task2GenderChoiceBox.setValue("M");
         task2GenderChoiceBox.setItems(genderChoice);
@@ -353,6 +363,11 @@ public class Controller {
 
 
     // ----------------------------- General Terminal UI Interface ------------------------//
+
+    /**
+     * Used to record which task is in use
+     */
+    int selectedTask = 0;
 
     /**
      * Used to record which button is selected
@@ -380,6 +395,20 @@ public class Controller {
         for(Node node : outputPanel.getChildren()) {
             node.setVisible(false);
         }
+//        textAreaConsole.setVisible(true);
+    }
+
+    void clearAllInputBox() {
+        // task1
+        p1YearField.clear();
+        p1YearErrorLabel.setVisible(false);
+        p1NField.clear();
+        p1NErrorLabel.setVisible(false);
+        // task2
+        // task3
+        // task4
+        // task5
+        // task6
     }
 
     /**
@@ -394,6 +423,9 @@ public class Controller {
         outputPieChart2.getData().clear();
         outputLineChart1.getData().clear();
         outputLineChart2.getData().clear();
+        setAllChartsInvisible();
+        textAreaConsole.setVisible(true);
+        switchButton(summaryButton);
     }
 
     /**
@@ -413,7 +445,8 @@ public class Controller {
     void clickTable() {
         switchButton(tableButton);
         setAllChartsInvisible();
-        outputTable.setVisible(true);
+        if(outputTable.getColumns().size() != 0)
+            outputTable.setVisible(true);
     }
 
     /**
@@ -423,8 +456,17 @@ public class Controller {
     void clickBar() {
         switchButton(barButton);
         setAllChartsInvisible();
-        outputBarChart1.setVisible(true);
-        outputBarChart2.setVisible(true);
+        if(outputBarChart1.getData().size() != 0)
+            if(selectedTask == 1) {
+                outputBarChart1.setVisible(true);
+                outputBarChart1.setPrefWidth(outputPanel.getWidth()/2);
+                outputBarChart2.setVisible(true);
+                outputBarChart2.setPrefWidth(outputPanel.getWidth()/2);
+            }
+            else {
+                outputBarChart1.setVisible(true);
+                outputBarChart1.setPrefWidth(outputPanel.getWidth());
+            }
     }
 
     /**
@@ -434,8 +476,17 @@ public class Controller {
     void clickPie() {
         switchButton(pieButton);
         setAllChartsInvisible();
-        outputPieChart1.setVisible(true);
-        outputPieChart2.setVisible(true);
+        if(outputPieChart1.getData().size() != 0)
+            if(selectedTask == 1) {
+                outputPieChart1.setVisible(true);
+                outputPieChart1.setPrefWidth(outputPanel.getWidth()/2);
+                outputPieChart2.setVisible(true);
+                outputPieChart2.setPrefWidth(outputPanel.getWidth()/2);
+            }
+            else {
+                outputPieChart1.setVisible(true);
+                outputPieChart1.setPrefWidth(outputPanel.getWidth());
+            }
     }
 
     /**
@@ -445,8 +496,82 @@ public class Controller {
     void clickLine() {
         switchButton(lineButton);
         setAllChartsInvisible();
-        outputLineChart1.setVisible(true);
-        outputLineChart2.setVisible(true);
+        if(outputLineChart1.getData().size() != 0)
+            if(selectedTask == 1) {
+                outputLineChart1.setVisible(true);
+                outputLineChart1.setPrefWidth(outputPanel.getWidth()/2);
+                outputLineChart2.setVisible(true);
+                outputLineChart2.setPrefWidth(outputPanel.getWidth()/2);
+            }
+            else {
+                outputLineChart1.setVisible(true);
+                outputLineChart1.setPrefWidth(outputPanel.getWidth());
+            }
+    }
+
+    @FXML
+    void dragSplitWindow() {
+        splitWindow.setDividerPosition(0,0.135);
+    }
+
+    @FXML
+    void tab0Selected() {
+        if(textAreaConsole == null) return;
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(false);
+        barButton.setVisible(false);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
+        selectedTask = 0;
+    }
+
+    @FXML
+    void tab1Selected() {
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(true);
+        barButton.setVisible(true);
+        pieButton.setVisible(true);
+        lineButton.setVisible(false);
+        selectedTask = 1;
+    }
+
+    @FXML
+    void tab2Selected() {
+
+        selectedTask = 2;
+    }
+
+    @FXML
+    void tab3Selected() {
+
+        selectedTask = 3;
+    }
+
+    @FXML
+    void tab4Selected() {
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(true);
+        barButton.setVisible(true);
+        pieButton.setVisible(true);
+        lineButton.setVisible(true);
+        selectedTask = 4;
+    }
+
+    @FXML
+    void tab5Selected() {
+
+        selectedTask = 5;
+    }
+
+    @FXML
+    void tab6Selected() {
+
+        selectedTask = 6;
     }
 
     // ----------------------------- Task1 Function ------------------------//
@@ -505,13 +630,12 @@ public class Controller {
 
         String yearFieldText = p1YearField.getText();
         String nFieldText = p1NField.getText();
-        List<String> testX = new ArrayList<>(Arrays.asList("1","2","3","4","5","6"));
-        List<Integer> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
 
         MostPopularNames task1 = new MostPopularNames();
         if(!task1.setData(Integer.parseInt(yearFieldText), Integer.parseInt(nFieldText)))
             return;
 
+        textAreaConsole.setText(task1.getSummary());
         ChartSetter.BarChartSetter(outputBarChart1, "Male", "Name", "Occurrence", "number of babies", task1.getMaleList());
         ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
         ChartSetter.PieChartSetter(outputPieChart1, "Male", task1.getMaleList());
