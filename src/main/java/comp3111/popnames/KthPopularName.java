@@ -158,7 +158,7 @@ public class KthPopularName {
         sb.append(k); sb.append("-th rank in the period from ");
         sb.append(year1); sb.append(" to ");sb.append(year2);
         sb.append(".\n\n");
-        sb.append("(There may be other names that holds the ");sb.append(k);
+        sb.append("(There may be other names that hold the ");sb.append(k);
         sb.append("-th rank for "); sb.append(maxFrequency);
         sb.append(" times. Among all these names, "); sb.append(targetName);
         sb.append(" has the largest total number of occurrences over the period.)");
