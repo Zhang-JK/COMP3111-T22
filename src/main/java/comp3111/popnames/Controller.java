@@ -203,7 +203,10 @@ public class Controller {
     private TextArea textAreaConsole;
 
     @FXML
-    private TableView<?> outputTable;
+    private TableView outputTable1;
+
+    @FXML
+    private TableView outputTable2;
 
     @FXML
     private BarChart<String, Number> outputBarChart1;
@@ -492,7 +495,8 @@ public class Controller {
      */
     void clearAllCharts() {
         textAreaConsole.clear();
-        outputTable.getColumns().clear();
+        outputTable1.getColumns().clear();
+        outputTable2.getColumns().clear();
         outputBarChart1.getData().clear();
         outputBarChart2.getData().clear();
         outputPieChart1.getData().clear();
@@ -521,8 +525,17 @@ public class Controller {
     void clickTable() {
         switchButton(tableButton);
         setAllChartsInvisible();
-        if(outputTable.getColumns().size() != 0)
-            outputTable.setVisible(true);
+        if(outputTable1.getColumns().size() != 0)
+            if(selectedTask == 1 || selectedTask == 4) {
+                outputTable1.setVisible(true);
+                outputTable1.setPrefWidth(outputPanel.getWidth()/2);
+                outputTable2.setVisible(true);
+                outputTable2.setPrefWidth(outputPanel.getWidth()/2);
+            }
+            else {
+                outputTable1.setVisible(true);
+                outputTable1.setPrefWidth(outputPanel.getWidth());
+            }
     }
 
     /**
@@ -881,13 +894,12 @@ public class Controller {
 
         String barTitle = "";
         barTitle += String.format("%d-th popular %s names over the period from %d to %d\n", k, (gender.equals("M")?"Male":"Female"), year1, year2);
+        String[] columnTitle = {"Name","Frequency","Occurrences","Percentage"};
 
+        textAreaConsole.setText(task2.getSummary());
         ChartSetter.BarChartSetter(outputBarChart1, barTitle, "Name", "Occurrence", "number of babies", task2.getModifiedList() );
         ChartSetter.PieChartSetter(outputPieChart1, barTitle, task2.getModifiedList() );
-        outputBarChart1.setPrefWidth(600);
-        outputBarChart2.setVisible(false);
-        outputPieChart1.setPrefWidth(600);
-        outputPieChart2.setVisible(false);
+        ChartSetter.TableSetter(outputTable1, 4, columnTitle, task2.getMapList());
 
     }
 
