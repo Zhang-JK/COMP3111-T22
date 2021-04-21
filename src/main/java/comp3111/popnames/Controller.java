@@ -454,6 +454,13 @@ public class Controller {
         p1NField.clear();
         p1NErrorLabel.setVisible(false);
         // task2
+        task2Year1TextField.clear();
+        task2Year2TextField.clear();
+        task2KTextField.clear();
+        task2Year1ErrorLabel.setVisible(false);
+        task2Year2ErrorLabel.setVisible(false);
+        task2KErrorLabel.setVisible(false);
+        task2GenderChoiceBox.setValue(genderChoice.get(0));
         // task3
         // task4
         p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
@@ -469,6 +476,14 @@ public class Controller {
         p4TypeChoiceBox.setVisible(false);
         p4TypeLabel.setVisible(false);
         // task5
+        task5iNameTextField.clear();
+        task5iAgeTextField.clear();
+        task5iNameErrorLabel.setVisible(false);
+        task5iAgeErrorLabel.setVisible(false);
+        task5AlgorithmChoiceBox.setValue(p5AlgorithmChoice.get(0));
+        task5iPreferenceChoiceBox.setValue(ageChoice.get(0));
+        task5iGenderChoiceBox.setValue(genderChoice.get(0));
+        task5iGenderMateChoiceBox.setValue(genderChoice.get(0));
         // task6
     }
 
@@ -614,7 +629,13 @@ public class Controller {
      */
     @FXML
     void tab2Selected() {
-
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(true);
+        barButton.setVisible(true);
+        pieButton.setVisible(true);
+        lineButton.setVisible(false);
         selectedTask = 2;
     }
 
@@ -646,7 +667,13 @@ public class Controller {
      */
     @FXML
     void tab5Selected() {
-
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(true);
+        barButton.setVisible(true);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
         selectedTask = 5;
     }
 
@@ -862,31 +889,6 @@ public class Controller {
         outputPieChart1.setPrefWidth(600);
         outputPieChart2.setVisible(false);
 
-    }
-    /**
-     * do when leave the Task#2 Tab
-     */
-    @FXML
-    void leaveTab2() {
-        task2Year1TextField.clear();
-        task2Year2TextField.clear();
-        task2KTextField.clear();
-        task2Year1ErrorLabel.setText("");
-        task2Year1ErrorLabel.setVisible(false);
-        task2Year2ErrorLabel.setText("");
-        task2Year2ErrorLabel.setVisible(false);
-        task2KErrorLabel.setText("");
-        task2KErrorLabel.setVisible(false);
-        clearAllCharts();
-        outputBarChart1.setTitle("");
-        outputBarChart1.setPrefWidth(307);
-        outputPieChart1.setTitle("");
-        outputPieChart1.setPrefWidth(307);
-        outputLineChart1.setTitle("");
-        outputLineChart1.setPrefWidth(307);
-        outputBarChart2.setVisible(true);
-        outputPieChart2.setVisible(true);
-        outputLineChart2.setVisible(true);
     }
 
     /**
