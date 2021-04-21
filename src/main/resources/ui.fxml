@@ -243,8 +243,8 @@
                               </Text>
                               <Text layoutX="37.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
                               <ChoiceBox fx:id="task5iGenderMateChoiceBox" layoutX="96.0" layoutY="213.0" prefHeight="26.0" prefWidth="75.0" />
-                              <Text layoutX="238.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
-                              <ChoiceBox fx:id="task5iPreferenceChoiceBox" layoutX="273.0" layoutY="213.0" prefHeight="26.0" prefWidth="83.0" />
+                              <Text layoutX="238.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age Preference:" />
+                              <ChoiceBox fx:id="task5iPreferenceChoiceBox" layoutX="334.0" layoutY="213.0" prefHeight="26.0" prefWidth="83.0" />
                               <Text layoutX="39.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm:">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />

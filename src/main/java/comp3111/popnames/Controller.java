@@ -440,8 +440,8 @@ public class Controller {
         task5iGenderChoiceBox.setItems(genderChoice);
         task5iGenderMateChoiceBox.setValue("M");
         task5iGenderMateChoiceBox.setItems(genderChoice);
-        task5iPreferenceChoiceBox.setValue("Young");
-        task5iPreferenceChoiceBox.setItems(ageChoice);
+        task5iPreferenceChoiceBox.setValue("Younger");
+        task5iPreferenceChoiceBox.setItems(ageChoice2);
         task5AlgorithmChoiceBox.setValue("T5X1");
         task5AlgorithmChoiceBox.setItems(p5AlgorithmChoice);
         // -------------------------- Task6 Initialization ------------------------//

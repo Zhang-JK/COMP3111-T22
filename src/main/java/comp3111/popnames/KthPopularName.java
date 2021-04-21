@@ -124,27 +124,42 @@ public class KthPopularName {
         if(rawList.size() == 0) return null;
         DecimalFormat format = new DecimalFormat("0.00000");
         StringBuilder sb = new StringBuilder();
-        String targetName = modifiedList.get(0).getName();
-        int time = 0;
-        for (NameRecord rec: rawList){
-            if(rec.getName().equals(targetName)) time++;
+
+        int maxFrequency = 0;
+        String targetName = "";
+        for (NameRecord rec: modifiedList){
+            String recName = rec.getName();
+            int frequency = 0;
+            for(NameRecord rec2:rawList)
+                if(rec2.getName().equals(recName)) frequency++;
+            if(frequency > maxFrequency){
+                maxFrequency = frequency;
+                targetName = recName;
+            }
         }
+        int totalOccurrence = 0;
+        for (NameRecord rec : modifiedList){
+            if(rec.getName().equals(targetName)) totalOccurrence += rec.getOccurrence();
+        }
+
         sb.append("\n* ");
-        sb.append(modifiedList.get(0).getName()).append(" has hold the ");sb.append(k);
-        sb.append("-th rank most often for a total of "); sb.append(time);
+        sb.append(targetName).append(" has hold the ");sb.append(k);
+        sb.append("-th rank most often for a total of "); sb.append(maxFrequency);
         sb.append(" times among names registered for baby ");
         sb.append( (gender.equals("M") ? "boys" :"girls") );sb.append(" born in the period from ");
-        sb.append(year1);sb.append(" and ");sb.append(year2);
+        sb.append(year1);sb.append(" to ");sb.append(year2);
         sb.append(". The total number of occurrences of ");
         sb.append(targetName);
-        sb.append(" is ");sb.append(modifiedList.get(0).getOccurrence());sb.append(" which represents ");
-        sb.append(format.format( (float) 100*modifiedList.get(0).getOccurrence()/totalNameOccurrence ));
-        sb.append("% of total female births at the ");
+        sb.append(" is ");sb.append(totalOccurrence);sb.append(" which represents ");
+        sb.append(format.format( (float) 100*totalOccurrence/totalNameOccurrence ));
+        sb.append("% of total ");
+        sb.append((gender.equals("M"))?"male":"female");
+        sb.append(" births at the ");
         sb.append(k); sb.append("-th rank in the period from ");
-        sb.append(year1); sb.append(" and ");sb.append(year2);
+        sb.append(year1); sb.append(" to ");sb.append(year2);
         sb.append(".\n\n");
         sb.append("(There may be other names that holds the ");sb.append(k);
-        sb.append("-th rank for "); sb.append(time);
+        sb.append("-th rank for "); sb.append(maxFrequency);
         sb.append(" times. Among all these names, "); sb.append(targetName);
         sb.append(" has the largest total number of occurrences over the period.)");
         return sb.toString();
