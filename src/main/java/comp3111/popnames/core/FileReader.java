@@ -76,6 +76,34 @@ public class FileReader {
     	return result;
 
     }
+    
+    /**
+     * input data and find the whether there's one year the popularity of name is within 100
+     * @param mateName the name want to research the popularity
+     * @param agePreference the age preference of the user
+     * @param mateGender gender of interest
+     * @param userYOB year of birth of user
+     */  
+    public static boolean findPopularity(String mateName, String agePreference, String mateGender, int userYOB) {
+    	boolean within100 = false;
+    	int genderCheck = mateGender.equals("M") ? 0 : 1;
+    	
+    	if(agePreference == "younger") {
+    		for (int i = userYOB - 1; i >= 1880; i--) {
+    			int rank = getRankByYearAndName(mateName, i, genderCheck);
+    			if(rank <= 100) within100 = true;
+    		}
+    	}
+    	
+    	else {
+    		for (int i = userYOB + 1; i <= 2019; i++) {
+    			int rank = getRankByYearAndName(mateName, i, genderCheck);
+    			if(rank <= 100) within100 = true;
+    		}
+    	}
+    	
+    	return within100;
+    }
 
     /**
      * Find the top popular names in a year and in a gender
