@@ -7,7 +7,7 @@ import org.apache.commons.csv.CSVRecord;
  * @author ZHANG Jiekai
  * @version 1.0
  */
-public class NameRecord {
+public class NameRecord implements Comparable<NameRecord> {
     String name;        // name of this record
     int gender;         // the gender, 0 for Male, 1 for Female
     int occurrence;     // number of occurrence
@@ -56,6 +56,20 @@ public class NameRecord {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * set the number of occurrence of this name
+     * @param newOccurrence number of occurrence of this name
+     */
+    public void setOccurrence(int newOccurrence) {
+        occurrence = newOccurrence;
+    }
+
+    public int compareTo(NameRecord name2){
+        if (occurrence == name2.occurrence) return 0;
+        else if (occurrence > name2.occurrence) return 1;
+        else return -1;
     }
 
 }
