@@ -44,6 +44,25 @@ public class ChartSetter {
     }
 
     /**
+     * A bar chart generator using occurrence record
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param records the data to show (year, occurrnce)
+     */
+    static public void BarChartSetter2(BarChart<String, Number> chart, String title, String xTitle, String yTitle, String seriesTitle, List<OccurrenceRecord> record) {
+        List<String> xData = new ArrayList<String>();
+        List<Number> yData = new ArrayList<Number>();
+        for (OccurrenceRecord rec : record) {
+            xData.add(String.valueOf(rec.getYear()));
+            yData.add(rec.getOccurrence());
+        }
+        BarChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);
+    }
+    
+    /**
      * Full bar chart generator
      * You need to pass the raw data in List<String> for x and List<Number> for y
      * @param chart the output chart
@@ -74,7 +93,7 @@ public class ChartSetter {
         series.setName(seriesTitle);
         chart.getData().addAll(series);
     }
-
+  
     /**
      * A pie chart generator using name record
      * @param chart the output chart
@@ -128,6 +147,16 @@ public class ChartSetter {
                         }
                     });
         }
+    }
+    
+    static public void LineChartSetter(LineChart<Integer, Integer> chart, String title, String xTitle, String yTitle, String seriesTitle, List<OccurrenceRecord> record) {
+        List<String> xData = new ArrayList<String>();
+        List<Integer> yData = new ArrayList<Integer>();
+        for (OccurrenceRecord rec : record) {
+            xData.add(String.valueOf(rec.getYear()));
+            yData.add(rec.getOccurrence());
+        }
+        LineChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);
     }
 
     /**

@@ -4,7 +4,6 @@
 package comp3111.popnames;
 
 import comp3111.popnames.core.ChartSetter;
-import comp3111.popnames.core.FileReader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,9 +14,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
 
@@ -32,6 +29,8 @@ public class Controller {
     ObservableList<String> genderChoice = FXCollections.observableArrayList("M","F");
     ObservableList<String> ageChoice = FXCollections.observableArrayList("Young","Old");
     ObservableList<String> algorithmChoice = FXCollections.observableArrayList("T5X1","T5X2");
+    ObservableList<String> p4AlgorithmChoice = FXCollections.observableArrayList("T4X1","T4X2");
+    ObservableList<String> p4TypeChoice = FXCollections.observableArrayList("Popular","Unique");
 
     @FXML
     private Tab tabTaskZero;
@@ -128,6 +127,36 @@ public class Controller {
 
     @FXML
     private ToggleGroup T111;
+    
+    @FXML
+    private TextArea task3IntroBox;
+
+    @FXML
+    private TextField task3Year1TextField;
+
+    @FXML
+    private TextField task3Year2TextField;
+
+    @FXML
+    private TextField task3NameTextField;
+
+    @FXML
+    private Label task3Year1ErrorLabel;
+
+    @FXML
+    private Label task3Year2ErrorLabel;
+
+    @FXML
+    private Label task3NameErrorLabel;
+
+    @FXML
+    private ChoiceBox task3GenderChoiceBox;
+
+    @FXML
+    private Button task3SubmitButton;
+
+    @FXML
+    private Button task3ResetButton;
 
     @FXML
     private Tab tabApp1;
@@ -212,6 +241,51 @@ public class Controller {
 
     @FXML
     private AnchorPane outputPanel;
+
+    @FXML
+    private SplitPane splitWindow;
+
+    @FXML
+    private TextField p4DadName;
+
+    @FXML
+    private TextField p4MomName;
+
+    @FXML
+    private TextField p4DadYob;
+
+    @FXML
+    private TextField p4MomYob;
+
+    @FXML
+    private ChoiceBox<String> p4AlgoChoiceBox;
+
+    @FXML
+    private Label p4DadNameError;
+
+    @FXML
+    private Label p4MomNameError;
+
+    @FXML
+    private Label p4DadYobError;
+
+    @FXML
+    private Label p4MomYobError;
+
+    @FXML
+    private Label p4AlgoError;
+
+    @FXML
+    private Button p4SubmitButton;
+
+    @FXML
+    private Button p4ResetButton;
+
+    @FXML
+    private Label p4TypeLabel;
+
+    @FXML
+    private ChoiceBox<String> p4TypeChoiceBox;
 
     // ----------------------------- Task0 Functions ------------------------//
     /**
@@ -316,9 +390,24 @@ public class Controller {
      */
     @FXML
     void initialize() {
+        // ----------------------- General UI Initialization ------------------------//
+        summaryButton.setVisible(true);
+        tableButton.setVisible(false);
+        barButton.setVisible(false);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
+        selectedTask = 0;
         // -------------------------- Task2 Initialization ------------------------//
         task2GenderChoiceBox.setValue("M");
         task2GenderChoiceBox.setItems(genderChoice);
+        // -------------------------- Task3 Initialization ------------------------//
+        task3GenderChoiceBox.setValue("M");
+        task3GenderChoiceBox.setItems(genderChoice);
+        // -------------------------- Task4 Initialization ------------------------//
+        p4AlgoChoiceBox.setItems(p4AlgorithmChoice);
+        p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
+        p4TypeChoiceBox.setItems(p4TypeChoice);
+        p4TypeChoiceBox.setValue(p4TypeChoice.get(0));
         // -------------------------- Task5 Initialization ------------------------//
         task5iGenderChoiceBox.setValue("M");
         task5iGenderChoiceBox.setItems(genderChoice);
@@ -333,6 +422,11 @@ public class Controller {
 
 
     // ----------------------------- General Terminal UI Interface ------------------------//
+
+    /**
+     * Used to record which task is in use
+     */
+    int selectedTask = 0;
 
     /**
      * Used to record which button is selected
@@ -360,6 +454,36 @@ public class Controller {
         for(Node node : outputPanel.getChildren()) {
             node.setVisible(false);
         }
+//        textAreaConsole.setVisible(true);
+    }
+
+    /**
+     * clean all the user input
+     * please add your input text box here
+     */
+    void clearAllInputBox() {
+        // task1
+        p1YearField.clear();
+        p1YearErrorLabel.setVisible(false);
+        p1NField.clear();
+        p1NErrorLabel.setVisible(false);
+        // task2
+        // task3
+        // task4
+        p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
+        p4DadName.clear();
+        p4DadYob.clear();
+        p4MomName.clear();
+        p4MomYob.clear();
+        p4AlgoError.setVisible(false);
+        p4DadNameError.setVisible(false);
+        p4DadYobError.setVisible(false);
+        p4MomNameError.setVisible(false);
+        p4MomYobError.setVisible(false);
+        p4TypeChoiceBox.setVisible(false);
+        p4TypeLabel.setVisible(false);
+        // task5
+        // task6
     }
 
     /**
@@ -374,6 +498,9 @@ public class Controller {
         outputPieChart2.getData().clear();
         outputLineChart1.getData().clear();
         outputLineChart2.getData().clear();
+        setAllChartsInvisible();
+        textAreaConsole.setVisible(true);
+        switchButton(summaryButton);
     }
 
     /**
@@ -393,7 +520,8 @@ public class Controller {
     void clickTable() {
         switchButton(tableButton);
         setAllChartsInvisible();
-        outputTable.setVisible(true);
+        if(outputTable.getColumns().size() != 0)
+            outputTable.setVisible(true);
     }
 
     /**
@@ -403,8 +531,17 @@ public class Controller {
     void clickBar() {
         switchButton(barButton);
         setAllChartsInvisible();
-        outputBarChart1.setVisible(true);
-        if(!workingOnTask2) outputBarChart2.setVisible(true);
+        if(outputBarChart1.getData().size() != 0)
+            if(selectedTask == 1 || selectedTask == 4) {
+                outputBarChart1.setVisible(true);
+                outputBarChart1.setPrefWidth(outputPanel.getWidth()/2);
+                outputBarChart2.setVisible(true);
+                outputBarChart2.setPrefWidth(outputPanel.getWidth()/2);
+            }
+            else {
+                outputBarChart1.setVisible(true);
+                outputBarChart1.setPrefWidth(outputPanel.getWidth());
+            }
     }
 
     /**
@@ -414,8 +551,17 @@ public class Controller {
     void clickPie() {
         switchButton(pieButton);
         setAllChartsInvisible();
-        outputPieChart1.setVisible(true);
-        if(!workingOnTask2) outputPieChart2.setVisible(true);
+        if(outputPieChart1.getData().size() != 0)
+            if(selectedTask == 1 || selectedTask == 4) {
+                outputPieChart1.setVisible(true);
+                outputPieChart1.setPrefWidth(outputPanel.getWidth()/2);
+                outputPieChart2.setVisible(true);
+                outputPieChart2.setPrefWidth(outputPanel.getWidth()/2);
+            }
+            else {
+                outputPieChart1.setVisible(true);
+                outputPieChart1.setPrefWidth(outputPanel.getWidth());
+            }
     }
 
     /**
@@ -425,8 +571,106 @@ public class Controller {
     void clickLine() {
         switchButton(lineButton);
         setAllChartsInvisible();
-        outputLineChart1.setVisible(true);
-        if(!workingOnTask2) outputLineChart2.setVisible(true);
+        if(outputLineChart1.getData().size() != 0)
+            if(selectedTask == 1 || selectedTask == 4) {
+                outputLineChart1.setVisible(true);
+                outputLineChart1.setPrefWidth(outputPanel.getWidth()/2);
+                outputLineChart2.setVisible(true);
+                outputLineChart2.setPrefWidth(outputPanel.getWidth()/2);
+            }
+            else {
+                outputLineChart1.setVisible(true);
+                outputLineChart1.setPrefWidth(outputPanel.getWidth());
+            }
+    }
+
+    /**
+     * prevent drag split panel
+     */
+    @FXML
+    void dragSplitWindow() {
+        splitWindow.setDividerPosition(0,0.135);
+    }
+
+    /**
+     * when switch to tab0
+     */
+    @FXML
+    void tab0Selected() {
+        if(textAreaConsole == null) return;
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(false);
+        barButton.setVisible(false);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
+        selectedTask = 0;
+    }
+
+    /**
+     * when switch to tab1
+     */
+    @FXML
+    void tab1Selected() {
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(true);
+        barButton.setVisible(true);
+        pieButton.setVisible(true);
+        lineButton.setVisible(false);
+        selectedTask = 1;
+    }
+
+    /**
+     * when switch to tab2
+     */
+    @FXML
+    void tab2Selected() {
+
+        selectedTask = 2;
+    }
+
+    /**
+     * when switch to tab3
+     */
+    @FXML
+    void tab3Selected() {
+
+        selectedTask = 3;
+    }
+
+    /**
+     * when switch to tab4
+     */
+    @FXML
+    void tab4Selected() {
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(true);
+        barButton.setVisible(true);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
+        selectedTask = 4;
+    }
+
+    /**
+     * when switch to tab5
+     */
+    @FXML
+    void tab5Selected() {
+
+        selectedTask = 5;
+    }
+
+    /**
+     * when switch to tab6
+     */
+    @FXML
+    void tab6Selected() {
+
+        selectedTask = 6;
     }
 
     // ----------------------------- Task1 Function ------------------------//
@@ -498,17 +742,17 @@ public class Controller {
 
         String yearFieldText = p1YearField.getText();
         String nFieldText = p1NField.getText();
-        List<String> testX = new ArrayList<>(Arrays.asList("1","2","3","4","5","6"));
-        List<Integer> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
 
         MostPopularNames task1 = new MostPopularNames();
         if(!task1.setData(Integer.parseInt(yearFieldText), Integer.parseInt(nFieldText)))
             return;
 
+        textAreaConsole.setText(task1.getSummary());
         ChartSetter.BarChartSetter(outputBarChart1, "Male", "Name", "Occurrence", "number of babies", task1.getMaleList());
         ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
         ChartSetter.PieChartSetter(outputPieChart1, "Male", task1.getMaleList());
         ChartSetter.PieChartSetter(outputPieChart2, "Female", task1.getFemaleList());
+        // TODO
     }
 
     /**
@@ -701,47 +945,275 @@ public class Controller {
         clearAllCharts();
     }
 
-
     // ----------------------------- Task3 Function ------------------------//
     /**
-     * record if user is now using Task#3 Tab
+     * record if there's any error in user's input
      */
-    boolean workingOnTask3 = false;
+    boolean hasErrorTask3 = false;
 
     /**
-     * do when user select task#3 tab
+     * check year1 input
      */
     @FXML
-    void openTab3() {
-        workingOnTask3 = true;
-        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask4=workingOnTask5=workingOnTask6=false;
+    void doTask3Year1Check() {
+        String year1Text = task3Year1TextField.getText();
+        boolean hasError = false;
+        if (year1Text.isBlank() || !StringUtils.isNumeric(year1Text)) {
+            task3Year1ErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(year1Text) > 2019 || Integer.parseInt(year1Text) < 1880) {
+            task3Year1ErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        task3Year1ErrorLabel.setVisible(hasError);
+        hasErrorTask3 = hasError;
     }
 
+    /**
+     * check year2 input
+     */
+    @FXML
+    void doTask3Year2Check() {
+        String year2Text = task3Year2TextField.getText();
+        boolean hasError = false;
+        if (year2Text.isBlank() || !StringUtils.isNumeric(year2Text) ) {
+            task3Year2ErrorLabel.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(year2Text) > 2019 || Integer.parseInt(year2Text) < 1880) {
+            task3Year2ErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        task3Year2ErrorLabel.setVisible(hasError);
+        hasErrorTask3 = hasError;
+    }
 
+    /**
+     * check whether year1 <= year2
+     */
+    @FXML
+    void doTask3YearRelationCheck() {
+        String year1Text = task3Year1TextField.getText();
+        String year2Text = task3Year2TextField.getText();
+        int year1 = Integer.parseInt(year1Text);
+        int year2 = Integer.parseInt(year2Text);
+        boolean hasError = false;
+        if (year1 > year2) {
+            task3Year2ErrorLabel.setText("Year2 should be larger than or equal to Year1");
+            hasError = true;
+        }
+        task3Year2ErrorLabel.setVisible(hasError);
+        hasErrorTask3 = hasError;
+    }
 
+    /**
+     *  Task Three
+     *  To be triggered by the "Submit" button on the Task #2 Tab
+     *
+     */       
+    @FXML
+    void task3SubmitData() {
+        String report = "";
+    	
+    	doTask3Year1Check();
+        doTask3Year2Check();
+        if(hasErrorTask3) return;
 
-
+        doTask3YearRelationCheck();
+        if(hasErrorTask3) return;
+        
+    	int year1 = Integer.parseInt(task3Year1TextField.getText());
+    	int year2 = Integer.parseInt(task3Year2TextField.getText());
+    	String name = task3NameTextField.getText();
+    	String gender = (String) task3GenderChoiceBox.getValue();
+    	
+    	PopularityOfNames task3 = new PopularityOfNames();
+    	task3.setData(year1, year2, name, gender);
+    	task3.findMaxYear();
+    	int maxYear = task3.getYear();
+    	int maxRank = task3.getRank();
+    	int occurrences = task3.getOccurrence();
+    	String percentage = task3.getPercentage();
+    	
+    	report += String.format("The year when the name %s was most popular is %d at rank %d.\n"
+				+ "In that year, the number of occurrences is %d,\n"
+				+ "which represents %s of total %s births in %d.",
+				name, maxYear, maxRank, occurrences, percentage, 
+				gender.equals("M")?"male":"female", maxYear);
+    	
+    	textAreaConsole.setText(report);
+    	ChartSetter.BarChartSetter2(outputBarChart1, "Popularity of name", "Year", "Occurrence", "number of babies", task3.getList());
+    	ChartSetter.LineChartSetter(outputLineChart1,"Popularity of name", "Year", "Occurrence", "number of babies", task3.getList());
+    }
+    
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void task3Reset() {
+        task3Year1TextField.clear();
+        task3Year2TextField.clear();
+        task3NameTextField.clear();
+        task3Year1ErrorLabel.setText("");
+        task3Year1ErrorLabel.setVisible(false);
+        task3Year2ErrorLabel.setText("");
+        task3Year2ErrorLabel.setVisible(false);
+        task3NameErrorLabel.setText("");
+        task3NameErrorLabel.setVisible(false);
+        clearAllCharts();
+    }
 
     // ----------------------------- Task4 Function ------------------------//
     /**
-     * record if user is now using Task#4 Tab
+     * indicates whether there's any mistake in the user input
      */
-    boolean workingOnTask4 = false;
+    boolean hasErrorTask4 = false;
 
     /**
-     * do when user select task#4 tab
+     * check the dad name input
      */
     @FXML
-    void openTab4() {
-        workingOnTask4 = true;
-        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask3=workingOnTask5=workingOnTask6=false;
+    void p4DadNameCheck() {
+        String name = p4DadName.getText();
+        boolean hasError = false;
+        if (name.isBlank() || StringUtils.isNumeric(name)) {
+            p4DadNameError.setText("Please Enter a Name");
+            hasError = true;
+        }
+        p4DadNameError.setVisible(hasError);
+        hasErrorTask4 = hasError;
     }
 
+    /**
+     * check the dad YOB input
+     */
+    @FXML
+    void p4DadYobCheck() {
+        String year = p4DadYob.getText();
+        boolean hasError = false;
+        if (year.isBlank()) {
+            p4DadYobError.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(year) || Integer.parseInt(year) > 2019 || Integer.parseInt(year) < 1880) {
+            p4DadYobError.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        p4DadYobError.setVisible(hasError);
+        hasErrorTask4 = hasError;
+    }
 
+    /**
+     * check the mom name input
+     */
+    @FXML
+    void p4MomNameCheck() {
+        String name = p4MomName.getText();
+        boolean hasError = false;
+        if (name.isBlank() || StringUtils.isNumeric(name)) {
+            p4MomNameError.setText("Please Enter a Name");
+            hasError = true;
+        }
+        p4MomNameError.setVisible(hasError);
+        hasErrorTask4 = hasError;
+    }
 
+    /**
+     * check the mom YOB input
+     */
+    @FXML
+    void p4MomYobCheck() {
+        String year = p4MomYob.getText();
+        boolean hasError = false;
+        if (year.isBlank()) {
+            p4MomYobError.setText("Please Enter a Year Number");
+            hasError = true;
+        }
+        else if (!StringUtils.isNumeric(year) || Integer.parseInt(year) > 2019 || Integer.parseInt(year) < 1880) {
+            p4MomYobError.setText("Please Enter a Number Between 1880 and 2019");
+            hasError = true;
+        }
+        p4MomYobError.setVisible(hasError);
+        hasErrorTask4 = hasError;
+    }
 
+    /**
+     * display additional information is second algorithm is selected
+     */
+    @FXML
+    void p4AlgoCheck() {
+        String algo = p4AlgoChoiceBox.getValue().toString();
+//        boolean hasError = false;
+//        if ( !( algo.equals(p4AlgorithmChoice.get(0)) || algo.equals(p4AlgorithmChoice.get(1)) ) ) {
+//            p4AlgoError.setText("Please Select an algorithm");
+//            hasError = true;
+//        }
+//        p4AlgoError.setVisible(hasError);
+//        hasErrorTask4 = hasError;
+        p4TypeChoiceBox.setVisible(algo.equals(p4AlgorithmChoice.get(1)));
+        p4TypeLabel.setVisible(algo.equals(p4AlgorithmChoice.get(1)));
+    }
 
+    /**
+     * when click the submit button, check data and output result
+     */
+    @FXML
+    void doP4Submit() {
+        p4AlgoCheck();
+        p4DadNameCheck();
+        p4DadYobCheck();
+        p4MomNameCheck();
+        p4MomYobCheck();
+        if(hasErrorTask4) return;
 
+        String dadName = p4DadName.getText();
+        String momName = p4MomName.getText();
+        int dadYob = Integer.parseInt(p4DadYob.getText());
+        int momYob = Integer.parseInt(p4MomYob.getText());
+        boolean isAlgo1 = p4AlgoChoiceBox.getValue().equals(p4AlgorithmChoice.get(0));
+        int type = isAlgo1 ? 0 : p4TypeChoiceBox.getValue().equals(p4TypeChoice.get(0)) ? 1 : 2;
+
+        RecommendationOnNames task4 = new RecommendationOnNames();
+        task4.setData(dadName, momName, dadYob, momYob, isAlgo1, type);
+        if (isAlgo1) {
+            pieButton.setVisible(false);
+            lineButton.setVisible(false);
+            textAreaConsole.setText(task4.getSummaryAlgo1());
+            ChartSetter.BarChartSetter(outputBarChart1, "Boy's most popular names", "Name", "Occurrence", String.valueOf(dadYob), task4.getBoyRecommendList());
+            ChartSetter.BarChartSetter(outputBarChart2, "Girl's most popular names", "Name", "Occurrence", String.valueOf(momYob), task4.getGirlRecommendList());
+            // TODO
+        }
+        else {
+            pieButton.setVisible(true);
+            lineButton.setVisible(true);
+            textAreaConsole.setText(task4.getSummaryAlgo2());
+            // TODO
+        }
+    }
+
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void doP4Reset() {
+        p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
+        p4DadName.clear();
+        p4DadYob.clear();
+        p4MomName.clear();
+        p4MomYob.clear();
+        p4AlgoError.setVisible(false);
+        p4DadNameError.setVisible(false);
+        p4DadYobError.setVisible(false);
+        p4MomNameError.setVisible(false);
+        p4MomYobError.setVisible(false);
+        p4TypeChoiceBox.setVisible(false);
+        p4TypeLabel.setVisible(false);
+        pieButton.setVisible(false);
+        lineButton.setVisible(false);
+
+        clearAllCharts();
+    }
 
     // ----------------------------- Task5 Function ------------------------//
     /**

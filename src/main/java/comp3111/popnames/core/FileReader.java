@@ -4,6 +4,7 @@ import edu.duke.FileResource;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,45 @@ public class FileReader {
             result.add(new NameRecord(rec));
         }
         return result;
+    }
+    
+    /**
+     * input data and find the occurrence list
+     * @param year1 target starting year
+     * @param year2 target ending year
+     * @param name name of interest
+     * @param gender gender of the name want to research
+     */  
+    public static List<OccurrenceRecord> getFileOfYearAndName(int year1, int year2, String name, String gender){
+    	NumberFormat numberFormat = NumberFormat.getInstance();
+    	List<OccurrenceRecord> result = new ArrayList<>();
+    	
+    	for(int i = year1; i<= year2; i++) {
+			int occurrences = 0;
+			int totalBirths = 0;
+			String percentage = "";
+			int genderCheck = gender.equals("M") ? 0 : 1;
+			int rank = getRankByYearAndName(name, i, genderCheck);
+			
+			for (CSVRecord rec : getFileParser(i)) {
+				int numBorn = Integer.parseInt(rec.get(2));
+				if (rec.get(1).equals(gender)) {
+					totalBirths += numBorn;
+				}
+				if (rec.get(0).equals(name)) {
+					occurrences = numBorn;
+				}
+			}
+			
+			numberFormat.setMaximumFractionDigits(2);  
+			percentage = numberFormat.format((float) occurrences / (float) totalBirths * 100);
+			percentage = percentage + "%";
+			
+			result.add(new OccurrenceRecord(i, rank, occurrences, percentage, totalBirths));
+    	}
+    	
+    	return result;
+
     }
 
     /**
