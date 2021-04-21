@@ -25,10 +25,25 @@ public class KthPopularName {
      */
     private List<NameRecord> modifiedList;
 
+    /**
+     * record for total k-th popular name occurrences over that period
+     */
     private int totalNameOccurrence;
+    /**
+     * record for input year1
+     */
     private int year1;
+    /**
+     * record for input year2
+     */
     private int year2;
+    /**
+     * record for input k
+     */
     private int k;
+    /**
+     * record for input gender
+     */
     private String gender;
 
 
@@ -38,16 +53,16 @@ public class KthPopularName {
      * @param year2 ending year
      * @param k k-th names in popularity
      * @param gender targeted gender
-     * @return if data is valid
+     * @return if data is valid, 0 for obvious invalid input,
+     *         1 means k-th names do not always exist, 2 for valid input
      */
-    public boolean setData(int year1, int year2, int k, String gender) {
-        if (year1 < 1880 || year1 > 2019) return false;
-        if (year2 < 1880 || year2 > 2019) return false;
-        if (year2 < year1) return false;
-        this.year1 = year1;
-        this.year2 = year2;
-        this.k = k;
-        this.gender = gender;
+    public int setData(int year1, int year2, int k, String gender) {
+        if (year1 < 1880 || year1 > 2019) return 0;
+        if (year2 < 1880 || year2 > 2019) return 0;
+        if (year2 < year1) return 0;
+        this.year1 = year1; this.year2 = year2; this.k = k; this.gender = gender;
+        boolean kValid = ValidateKInput(k);
+        if(!kValid) return 1;
         rawList = new ArrayList<NameRecord>();
         modifiedList = new ArrayList<NameRecord>();
         for(int i = year1; i <= year2; i++){
@@ -59,7 +74,23 @@ public class KthPopularName {
         }
         CombineEntries(rawList,modifiedList);
         Collections.sort(modifiedList, Collections.reverseOrder());
-        return true;
+        return 2;
+    }
+
+
+    /**
+     * check whether all the k-th popular names over that period exist
+     * @param k k-th names in popularity
+     * @return if k is valid
+     */
+    public boolean ValidateKInput(int k){
+        boolean isValid = true;
+        for(int i = year1; i <= year2; i++) {
+            if (FileReader.getNthNamesByYear(i, k, (gender.equals("M") ? 0 : 1)) == null) {
+                isValid = false; break;
+            }
+        }
+        return isValid;
     }
 
     /**
@@ -120,8 +151,8 @@ public class KthPopularName {
     }
 
     /**
-     * return an ObservableListList of Map data for generating the table
-     *
+     * generate an an ObservableListList of Map data
+     * @return an ObservableListList of Map data for generating the table
      */
 
     public ObservableList<Map> getMapList() {

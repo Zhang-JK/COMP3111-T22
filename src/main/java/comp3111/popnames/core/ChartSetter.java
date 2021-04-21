@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * This class is used for generating charts and tables
  * @author ZHANG Jiekai LIANG Houdong
- * @version 1.0
+ * @version 1.1
  */
 public class ChartSetter {
 

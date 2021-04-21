@@ -151,4 +151,22 @@ public class FileReader {
         }
         return 0;
     }
+
+    /**
+     * Input a name and get its occurrence in a certain year
+     * @param name the name to search
+     * @param year the target year
+     * @param gender the target gender
+     * @return occurrence, 0 for NOT FOUND
+     */
+    public static int getOccurrenceByYearAndName(String name, int year, int gender) {
+        for (CSVRecord rec : getFileParser(year)) {
+            if (rec.get(1).equals(gender==1 ? "F" : "M")) {
+                if(rec.get(0).equals(name)) return Integer.parseInt(rec.get(2));
+            }
+        }
+        return 0;
+    }
+
+
 }

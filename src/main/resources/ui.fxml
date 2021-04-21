@@ -234,8 +234,8 @@
                               <TextField fx:id="task5iNameTextField" layoutX="91.0" layoutY="141.0" onKeyTyped="#doTask5iNameCheck" />
                               <Text layoutX="263.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" />
                               <ChoiceBox fx:id="task5iGenderChoiceBox" layoutX="314.0" layoutY="141.0" prefHeight="26.0" prefWidth="82.0" />
-                              <Text layoutX="417.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
-                              <TextField fx:id="task5iAgeTextField" layoutX="454.0" layoutY="141.0" onKeyTyped="#doTask5iAgeCheck" />
+                              <Text layoutX="417.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year of Birth:" />
+                              <TextField fx:id="task5iAgeTextField" layoutX="494.0" layoutY="141.0" onKeyTyped="#doTask5iYOBCheck" prefHeight="26.0" prefWidth="134.0" />
                               <Text layoutX="39.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Target Preference:">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />
@@ -258,7 +258,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="task5iAgeErrorLabel" layoutX="454.0" layoutY="165.0" text="Wrong format" textFill="RED" visible="false">
+                              <Label fx:id="task5iAgeErrorLabel" layoutX="494.0" layoutY="167.0" text="Wrong format" textFill="RED" visible="false">
                                  <font>
                                     <Font size="10.0" />
                                  </font>

@@ -686,7 +686,7 @@ public class Controller {
         tableButton.setVisible(true);
         barButton.setVisible(true);
         pieButton.setVisible(false);
-        lineButton.setVisible(false);
+        lineButton.setVisible(true);
         selectedTask = 5;
     }
 
@@ -861,6 +861,7 @@ public class Controller {
             task2KErrorLabel.setText("Please Enter a Positive Integer");
             hasError = true;
         }
+
         task2KErrorLabel.setVisible(hasError);
         hasErrorTask2 = hasError;
     }
@@ -872,13 +873,10 @@ public class Controller {
      */
     @FXML
     void task2SubmitData(ActionEvent event) {
-        doTask2Year1Check();
-        doTask2Year2Check();
-        doTask2KCheck();
-        if(hasErrorTask2) return;
-
-        doTask2YearRelationCheck();
-        if(hasErrorTask2) return;
+        doTask2Year1Check();if(hasErrorTask2) return;
+        doTask2Year2Check();if(hasErrorTask2) return;
+        doTask2KCheck();if(hasErrorTask2) return;
+        doTask2YearRelationCheck();if(hasErrorTask2) return;
 
         int year1 = Integer.parseInt(task2Year1TextField.getText());
         int year2 = Integer.parseInt(task2Year2TextField.getText());
@@ -889,8 +887,14 @@ public class Controller {
         List<Number> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
 
         KthPopularName task2 = new KthPopularName();
-        if(! task2.setData(year1, year2, k, gender ) )
+        if(task2.setData(year1, year2, k, gender ) == 0)
             return;
+        if(task2.setData(year1, year2, k, gender ) == 1){
+            String errorReport = "";
+            errorReport += String.format("\n*Error: Not all %d-th most popular names exist in the period from %d to %d, please try again with a smaller k value :)", k, year1, year2);
+            textAreaConsole.setText(errorReport);
+            return;
+        }
 
         String barTitle = "";
         barTitle += String.format("%d-th popular %s names over the period from %d to %d\n", k, (gender.equals("M")?"Male":"Female"), year1, year2);
@@ -1214,18 +1218,18 @@ public class Controller {
     }
 
     /**
-     * check iAge input
+     * check iYOB input
      */
     @FXML
-    void doTask5iAgeCheck() {
-        String iAgeText = task5iAgeTextField.getText();
+    void doTask5iYOBCheck() {
+        String iYOBText = task5iAgeTextField.getText();
         boolean hasError = false;
-        if ( iAgeText.isBlank() || !StringUtils.isNumeric(iAgeText) ) {
+        if ( iYOBText.isBlank() || !StringUtils.isNumeric(iYOBText) ) {
             task5iAgeErrorLabel.setText("Please Enter an age number");
             hasError = true;
         }
-        else if ( Integer.parseInt(iAgeText) < 1){
-            task5iAgeErrorLabel.setText("Please Enter a Positive Integer");
+        else if ( Integer.parseInt(iYOBText) < 1880 || Integer.parseInt(iYOBText) > 2019){
+            task5iAgeErrorLabel.setText("Please Enter a Number Between 1880 and 2019");
             hasError = true;
         }
         task5iAgeErrorLabel.setVisible(hasError);
@@ -1240,8 +1244,39 @@ public class Controller {
     @FXML
     void task5SubmitData(ActionEvent event) {
         doTask5iNameCheck();
-        doTask5iAgeCheck();
         if(hasErrorTask5) return;
+        doTask5iYOBCheck();
+        if(hasErrorTask5) return;
+
+        String iName = task5iNameTextField.getText();
+        String iGender = task5iGenderChoiceBox.getValue().toString();
+        int iYOB = Integer.parseInt( task5iAgeTextField.getText() );
+        String iGenderMate = task5iGenderMateChoiceBox.getValue().toString();
+        String iPreference = task5iPreferenceChoiceBox.getValue().toString();
+        boolean isAlgo1 = task5AlgorithmChoiceBox.getValue().equals(p5AlgorithmChoice.get(0));
+
+        NameforCompatiblePairs task5 = new NameforCompatiblePairs();
+
+        task5.setData(iName, iGender, iYOB, iGenderMate, iPreference, isAlgo1);
+        if (isAlgo1) {
+            pieButton.setVisible(false);
+            //lineButton.setVisible(false);
+            textAreaConsole.setText(task5.getSummaryAlgo1());
+            String batTitle = ""; String lineTitle = "";
+            batTitle += String.format("%s' Most Popular Names in %d", (iGenderMate.equals("M")?"Boys":"Girls"), iYOB);
+            lineTitle += String.format("Trend of Giving Name %s to New Babies from %d to %d", task5.getPairName().getName(), iYOB-3, iYOB+3 );
+            String[] tableTitle = {"Name", "Occurrences", "Percentage"};
+            ChartSetter.BarChartSetter(outputBarChart1, batTitle, "Name", "Occurrence", "Number of New Babies", task5.getPairNameList());
+            ChartSetter.TableSetter(outputTable1, 3, tableTitle, task5.getMapListAlgo1() );
+            ChartSetter.LineChartSetter(outputLineChart1, lineTitle, "Year", "Occurrences", "Number of New Babies", task5.getXListAlgo1(), task5.getYListAlgo1());
+        }
+        else {
+            pieButton.setVisible(true);
+            //lineButton.setVisible(true);
+            textAreaConsole.setText(task5.getSummaryAlgo2());
+            // TODO
+        }
+
 
     }
 
@@ -1250,6 +1285,10 @@ public class Controller {
      */
     @FXML
     void task5Reset() {
+        task5AlgorithmChoiceBox.setValue(p5AlgorithmChoice.get(0));
+        task5iGenderChoiceBox.setValue(genderChoice.get(0));
+        task5iGenderMateChoiceBox.setValue(genderChoice.get(0));
+        task5iPreferenceChoiceBox.setValue(ageChoice.get(0));
         task5iNameTextField.clear();
         task5iAgeTextField.clear();
         task5iNameErrorLabel.setText("");
