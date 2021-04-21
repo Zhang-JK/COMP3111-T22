@@ -28,7 +28,7 @@ public class Controller {
     ObservableList<String> genderChoice = FXCollections.observableArrayList("M","F");
     ObservableList<String> ageChoice = FXCollections.observableArrayList("Young","Old");
     ObservableList<String> ageChoice2 = FXCollections.observableArrayList("Younger","Older");
-    ObservableList<String> algorithmChoice2 = FXCollections.observableArrayList("T6X1","T6X2");
+    ObservableList<String> p6AlgorithmChoice = FXCollections.observableArrayList("T6X1","T6X2");
     ObservableList<String> p5AlgorithmChoice = FXCollections.observableArrayList("T5X1","T5X2");
     ObservableList<String> p4AlgorithmChoice = FXCollections.observableArrayList("T4X1","T4X2");
     ObservableList<String> p4TypeChoice = FXCollections.observableArrayList("Popular","Unique");
@@ -452,7 +452,7 @@ public class Controller {
         task6AgePreferenceBox.setValue("Younger");
         task6AgePreferenceBox.setItems(ageChoice2);
         task6AlgorithmChoiceBox.setValue("T6X1");
-        task6AlgorithmChoiceBox.setItems(algorithmChoice2);
+        task6AlgorithmChoiceBox.setItems(p6AlgorithmChoice);
 
     }
 
@@ -535,7 +535,16 @@ public class Controller {
         task5iPreferenceChoiceBox.setValue(ageChoice.get(0));
         task5iGenderChoiceBox.setValue(genderChoice.get(0));
         task5iGenderMateChoiceBox.setValue(genderChoice.get(0));
-        // task6
+        task6UserName.clear();
+        task6MateName.clear();
+        task6SelfYOB.clear();
+        task6SelfGenderBox.setValue(genderChoice.get(0));
+        task6MateGenderBox.setValue(genderChoice.get(0));
+        task6AgePreferenceBox.setValue(ageChoice2.get(0));
+        task6AlgorithmChoiceBox.setValue(p6AlgorithmChoice.get(0));
+        task6UserNameErrorLabel.setVisible(false);
+        task6MateNameErrorLabel.setVisible(false);
+        task6SelfYOBErrorLabel.setVisible(false);
     }
 
     /**
@@ -705,7 +714,12 @@ public class Controller {
      */
     @FXML
     void tab3Selected() {
-
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(true);
+        barButton.setVisible(true);
+        lineButton.setVisible(true);
         selectedTask = 3;
     }
 
@@ -743,7 +757,12 @@ public class Controller {
      */
     @FXML
     void tab6Selected() {
-
+        clearAllInputBox();
+        clearAllCharts();
+        summaryButton.setVisible(true);
+        tableButton.setVisible(false);
+        barButton.setVisible(false);
+        lineButton.setVisible(false);
         selectedTask = 6;
     }
 
@@ -1062,6 +1081,7 @@ public class Controller {
     	int maxRank = task3.getRank();
     	int occurrences = task3.getOccurrence();
     	String percentage = task3.getPercentage();
+    	String[] columnTitle = {"Year","Rank","Occurrences","Percentage"};
     	
     	report += String.format("The year when the name %s was most popular is %d at rank %d.\n"
 				+ "In that year, the number of occurrences is %d,\n"
@@ -1072,6 +1092,7 @@ public class Controller {
     	textAreaConsole.setText(report);
     	ChartSetter.BarChartSetter2(outputBarChart1, "Popularity of name", "Year", "Occurrence", "number of babies", task3.getList());
     	ChartSetter.LineChartSetter(outputLineChart1,"Popularity of name", "Year", "Occurrence", "number of babies", task3.getList());
+    	ChartSetter.TableSetter(outputTable1, 4, columnTitle, task3.getMapList());
     }
     
     /**
