@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox onDragDetected="#dragSplitWindow" prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
+<VBox onDragDetected="#dragSplitWindow" prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="298.0" prefWidth="719.0">
       <children>
@@ -87,7 +87,7 @@
                            <children>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="722.0">
                                  <children>
-                                    <TextArea fx:id="task2IntroBox" editable="false" layoutX="27.0" layoutY="14.0" prefHeight="106.0" prefWidth="628.0" text="Task #2: K-th Popular Names &#10;Generate a report in response to the queries on the K-th popular names over a given period.&#10;&#10;Please input the following information: &#10;Year1 : the starting year to be calculated&#10;Year2: the ending year to be calculated &#10;k: the rank of interest&#10;Gender: the gender to be focused ('M' for Male, 'F' for Female)&#10;&#10;" wrapText="true" />
+                                    <TextArea fx:id="task2IntroBox" editable="false" prefHeight="119.0" prefWidth="719.0" text="Task #2: K-th Popular Names &#10;&#10;Group22, LIANG Houdong&#10;Welcome to check Task #2,&#10;please input the time period, the rank of names and the gender you want to search!" wrapText="true" />
                                     <TextField fx:id="task2Year1TextField" layoutX="72.0" layoutY="142.0" onKeyTyped="#doTask2Year1Check" />
                                     <Text layoutX="27.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year1:" wrappingWidth="45.0" />
                                     <Text layoutX="295.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year2:" />
@@ -224,7 +224,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea fx:id="task5IntroBox" editable="false" layoutX="39.0" layoutY="14.0" prefHeight="93.0" prefWidth="611.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Provide an online service using empirical data to help make informed decisions on predicting names for compatible pairs.&#10;&#10;" wrapText="true" />
+                              <TextArea fx:id="task5IntroBox" editable="false" prefHeight="103.0" prefWidth="719.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Group22, LIANG Houdong&#10;Welcome to check Task #5,&#10;Please input the following infomation and we will predict name of your compatible pair based on that." wrapText="true" />
                               <Text layoutX="37.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information:">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />
