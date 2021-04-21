@@ -3,10 +3,14 @@ package comp3111.popnames;
 import comp3111.popnames.core.FileReader;
 import comp3111.popnames.core.NameRecord;
 import comp3111.popnames.core.OccurrenceRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is for task3, find the popularity of a name in the input period
@@ -60,6 +64,32 @@ public class PopularityOfNames {
 			}
 		}
 	}
+	
+    /**
+     * return an ObservableListList of Map data for generating the table
+     *
+     */
+    public ObservableList<Map> getMapList() {
+
+        DecimalFormat format = new DecimalFormat("0.000");
+
+        ObservableList<Map> list = FXCollections.<Map>observableArrayList();
+
+        for(OccurrenceRecord rec : this.popularityList){
+            Map<String, Object> item = new HashMap<>();
+            int year = rec.getYear();
+            int rank = rec.getRank();
+            int occurrence = rec.getOccurrence();
+            String percentage = rec.getPercentage();
+            
+            item.put("key1" , year);
+            item.put("key2" , rank);
+            item.put("key3" , occurrence);
+            item.put("key4" , percentage);
+            list.add(item);
+        }
+        return list;
+    }
 	
     /**
      * get the rank
