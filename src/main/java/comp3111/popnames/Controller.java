@@ -27,6 +27,8 @@ public class Controller {
 
     ObservableList<String> genderChoice = FXCollections.observableArrayList("M","F");
     ObservableList<String> ageChoice = FXCollections.observableArrayList("Young","Old");
+    ObservableList<String> ageChoice2 = FXCollections.observableArrayList("Younger","Older");
+    ObservableList<String> algorithmChoice2 = FXCollections.observableArrayList("T6X1","T6X2");
     ObservableList<String> p5AlgorithmChoice = FXCollections.observableArrayList("T5X1","T5X2");
     ObservableList<String> p4AlgorithmChoice = FXCollections.observableArrayList("T4X1","T4X2");
     ObservableList<String> p4TypeChoice = FXCollections.observableArrayList("Popular","Unique");
@@ -201,6 +203,42 @@ public class Controller {
 
     @FXML
     private TextArea textAreaConsole;
+    
+    @FXML
+    private TextField task6UserName;
+    
+    @FXML
+    private TextField task6MateName;
+    
+    @FXML
+    private TextField task6SelfYOB;
+    
+    @FXML
+    private ChoiceBox task6SelfGenderBox;
+    
+    @FXML
+    private ChoiceBox task6MateGenderBox;
+    
+    @FXML
+    private ChoiceBox task6AgePreferenceBox;
+    
+    @FXML
+    private ChoiceBox task6AlgorithmChoiceBox;
+    
+    @FXML
+    private Label task6UserNameErrorLabel;
+
+    @FXML
+    private Label task6MateNameErrorLabel;
+    
+    @FXML
+    private Label task6SelfYOBErrorLabel;
+    
+    @FXML
+    private Button task6SubmitButton;
+    
+    @FXML
+    private Button task6ResetButton;
 
     @FXML
     private TableView outputTable1;
@@ -406,6 +444,16 @@ public class Controller {
         task5iPreferenceChoiceBox.setItems(ageChoice);
         task5AlgorithmChoiceBox.setValue("T5X1");
         task5AlgorithmChoiceBox.setItems(p5AlgorithmChoice);
+        // -------------------------- Task6 Initialization ------------------------//
+        task6SelfGenderBox.setValue("M");
+        task6SelfGenderBox.setItems(genderChoice);
+        task6MateGenderBox.setValue("F");
+        task6MateGenderBox.setItems(genderChoice);
+        task6AgePreferenceBox.setValue("Younger");
+        task6AgePreferenceBox.setItems(ageChoice2);
+        task6AlgorithmChoiceBox.setValue("T6X1");
+        task6AlgorithmChoiceBox.setItems(algorithmChoice2);
+
     }
 
 
@@ -1258,10 +1306,121 @@ public class Controller {
         task5iAgeErrorLabel.setVisible(false);
         clearAllCharts();
     }
-
-
-
+    
     // ----------------------------- Task6 Function ------------------------//
+    /**
+     * record if there's any error in user's input
+     */
+    boolean hasErrorTask6 = false;
+    
+    /**
+     * check userName input
+     */
+    @FXML
+    void doTask6UserNameCheck() {
+        String userName = task6UserName.getText();
+        boolean hasError = false;
+        if ( userName.isBlank() ) {
+            task6UserNameErrorLabel.setText("Please Enter a Name");
+            hasError = true;
+        }
+        task6UserNameErrorLabel.setVisible(hasError);
+        hasErrorTask6 = hasError;
+    }
+    
+    /**
+     * check mateName input
+     */
+    @FXML
+    void doTask6MateNameCheck() {
+        String mateName = task6MateName.getText();
+        boolean hasError = false;
+        if ( mateName.isBlank() ) {
+            task6MateNameErrorLabel.setText("Please Enter a Name");
+            hasError = true;
+        }
+        task6MateNameErrorLabel.setVisible(hasError);
+        hasErrorTask6 = hasError;
+    }
+    
+    /**
+     * check selfYOB input
+     */
+    @FXML
+    void doTask6SelfYOBCheck() {
+        String selfYOB = task6SelfYOB.getText();
+        boolean hasError = false;
+        if ( selfYOB.isBlank() || !StringUtils.isNumeric(selfYOB) ) {
+            task6SelfYOBErrorLabel.setText("Please Enter an age number");
+            hasError = true;
+        }
+        else if (Integer.parseInt(selfYOB) < 1881 || Integer.parseInt(selfYOB) > 2018) {
+        	task6SelfYOBErrorLabel.setText("Please Enter an integer between 1881 and 2018");
+            hasError = true;
+        }
+        
+        task6SelfYOBErrorLabel.setVisible(hasError);
+        hasErrorTask6 = hasError;
+    }
+    
+    /**
+     *  Task Six
+     *  To be triggered by the "Submit" button on the Task#6 Tab
+     *
+     */
+    @FXML
+    void task6SubmitData() {
+        doTask6UserNameCheck();
+        doTask6MateNameCheck();
+        doTask6SelfYOBCheck();
+        if(hasErrorTask6) return; 
+        
+        String userName = task6UserName.getText();
+        String mateName = task6MateName.getText();
+        int userYOB = Integer.parseInt(task6SelfYOB.getText());
+        String userGender = (String) task6SelfGenderBox.getValue();
+        String mateGender = (String) task6MateGenderBox.getValue();
+        String agePreference = (String) task6AgePreferenceBox.getValue();
+        String algorithm = (String) task6AlgorithmChoiceBox.getValue();
+        String isMatch = "";
+        String oReport = "";
+        PredictScore predictObject = new PredictScore();
+        
+        if(algorithm == "T6X1") {
+        	isMatch = predictObject.predict(userName, mateName);
+        	
+        	oReport += String.format("There's a study saying that people are perfect "
+        			+ "match with each other if their name lengths are the same.\n"
+        			+ "Otherwise they are not.\n"
+        			+ "So you two's compatible pair score is %s.", isMatch);
+        	textAreaConsole.setText(oReport);
+        }
+        
+        else {
+        	isMatch = predictObject.predict2(mateName, agePreference, mateGender, userYOB);
+        
+    		oReport += String.format("The compatible score is %s", isMatch);
+        	
+        	textAreaConsole.setText(oReport);
+        }
+        
+    } 
+    
+    /**
+     * when click reset button, clear input box and output console
+     */
+    @FXML
+    void task6Reset() {
+        task6UserName.clear();
+        task6MateName.clear();
+        task6UserNameErrorLabel.setText("");
+        task6UserNameErrorLabel.setVisible(false);
+        task6MateNameErrorLabel.setText("");
+        task6MateNameErrorLabel.setVisible(false);
+        task6SelfYOBErrorLabel.setText("");
+        task6SelfYOBErrorLabel.setVisible(false); 
+        clearAllCharts();
+    }
 
 
 }
