@@ -11,15 +11,19 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is used for generating charts and tables
- * @author ZHANG Jiekai
+ * @author ZHANG Jiekai LIANG Houdong
  * @version 1.0
  */
 public class ChartSetter {
@@ -50,7 +54,7 @@ public class ChartSetter {
      * @param xTitle x-axis title/comment
      * @param yTitle y-axis title/comment
      * @param seriesTitle bar comment
-     * @param records the data to show (year, occurrnce)
+     * @param record the data to show (year, occurrnce)
      */
     static public void BarChartSetter2(BarChart<String, Number> chart, String title, String xTitle, String yTitle, String seriesTitle, List<OccurrenceRecord> record) {
         List<String> xData = new ArrayList<String>();
@@ -184,4 +188,28 @@ public class ChartSetter {
         series.setName(seriesTitle);
         chart.getData().addAll(series);
     }
+
+    public static final String[] ColumnMapKey = {"key1", "key2", "key3", "key4", "key5"};
+
+    /**
+     * Full version of table generator
+     * You need to pass a list of data in Map structure
+     * @param table the output table
+     * @param columnNum the number of columns
+     * @param columnName an array of column names
+     * @param dataMap an ObservableList of Map contains data you want to display
+     */
+    static public void TableSetter(TableView table, int columnNum, String[] columnName, ObservableList<Map> dataMap) {
+        table.getColumns().clear();
+        ArrayList< TableColumn<Map,String> > columnList = new ArrayList<>();
+        for(int i = 0; i < columnNum; i++){
+          TableColumn<Map, String> dataColumn = new TableColumn<>(columnName[i]);
+          dataColumn.setCellValueFactory(new MapValueFactory<>(ColumnMapKey[i]));
+          columnList.add(dataColumn);
+          table.getColumns().add(dataColumn);
+        }
+        table.getItems().setAll(dataMap);
+
+    }
+
 }

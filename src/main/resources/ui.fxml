@@ -21,13 +21,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
+<VBox onDragDetected="#dragSplitWindow" prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="298.0" prefWidth="719.0">
       <children>
             <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="322.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="tabTaskZero" text="Task Zero">
+                <Tab fx:id="tabTaskZero" onSelectionChanged="#tab0Selected" text="Task Zero">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="719.0">
                            <children>
@@ -48,18 +48,17 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabReport1" text="Reporting 1">
+                  <Tab fx:id="tabReport1" onSelectionChanged="#tab1Selected" text="Reporting 1">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="719.0">
                            <children>
-                              <Label layoutX="79.0" layoutY="44.0" />
-                              <TextArea fx:id="p1DescriputionBox" editable="false" layoutY="3.0" prefHeight="88.0" prefWidth="719.0" scrollLeft="10.0" text="Task #1: Most Popular Names &#10;Group22, ZHANG Jiekai&#10;Welcome to check Task #1,&#10;please input the the year and the number of top names you want to research!" wrapText="true" />
-                              <Label layoutX="150.0" layoutY="113.0" text="Year">
+                              <TextArea fx:id="p1DescriputionBox" editable="false" layoutY="-3.0" prefHeight="96.0" prefWidth="719.0" scrollLeft="10.0" text="Task #1: Most Popular Names&#10; &#10;Group22, ZHANG Jiekai&#10;Welcome to check Task #1,&#10;please input the year and the number of top names you want to research!" wrapText="true" />
+                              <Label layoutX="150.0" layoutY="113.0" prefHeight="20.0" prefWidth="45.0" text="Year">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="158.0" layoutY="172.0" text="N">
+                              <Label layoutX="158.0" layoutY="172.0" prefHeight="20.0" prefWidth="21.0" text="N">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -82,13 +81,13 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                <Tab fx:id="tabReport2" text="Reporting 2">
+                <Tab fx:id="tabReport2" onSelectionChanged="#tab2Selected" text="Reporting 2">
                   <content>
                         <AnchorPane>
                            <children>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="722.0">
                                  <children>
-                                    <TextArea fx:id="task2IntroBox" editable="false" layoutX="27.0" layoutY="14.0" prefHeight="106.0" prefWidth="628.0" text="Task #2: K-th Popular Names &#10;Generate a report in response to the queries on the K-th popular names over a given period.&#10;&#10;Please input the following information: &#10;Year1 : the starting year to be calculated&#10;Year2: the ending year to be calculated &#10;k: the rank of interest&#10;Gender: the gender to be focused ('M' for Male, 'F' for Female)&#10;&#10;" wrapText="true" />
+                                    <TextArea fx:id="task2IntroBox" editable="false" prefHeight="119.0" prefWidth="719.0" text="Task #2: K-th Popular Names &#10;&#10;Group22, LIANG Houdong&#10;Welcome to check Task #2,&#10;please input the time period, the rank of names and the gender you want to search!" wrapText="true" />
                                     <TextField fx:id="task2Year1TextField" layoutX="72.0" layoutY="142.0" onKeyTyped="#doTask2Year1Check" />
                                     <Text layoutX="27.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year1:" wrappingWidth="45.0" />
                                     <Text layoutX="295.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year2:" />
@@ -120,7 +119,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabReport3" text="Reporting 3">
+                  <Tab fx:id="tabReport3" onSelectionChanged="#tab3Selected" text="Reporting 3">
                     <content>
                         <AnchorPane>
                            <children>
@@ -153,20 +152,79 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp1" text="Application1">
+                  <Tab fx:id="tabApp1" onSelectionChanged="#tab4Selected" text="Application1">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="719.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" onMouseMoved="#p4AlgoCheck" prefHeight="412.0" prefWidth="719.0">
                            <children>
-                              <TextArea layoutX="40.0" layoutY="26.0" prefHeight="106.0" prefWidth="538.0" text="Task #4: Recommendation on Names for Newborn Babies (application)&#10;&#10;Develop and implement an online service using empirical data to help make informed decisions on naming their newborn babies.&#10;" wrapText="true" />
+                              <TextArea layoutY="-3.0" prefHeight="95.0" prefWidth="719.0" text="Task #4: Recommendation on Names for Newborn Babies&#10;&#10;Group22, ZHANG Jiekai&#10;Welcome to check Task #4,&#10;please input the following infomation and we will recommand a name for both boy and girl based on that." wrapText="true" />
+                              <Label layoutX="34.0" layoutY="111.0" prefHeight="26.0" prefWidth="107.0" text="Dad's name">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="34.0" layoutY="168.0" prefHeight="26.0" prefWidth="119.0" text="Mom's name">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="343.0" layoutY="111.0" prefHeight="26.0" prefWidth="136.0" text="Dad's birth year">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="343.0" layoutY="168.0" prefHeight="26.0" prefWidth="145.0" text="Mom's birth year">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="p4DadName" layoutX="153.0" layoutY="107.0" onKeyTyped="#p4DadNameCheck" prefHeight="32.0" prefWidth="155.0" promptText="Baby dad's name" />
+                              <TextField fx:id="p4MomName" layoutX="153.0" layoutY="164.0" onKeyTyped="#p4MomNameCheck" prefHeight="32.0" prefWidth="156.0" promptText="Baby mom's name" />
+                              <TextField fx:id="p4DadYob" layoutX="490.0" layoutY="107.0" onKeyTyped="#p4DadYobCheck" prefHeight="32.0" prefWidth="202.0" promptText="Integer, from 1880 to 2019" />
+                              <TextField fx:id="p4MomYob" layoutX="490.0" layoutY="164.0" onKeyTyped="#p4MomYobCheck" prefHeight="32.0" prefWidth="202.0" promptText="Integer, from 1880 to 2019" />
+                              <Label layoutX="34.0" layoutY="226.0" prefHeight="26.0" prefWidth="93.0" text="Algorithm">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="p4AlgoChoiceBox" layoutX="153.0" layoutY="226.0" onMouseClicked="#p4AlgoCheck" onMouseMoved="#p4AlgoCheck" prefHeight="32.0" prefWidth="69.0" />
+                              <Label fx:id="p4DadNameError" layoutX="153.0" layoutY="139.0" prefHeight="16.0" prefWidth="180.0" text="Label" textFill="#f04a20" visible="false" />
+                              <Label fx:id="p4MomNameError" layoutX="153.0" layoutY="196.0" prefHeight="16.0" prefWidth="180.0" text="Label" textFill="#f04a20" visible="false" />
+                              <Label fx:id="p4DadYobError" layoutX="487.0" layoutY="139.0" prefHeight="17.0" prefWidth="222.0" text="Label" textAlignment="CENTER" textFill="#f04a20" visible="false" wrapText="true">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="p4MomYobError" layoutX="487.0" layoutY="196.0" prefHeight="18.0" prefWidth="223.0" text="Label" textAlignment="CENTER" textFill="#f04a20" visible="false" wrapText="true">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="p4AlgoError" layoutX="153.0" layoutY="259.0" prefHeight="16.0" prefWidth="180.0" text="Label" textFill="#f04a20" visible="false" />
+                              <Button fx:id="p4SubmitButton" layoutX="607.0" layoutY="225.0" mnemonicParsing="false" onAction="#doP4Submit" prefHeight="34.0" prefWidth="85.0" style="-fx-background-color: #3786F0;" text="Submit" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="p4ResetButton" layoutX="513.0" layoutY="227.0" mnemonicParsing="false" onAction="#doP4Reset" prefHeight="34.0" prefWidth="70.0" style="-fx-background-color: #77D9FA;" text="Reset" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="p4TypeLabel" layoutX="250.0" layoutY="229.0" prefHeight="26.0" prefWidth="119.0" text="Type of name" visible="false">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="p4TypeChoiceBox" layoutX="377.0" layoutY="227.0" onKeyTyped="#p4AlgoCheck" onMouseClicked="#p4AlgoCheck" prefHeight="32.0" prefWidth="86.0" visible="false" />
                            </children>
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp2" text="Application 2">
+                  <Tab fx:id="tabApp2" onSelectionChanged="#tab5Selected" text="Application 2">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea fx:id="task5IntroBox" editable="false" layoutX="39.0" layoutY="14.0" prefHeight="93.0" prefWidth="611.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Provide an online service using empirical data to help make informed decisions on predicting names for compatible pairs.&#10;&#10;" wrapText="true" />
+                              <TextArea fx:id="task5IntroBox" editable="false" prefHeight="103.0" prefWidth="719.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Group22, LIANG Houdong&#10;Welcome to check Task #5,&#10;Please input the following infomation and we will predict name of your compatible pair based on that." wrapText="true" />
                               <Text layoutX="37.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information:">
                                  <font>
                                     <Font name="Arial Bold" size="13.0" />
@@ -209,7 +267,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="tabApp3" text="Application 3">
+                  <Tab fx:id="tabApp3" onSelectionChanged="#tab6Selected" text="Application 3">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -267,7 +325,7 @@
             </TabPane>
       </children>
     </AnchorPane>
-      <SplitPane dividerPositions="0.13528591352859135" prefHeight="358.0" prefWidth="719.0">
+      <SplitPane fx:id="splitWindow" dividerPositions="0.135" onMouseDragged="#dragSplitWindow" onMouseMoved="#dragSplitWindow" onSwipeLeft="#dragSplitWindow" onSwipeRight="#dragSplitWindow" prefHeight="358.0" prefWidth="719.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -304,7 +362,7 @@
             </AnchorPane>
           <AnchorPane fx:id="outputPanel" minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="644.0">
                <children>
-                  <TextArea fx:id="textAreaConsole" disable="true" editable="false" prefHeight="356.0" prefWidth="624.0" />
+                  <TextArea fx:id="textAreaConsole" editable="false" prefHeight="356.0" prefWidth="624.0" wrapText="true" />
                   <BarChart fx:id="outputBarChart1" alternativeColumnFillVisible="true" layoutX="-1.0" prefHeight="356.0" prefWidth="307.0" visible="false">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" visible="false" />
@@ -339,7 +397,13 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
-                  <TableView fx:id="outputTable" layoutX="14.0" layoutY="14.0" prefHeight="322.0" prefWidth="590.0" visible="false">
+                  <TableView fx:id="outputTable1" layoutX="1.0" prefHeight="356.0" prefWidth="309.0" visible="false">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+                  <TableView fx:id="outputTable2" layoutX="312.0" prefHeight="356.0" prefWidth="309.0" visible="false">
                     <columns>
                       <TableColumn prefWidth="75.0" text="C1" />
                       <TableColumn prefWidth="75.0" text="C2" />
