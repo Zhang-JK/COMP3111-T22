@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -28,7 +27,7 @@ public class Controller {
 
     ObservableList<String> genderChoice = FXCollections.observableArrayList("M","F");
     ObservableList<String> ageChoice = FXCollections.observableArrayList("Young","Old");
-    ObservableList<String> algorithmChoice = FXCollections.observableArrayList("T5X1","T5X2");
+    ObservableList<String> p5AlgorithmChoice = FXCollections.observableArrayList("T5X1","T5X2");
     ObservableList<String> p4AlgorithmChoice = FXCollections.observableArrayList("T4X1","T4X2");
     ObservableList<String> p4TypeChoice = FXCollections.observableArrayList("Popular","Unique");
 
@@ -288,19 +287,6 @@ public class Controller {
     private ChoiceBox<String> p4TypeChoiceBox;
 
     // ----------------------------- Task0 Functions ------------------------//
-    /**
-     * record if user is now using Task#0 Tab
-     */
-    boolean workingOnTask0 = false;
-
-    /**
-     * do when user select task#0 tab
-     */
-    @FXML
-    void openTab0() {
-        workingOnTask0 = true;
-        workingOnTask2=workingOnTask1=workingOnTask3=workingOnTask4=workingOnTask5=workingOnTask6=false;
-    }
 
     /**
      * Task Zero
@@ -416,7 +402,7 @@ public class Controller {
         task5iPreferenceChoiceBox.setValue("Young");
         task5iPreferenceChoiceBox.setItems(ageChoice);
         task5AlgorithmChoiceBox.setValue("T5X1");
-        task5AlgorithmChoiceBox.setItems(algorithmChoice);
+        task5AlgorithmChoiceBox.setItems(p5AlgorithmChoice);
     }
 
 
@@ -676,22 +662,9 @@ public class Controller {
     // ----------------------------- Task1 Function ------------------------//
 
     /**
-     * record if user is now using Task#2 Tab
-     */
-    boolean workingOnTask1 = false;
-    /**
      * record if there's any error in user's input
      */
     boolean hasErrorTask1 = false;
-    /**
-     * do when user select task#1 tab
-     */
-    @FXML
-    void openTab1() {
-        leaveTab2();
-        workingOnTask1 = true;
-        workingOnTask0=workingOnTask2=workingOnTask3=workingOnTask4=workingOnTask5=workingOnTask6=false;
-    }
 
     /**
      * check year input
@@ -772,22 +745,10 @@ public class Controller {
     // ----------------------------- Task2 Function ------------------------//
 
     /**
-     * record if user is now using Task#2 Tab
-     */
-    boolean workingOnTask2 = false;
-    /**
      * record if there's any error in user's input
      */
     boolean hasErrorTask2 = false;
 
-    /**
-     * do when user select task#2 tab
-     */
-    @FXML
-    void openTab2() {
-        workingOnTask2 = true;
-        workingOnTask0=workingOnTask1=workingOnTask3=workingOnTask4=workingOnTask5=workingOnTask6=false;
-    }
 
     /**
      * check year1 input
@@ -1216,24 +1177,12 @@ public class Controller {
     }
 
     // ----------------------------- Task5 Function ------------------------//
-    /**
-     * record if user is now using Task#5 Tab
-     */
-    boolean workingOnTask5 = false;
 
     /**
      * record if there's any error in user's input
      */
     boolean hasErrorTask5 = false;
 
-    /**
-     * do when user select task#5 tab
-     */
-    @FXML
-    void openTab5() {
-        workingOnTask5 = true;
-        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask3=workingOnTask4=workingOnTask6=false;
-    }
 
     /**
      * check iName input
@@ -1299,19 +1248,7 @@ public class Controller {
 
 
     // ----------------------------- Task6 Function ------------------------//
-    /**
-     * record if user is now using Task#6 Tab
-     */
-    boolean workingOnTask6 = false;
 
-    /**
-     * do when user select task#6 tab
-     */
-    @FXML
-    void openTab6() {
-        workingOnTask6 = true;
-        workingOnTask0=workingOnTask1=workingOnTask2=workingOnTask3=workingOnTask4=workingOnTask5=false;
-    }
 
 }
 
