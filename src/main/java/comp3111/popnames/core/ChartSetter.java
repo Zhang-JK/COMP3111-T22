@@ -65,6 +65,28 @@ public class ChartSetter {
         }
         BarChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);
     }
+
+    /**
+     * A bar chart generator using NameScorePair
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param pairs the data to show (year, occurrnce)
+     */
+    static public void BarChartSetter3(BarChart<String, Number> chart, String title, String xTitle, String yTitle, String seriesTitle, List<NameScorePair> pairs) {
+        List<String> xData = new ArrayList<String>();
+        List<Number> yData = new ArrayList<Number>();
+        int count = 0;
+        for (NameScorePair rec : pairs) {
+            xData.add(String.valueOf(rec.getName()));
+            yData.add(rec.getScore());
+            count++;
+            if(count == 10) break;;
+        }
+        BarChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);
+    }
     
     /**
      * Full bar chart generator

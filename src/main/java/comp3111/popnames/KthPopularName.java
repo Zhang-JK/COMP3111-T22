@@ -72,7 +72,7 @@ public class KthPopularName {
         for(NameRecord rec : rawList){
             totalNameOccurrence += rec.getOccurrence();
         }
-        CombineEntries(rawList,modifiedList);
+        CombineEntries(rawList, modifiedList);
         Collections.sort(modifiedList, Collections.reverseOrder());
         return 2;
     }
@@ -158,7 +158,7 @@ public class KthPopularName {
         sb.append(k); sb.append("-th rank in the period from ");
         sb.append(year1); sb.append(" to ");sb.append(year2);
         sb.append(".\n\n");
-        sb.append("(There may be other names that holds the ");sb.append(k);
+        sb.append("(There may be other names that hold the ");sb.append(k);
         sb.append("-th rank for "); sb.append(maxFrequency);
         sb.append(" times. Among all these names, "); sb.append(targetName);
         sb.append(" has the largest total number of occurrences over the period.)");
@@ -172,7 +172,7 @@ public class KthPopularName {
 
     public ObservableList<Map> getMapList() {
 
-        DecimalFormat format = new DecimalFormat("0.000");
+        DecimalFormat format = new DecimalFormat("0.00000");
 
         ObservableList<Map> list = FXCollections.<Map>observableArrayList();
 
@@ -189,6 +189,12 @@ public class KthPopularName {
             item.put("key4" , format.format((float)100*rec.getOccurrence()/totalNameOccurrence)+"%");
             list.add(item);
         }
+        Map<String, Object> finalItem = new HashMap<>();
+        finalItem.put("key1" , "Total");
+        finalItem.put("key2" , year2-year1+1);
+        finalItem.put("key3" , totalNameOccurrence);
+        finalItem.put("key4" , "100%");
+        list.add(finalItem);
         return list;
     }
 

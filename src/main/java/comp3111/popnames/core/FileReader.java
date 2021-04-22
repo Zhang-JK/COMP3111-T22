@@ -197,4 +197,30 @@ public class FileReader {
     }
 
 
+    /**
+     * Input a gender and get the number of records in a certain year
+     * @param gender the gender to search
+     * @param year the target year
+     * @return number of records
+     */
+    public static int getNumRecordByYearAndGender(int gender, int year) {
+        int numRecord = 0;
+        for (CSVRecord rec : getFileParser(year)) {
+            if (rec.get(1).equals(gender==1 ? "F" : "M")) numRecord++;
+        }
+        return numRecord;
+    }
+
+    /**
+     * Work as a proxy to create a NameScorePairObject for the outside class
+     * @param name the gender to search
+     * @param score Compatible Score of this record
+     * @param lengthScore Length Score of this record
+     * @param avg_rankScore Average Rank Score of this record
+     */
+    public static NameScorePair produceNameScorePair(String name, double score, double lengthScore, double avg_rankScore) {
+        return new NameScorePair(name, score, lengthScore, avg_rankScore);
+    }
+
+
 }
