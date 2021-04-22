@@ -66,6 +66,10 @@ public class NameRecord implements Comparable<NameRecord> {
         occurrence = newOccurrence;
     }
 
+
+    /**
+     * function that implements the surface, define the comparision criterion for two NameRecords
+     */
     public int compareTo(NameRecord name2){
         if (occurrence == name2.occurrence) return 0;
         else if (occurrence > name2.occurrence) return 1;

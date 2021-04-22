@@ -196,6 +196,9 @@ public class Controller {
     private Label task5iAgeErrorLabel;
 
     @FXML
+    private Label task5NoticeLabel;
+
+    @FXML
     private Button task5ResetButton;
 
     @FXML
@@ -563,6 +566,21 @@ public class Controller {
         setAllChartsInvisible();
         textAreaConsole.setVisible(true);
         switchButton(summaryButton);
+    }
+
+    /**
+     * clean the console without changing the current button, used for following invalid inputs
+     */
+    void clearAllChartsWithoutSwitching() {
+        textAreaConsole.clear();
+        outputTable1.getColumns().clear();
+        outputTable2.getColumns().clear();
+        outputBarChart1.getData().clear();
+        outputBarChart2.getData().clear();
+        outputPieChart1.getData().clear();
+        outputPieChart2.getData().clear();
+        outputLineChart1.getData().clear();
+        outputLineChart2.getData().clear();
     }
 
     /**
@@ -945,6 +963,8 @@ public class Controller {
         doTask2KCheck();if(hasErrorTask2) return;
         doTask2YearRelationCheck();if(hasErrorTask2) return;
 
+        clearAllChartsWithoutSwitching();
+
         int year1 = Integer.parseInt(task2Year1TextField.getText());
         int year2 = Integer.parseInt(task2Year2TextField.getText());
         int k = Integer.parseInt(task2KTextField.getText());
@@ -954,9 +974,11 @@ public class Controller {
         List<Number> testY = new ArrayList<>(Arrays.asList(1,1,4,5,1,4));
 
         KthPopularName task2 = new KthPopularName();
-        if(task2.setData(year1, year2, k, gender ) == 0)
+        int validCheck = task2.setData(year1, year2, k, gender);
+        if(validCheck == 0)
             return;
-        if(task2.setData(year1, year2, k, gender ) == 1){
+        if(validCheck == 1){
+            clearAllCharts();
             String errorReport = "";
             errorReport += String.format("\n*Error: Not all %d-th most popular names exist in the period from %d to %d, please try again with a smaller k value :)", k, year1, year2);
             textAreaConsole.setText(errorReport);
@@ -1326,27 +1348,54 @@ public class Controller {
 
         NameforCompatiblePairs task5 = new NameforCompatiblePairs();
 
-        task5.setData(iName, iGender, iYOB, iGenderMate, iPreference, isAlgo1);
+        boolean validCheck = task5.setData(iName, iGender, iYOB, iGenderMate, iPreference, isAlgo1);
+        if(!validCheck){
+            clearAllCharts();
+            String errorReport = "";
+            errorReport += String.format("\n*Error: Your name %s can not be found in the database. Please follow the format like \"Mike\",\"Anna\"", iName);
+            textAreaConsole.setText(errorReport);
+            return;
+        }
+
         if (isAlgo1) {
             pieButton.setVisible(false);
             //lineButton.setVisible(false);
             textAreaConsole.setText(task5.getSummaryAlgo1());
             String batTitle = ""; String lineTitle = "";
             batTitle += String.format("%s' Most Popular Names in %d", (iGenderMate.equals("M")?"Boys":"Girls"), iYOB);
-            lineTitle += String.format("Trend of Giving Name %s to New Babies from %d to %d", task5.getPairName().getName(), iYOB-3, iYOB+3 );
+            lineTitle += String.format("Trend of Giving Name %s to New Babies from %d to %d", task5.getPairName().getName(), (iYOB-3 < 1880)? 1880:iYOB-3, (iYOB+3>2019)? 2019:iYOB+3 );
             String[] tableTitle = {"Name", "Occurrences", "Percentage"};
             ChartSetter.BarChartSetter(outputBarChart1, batTitle, "Name", "Occurrence", "Number of New Babies", task5.getPairNameList());
             ChartSetter.TableSetter(outputTable1, 3, tableTitle, task5.getMapListAlgo1() );
             ChartSetter.LineChartSetter(outputLineChart1, lineTitle, "Year", "Occurrences", "Number of New Babies", task5.getXListAlgo1(), task5.getYListAlgo1());
         }
         else {
-            pieButton.setVisible(true);
-            //lineButton.setVisible(true);
+            pieButton.setVisible(false);
+            lineButton.setVisible(false);
             textAreaConsole.setText(task5.getSummaryAlgo2());
-            // TODO
+            String batTitle = "";
+            batTitle += String.format("Compatible Scores for Different Names");
+            ChartSetter.BarChartSetter3(outputBarChart1, batTitle, "Name", "Compatible Score", "Score", task5.getNameScorePairList());
+            String[] tableTitle = {"Name", "Compatible Score", "Length Score", "Average Popularity Score"};
+            ChartSetter.TableSetter(outputTable1, 4, tableTitle, task5.getMapListAlgo2() );
         }
 
 
+    }
+    /**
+     * display additional information is T5X2 algorithm is selected
+     */
+    @FXML
+    void p5AlgoCheck() {
+        String algo = task5AlgorithmChoiceBox.getValue().toString();
+//        boolean hasError = false;
+//        if ( !( algo.equals(p4AlgorithmChoice.get(0)) || algo.equals(p4AlgorithmChoice.get(1)) ) ) {
+//            p4AlgoError.setText("Please Select an algorithm");
+//            hasError = true;
+//        }
+//        p4AlgoError.setVisible(hasError);
+//        hasErrorTask4 = hasError;
+        task5NoticeLabel.setVisible(algo.equals(p5AlgorithmChoice.get(1)));
     }
 
     /**
@@ -1364,6 +1413,7 @@ public class Controller {
         task5iNameErrorLabel.setVisible(false);
         task5iAgeErrorLabel.setText("");
         task5iAgeErrorLabel.setVisible(false);
+        task5NoticeLabel.setVisible(false);
         clearAllCharts();
     }
     

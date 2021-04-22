@@ -222,7 +222,7 @@
                   </Tab>
                   <Tab fx:id="tabApp2" onSelectionChanged="#tab5Selected" text="Application 2">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" onMouseMoved="#p5AlgoCheck" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <TextArea fx:id="task5IntroBox" editable="false" prefHeight="103.0" prefWidth="719.0" text="Task #5: Prediction on Names for Compatible Pairs&#10;&#10;Group22, LIANG Houdong&#10;Welcome to check Task #5,&#10;Please input the following infomation and we will predict name of your compatible pair based on that." wrapText="true" />
                               <Text layoutX="37.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information:">
@@ -250,7 +250,7 @@
                                     <Font name="Arial Bold" size="13.0" />
                                  </font>
                               </Text>
-                              <ChoiceBox fx:id="task5AlgorithmChoiceBox" layoutX="118.0" layoutY="250.0" prefHeight="26.0" prefWidth="106.0" />
+                              <ChoiceBox fx:id="task5AlgorithmChoiceBox" layoutX="118.0" layoutY="250.0" onMouseClicked="#p5AlgoCheck" onMouseMoved="#p5AlgoCheck" prefHeight="26.0" prefWidth="106.0" />
                               <Button fx:id="task5SubmitButton" defaultButton="true" layoutX="578.0" layoutY="250.0" mnemonicParsing="false" onAction="#task5SubmitData" prefHeight="26.0" prefWidth="72.0" text="Submit" />
                               <Button fx:id="task5ResetButton" layoutX="503.0" layoutY="250.0" mnemonicParsing="false" onAction="#task5Reset" prefHeight="26.0" prefWidth="61.0" text="Reset" />
                               <Label fx:id="task5iNameErrorLabel" layoutX="90.0" layoutY="167.0" text="Wrong format" textFill="RED" visible="false">
@@ -261,6 +261,11 @@
                               <Label fx:id="task5iAgeErrorLabel" layoutX="494.0" layoutY="167.0" text="Wrong format" textFill="RED" visible="false">
                                  <font>
                                     <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="task5NoticeLabel" layoutX="230.0" layoutY="258.0" text="The algorithm takes about 30s, please wait patiently" textFill="#0011ff" visible="false">
+                                 <font>
+                                    <Font name="Arial Italic" size="10.0" />
                                  </font>
                               </Label>
                            </children>
