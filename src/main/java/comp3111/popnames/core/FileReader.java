@@ -222,5 +222,39 @@ public class FileReader {
         return new NameScorePair(name, score, lengthScore, avg_rankScore);
     }
 
+    /**
+     * find a name begin with a certain string
+     * @param beginning the beginning string
+     * @param year which year
+     * @param gender 0 for male and 1 for girl
+     * @return a list of names
+     */
+    public static List<NameRecord> getNameBeginWith(String beginning, int year, int gender) {
+        List<NameRecord> result = new ArrayList<>();
+        for (CSVRecord rec : getFileParser(year)) {
+            if(rec.get(1).equals(gender==0 ? "M" : "F") && rec.get(0).toLowerCase().substring(0, 1).equals(beginning))
+                result.add(new NameRecord(rec));
+        }
+        return result;
+    }
+
+    /**
+     * find a name begin with a certain string and end with another
+     * @param beginning the beginning string
+     * @param ending the ending string
+     * @param year which year
+     * @param gender 0 for male and 1 for girl
+     * @return a list of names
+     */
+    public static List<NameRecord> getNameBeginEndWith(String beginning, String ending, int year, int gender) {
+        List<NameRecord> result = new ArrayList<>();
+        for (CSVRecord rec : getFileParser(year)) {
+            if(rec.get(1).equals(gender==0 ? "M" : "F") &&
+                    rec.get(0).toLowerCase().substring(0, beginning.length()).equals(beginning) &&
+                    rec.get(0).toLowerCase().substring(rec.get(0).length() - ending.length(), rec.get(0).length()).equals(ending) )
+                result.add(new NameRecord(rec));
+        }
+        return result;
+    }
 
 }
