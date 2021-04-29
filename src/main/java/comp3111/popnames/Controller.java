@@ -750,7 +750,7 @@ public class Controller {
         summaryButton.setVisible(true);
         tableButton.setVisible(true);
         barButton.setVisible(true);
-        pieButton.setVisible(false);
+        pieButton.setVisible(true);
         lineButton.setVisible(false);
         selectedTask = 4;
     }
@@ -1250,22 +1250,19 @@ public class Controller {
 
         RecommendationOnNames task4 = new RecommendationOnNames();
         task4.setData(dadName, momName, dadYob, momYob, isAlgo1, type);
+
         if (isAlgo1) {
-            pieButton.setVisible(false);
-            lineButton.setVisible(false);
             textAreaConsole.setText(task4.getSummaryAlgo1());
-            ChartSetter.BarChartSetter(outputBarChart1, "Boy's most popular names", "Name", "Occurrence", String.valueOf(dadYob), task4.getBoyRecommendList());
-            ChartSetter.BarChartSetter(outputBarChart2, "Girl's most popular names", "Name", "Occurrence", String.valueOf(momYob), task4.getGirlRecommendList());
-            ChartSetter.TableSetter(outputTable1, 3, new String[]{"Boy Name", "Occurrences", "Percentage"}, task4.getMapList(0));
-            ChartSetter.TableSetter(outputTable2, 3, new String[]{"Girl Name", "Occurrences", "Percentage"}, task4.getMapList(1));
-            // TODO
         }
         else {
-//            pieButton.setVisible(true);
-//            lineButton.setVisible(true);
             textAreaConsole.setText(task4.getSummaryAlgo2());
-            // TODO
         }
+        ChartSetter.BarChartSetter(outputBarChart1, "Boy's most popular names", "Name", "Occurrence", String.valueOf(dadYob), task4.getBoyRecommendList());
+        ChartSetter.BarChartSetter(outputBarChart2, "Girl's most popular names", "Name", "Occurrence", String.valueOf(momYob), task4.getGirlRecommendList());
+        ChartSetter.TableSetter(outputTable1, 3, new String[]{"Boy Name", "Occurrences", "Percentage"}, task4.getMapList(0));
+        ChartSetter.TableSetter(outputTable2, 3, new String[]{"Girl Name", "Occurrences", "Percentage"}, task4.getMapList(1));
+        ChartSetter.PieChartSetter(outputPieChart1, "Boy's most popular names", task4.getBoyRecommendList());
+        ChartSetter.PieChartSetter(outputPieChart2, "Girl's most popular names", task4.getGirlRecommendList());
     }
 
     /**
@@ -1285,8 +1282,6 @@ public class Controller {
         p4MomYobError.setVisible(false);
         p4TypeChoiceBox.setVisible(false);
         p4TypeLabel.setVisible(false);
-        pieButton.setVisible(false);
-        lineButton.setVisible(false);
 
         clearAllCharts();
     }
