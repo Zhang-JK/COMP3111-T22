@@ -838,6 +838,7 @@ public class Controller {
         doP1NCheck();
         if(hasErrorTask1) return;
 
+        clearAllCharts();
         String yearFieldText = p1YearField.getText();
         String nFieldText = p1NField.getText();
 
@@ -846,6 +847,8 @@ public class Controller {
             return;
 
         textAreaConsole.setText(task1.getSummary());
+        ChartSetter.TableSetter(outputTable1, 3, new String[]{"Boy Name", "Occurrences", "Percentage"}, task1.getMapList(0));
+        ChartSetter.TableSetter(outputTable2, 3, new String[]{"Girl Name", "Occurrences", "Percentage"}, task1.getMapList(1));
         ChartSetter.BarChartSetter(outputBarChart1, "Male", "Name", "Occurrence", "number of babies", task1.getMaleList());
         ChartSetter.BarChartSetter(outputBarChart2, "Female", "Name", "Occurrence", "number of babies", task1.getFemaleList());
         ChartSetter.PieChartSetter(outputPieChart1, "Male", task1.getMaleList());
@@ -1237,6 +1240,7 @@ public class Controller {
         p4MomYobCheck();
         if(hasErrorTask4) return;
 
+        clearAllCharts();
         String dadName = p4DadName.getText();
         String momName = p4MomName.getText();
         int dadYob = Integer.parseInt(p4DadYob.getText());
@@ -1252,11 +1256,13 @@ public class Controller {
             textAreaConsole.setText(task4.getSummaryAlgo1());
             ChartSetter.BarChartSetter(outputBarChart1, "Boy's most popular names", "Name", "Occurrence", String.valueOf(dadYob), task4.getBoyRecommendList());
             ChartSetter.BarChartSetter(outputBarChart2, "Girl's most popular names", "Name", "Occurrence", String.valueOf(momYob), task4.getGirlRecommendList());
+            ChartSetter.TableSetter(outputTable1, 3, new String[]{"Boy Name", "Occurrences", "Percentage"}, task4.getMapList(0));
+            ChartSetter.TableSetter(outputTable2, 3, new String[]{"Girl Name", "Occurrences", "Percentage"}, task4.getMapList(1));
             // TODO
         }
         else {
-            pieButton.setVisible(true);
-            lineButton.setVisible(true);
+//            pieButton.setVisible(true);
+//            lineButton.setVisible(true);
             textAreaConsole.setText(task4.getSummaryAlgo2());
             // TODO
         }

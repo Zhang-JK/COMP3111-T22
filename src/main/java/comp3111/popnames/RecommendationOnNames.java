@@ -2,8 +2,12 @@ package comp3111.popnames;
 
 import comp3111.popnames.core.FileReader;
 import comp3111.popnames.core.NameRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is for task4, recommend names
@@ -11,6 +15,14 @@ import java.util.List;
  * @version 1.0
  */
 public class RecommendationOnNames {
+    /**
+     * total number of male births
+     */
+    private int maleTotalBirth;
+    /**
+     * total number of female births
+     */
+    private int femaleTotalBirth;
     /**
      * the recommend boy name
      */
@@ -37,16 +49,18 @@ public class RecommendationOnNames {
      * @param isAlgo1 whether using T4X1 Algorithm
      * @param nameType additional information if use T4X2, the type of the name
      *                 0 for T4X1, 1 for popular, 2 for unique
-     * @return whether get data is successful
      */
-    public boolean setData(String dadName, String momName, int dadYob, int momYob, boolean isAlgo1, int nameType) {
-        if (dadYob < 1880 || dadYob > 2019) return false;
-        if (momYob < 1880 || momYob > 2019) return false;
+    public void setData(String dadName, String momName, int dadYob, int momYob, boolean isAlgo1, int nameType) {
+        if (dadYob < 1880 || dadYob > 2019) return;
+        if (momYob < 1880 || momYob > 2019) return;
+        if(boyRecommendList != null) boyRecommendList.clear();
+        if(girlRecommendList != null) girlRecommendList.clear();
+        maleTotalBirth = FileReader.getTotalBirthsByYear(dadYob, 0);
+        femaleTotalBirth = FileReader.getTotalBirthsByYear(momYob, 1);
         if(isAlgo1)
             task4Algo1(dadYob, momYob);
         else
             task4Algo2(dadName, momName, dadYob, momYob, nameType);
-        return true;
     }
 
     /**
@@ -68,9 +82,9 @@ public class RecommendationOnNames {
      * @param momName mom's name
      * @param dadYob dad's year of birth
      * @param momYob mom's year of birth
-     * @param nameTpye 1 for popular 2 for unique
+     * @param nameType 1 for popular 2 for unique
      */
-    private void task4Algo2(String dadName, String momName, int dadYob, int momYob, int nameTpye) {
+    private void task4Algo2(String dadName, String momName, int dadYob, int momYob, int nameType) {
 
     }
 
@@ -121,7 +135,7 @@ public class RecommendationOnNames {
         sb.append("We used our data base to find a popular name at the year of parents' birth.\n");
         sb.append("- Boy's name is from the most popular boy name at dad's year of birth.\n");
         sb.append("- Girl's name is from the most popular girl name at mom's year of birth.\n");
-        sb.append("  (You can also view other popular name on the Bar Chart page)\n\n");
+        sb.append("  (You can also view other popular name on the Table and Bar Chart page)\n\n");
         sb.append("Hope you enjoy it and why not try once more with another algorithm ;)\n");
 
         return sb.toString();
@@ -135,5 +149,25 @@ public class RecommendationOnNames {
         StringBuilder sb = new StringBuilder();
         //TODO
         return sb.toString();
+    }
+
+    /**
+     * get table for setting the table chart
+     * @param gender 0 for male, 1 for female
+     * @return a map for table view
+     */
+    public ObservableList<Map> getMapList(int gender) {
+        ObservableList<Map> list = FXCollections.<Map>observableArrayList();
+
+        for(NameRecord rec : (gender==0 ? boyRecommendList : girlRecommendList)) {
+            Map<String, Object> item = new HashMap<>();
+            String name = rec.getName();
+            item.put("key1" , rec.getName());
+            item.put("key2" , rec.getOccurrence());
+            item.put("key3" , String.format("%.5f" ,(float)rec.getOccurrence() / (float)(gender==0 ? maleTotalBirth : femaleTotalBirth) ) );
+            list.add(item);
+        }
+
+        return list;
     }
 }
