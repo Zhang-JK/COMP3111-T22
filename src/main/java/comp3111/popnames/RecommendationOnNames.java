@@ -111,8 +111,8 @@ public class RecommendationOnNames {
                 boyRecommendList = boyRecommendList.subList(boyRecommendList.size() / 2, Math.min(boyRecommendList.size(), boyRecommendList.size() / 2 + 8));
             if (girlRecommendList.size() > 4)
                 girlRecommendList = girlRecommendList.subList(girlRecommendList.size() / 2, Math.min(girlRecommendList.size(), girlRecommendList.size() / 2 + 8));
-            boyName = boyRecommendList.get(boyRecommendList.size() / 2);
-            girlName = girlRecommendList.get(girlRecommendList.size() / 2);
+            boyName = boyRecommendList.get(0);
+            girlName = girlRecommendList.get(0);
         }
     }
 
@@ -162,8 +162,8 @@ public class RecommendationOnNames {
         StringBuilder sb = new StringBuilder();
 
         sb.append("\n * ");
-        sb.append("The Recommend Name for Boy is ").append(boyName.getName()).append(".\n\n * ");
-        sb.append("The Recommend Name for Girl is ").append(girlName.getName()).append(".\n\n\n\n");
+        sb.append("The Recommend Name for Boy is ").append(getBoyName().getName()).append(".\n\n * ");
+        sb.append("The Recommend Name for Girl is ").append(getGirlName().getName()).append(".\n\n\n\n");
         sb.append("How it works?\n");
         sb.append("We used our data base to find a popular name at the year of parents' birth.\n");
         sb.append("- Boy's name is from the most popular boy name at dad's year of birth.\n");
