@@ -1257,12 +1257,12 @@ public class Controller {
         else {
             textAreaConsole.setText(task4.getSummaryAlgo2());
         }
-        ChartSetter.BarChartSetter(outputBarChart1, "Boy's most popular names", "Name", "Occurrence", String.valueOf(dadYob), task4.getBoyRecommendList());
-        ChartSetter.BarChartSetter(outputBarChart2, "Girl's most popular names", "Name", "Occurrence", String.valueOf(momYob), task4.getGirlRecommendList());
+        ChartSetter.BarChartSetter(outputBarChart1, "Boy's names", "Name", "Occurrence", String.valueOf(dadYob), task4.getBoyRecommendList());
+        ChartSetter.BarChartSetter(outputBarChart2, "Girl's names", "Name", "Occurrence", String.valueOf(momYob), task4.getGirlRecommendList());
         ChartSetter.TableSetter(outputTable1, 3, new String[]{"Boy Name", "Occurrences", "Percentage"}, task4.getMapList(0));
         ChartSetter.TableSetter(outputTable2, 3, new String[]{"Girl Name", "Occurrences", "Percentage"}, task4.getMapList(1));
-        ChartSetter.PieChartSetter(outputPieChart1, "Boy's most popular names", task4.getBoyRecommendList());
-        ChartSetter.PieChartSetter(outputPieChart2, "Girl's most popular names", task4.getGirlRecommendList());
+        ChartSetter.PieChartSetter(outputPieChart1, "Boy's names", task4.getBoyRecommendList());
+        ChartSetter.PieChartSetter(outputPieChart2, "Girl's names", task4.getGirlRecommendList());
     }
 
     /**
