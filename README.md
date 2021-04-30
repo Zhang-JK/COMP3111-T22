@@ -23,4 +23,5 @@ Team Repo: https://github.com/Zhang-JK/COMP3111-T22
 > branch: [dong_](https://github.com/Zhang-JK/COMP3111-T22/tree/dong_)
 
 ## Documentation
+Click [HERE](./doc) to visit all reports and documentations.  
 Click [HERE](./doc/Activity1.pdf) to visit our Activity1 submission, including class diagram and use-case diagram.
