@@ -54,7 +54,7 @@ public class ChartSetter {
      * @param xTitle x-axis title/comment
      * @param yTitle y-axis title/comment
      * @param seriesTitle bar comment
-     * @param record the data to show (year, occurrnce)
+     * @param record the data to show (year, occurrence)
      */
     static public void BarChartSetter2(BarChart<String, Number> chart, String title, String xTitle, String yTitle, String seriesTitle, List<OccurrenceRecord> record) {
         List<String> xData = new ArrayList<String>();
@@ -73,7 +73,7 @@ public class ChartSetter {
      * @param xTitle x-axis title/comment
      * @param yTitle y-axis title/comment
      * @param seriesTitle bar comment
-     * @param pairs the data to show (year, occurrnce)
+     * @param pairs the data to show (year, occurrence)
      */
     static public void BarChartSetter3(BarChart<String, Number> chart, String title, String xTitle, String yTitle, String seriesTitle, List<NameScorePair> pairs) {
         List<String> xData = new ArrayList<String>();
@@ -102,6 +102,7 @@ public class ChartSetter {
     static public void BarChartSetter(BarChart<String, Number> chart, String title, String xTitle, String yTitle, String seriesTitle,List<String> xData, List<Number> yData) {
         if(xData.size() != yData.size()) throw new RuntimeException();
         chart.getData().clear();
+        chart.layout();
         chart.setTitle(title);
         chart.getXAxis().setLabel(xTitle);
         chart.getYAxis().setLabel(yTitle);
@@ -174,7 +175,16 @@ public class ChartSetter {
                     });
         }
     }
-    
+
+    /**
+     * A bar chart generator using occurrence record
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param record the data to show (year, occurrence)
+     */
     static public void LineChartSetter(LineChart<Integer, Integer> chart, String title, String xTitle, String yTitle, String seriesTitle, List<OccurrenceRecord> record) {
         List<String> xData = new ArrayList<String>();
         List<Integer> yData = new ArrayList<Integer>();
