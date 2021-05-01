@@ -96,4 +96,45 @@ public class FileReaderTest {
         assertEquals(rank, 0);
     }
 
+    @Test
+    public void testGetOccurrenceByYearAndName1() {
+        int occurrence = FileReader.getOccurrenceByYearAndName("Emma", 2019, 1);
+        assertEquals(occurrence, 17102);
+    }
+
+    @Test
+    public void testGetOccurrenceByYearAndName2() {
+        int occurrence = FileReader.getOccurrenceByYearAndName("James", 2019, 0);
+        assertEquals(occurrence, 13087);
+    }
+
+    @Test
+    public void testGetOccurrenceByYearAndName3() {
+        int occurrence = FileReader.getOccurrenceByYearAndName("lianghoudong", 2019, 0);
+        assertEquals(occurrence, 0);
+    }
+
+    @Test
+    public void testGetNumRecordByYearAndGender1() {
+        int numRecord = FileReader.getNumRecordByYearAndGender(0, 2019);
+        assertEquals(numRecord, 14049);
+    }
+
+    @Test
+    public void testGetNumRecordByYearAndGender2() {
+        int numRecord = FileReader.getNumRecordByYearAndGender(1, 2019);
+        assertEquals(numRecord, 17905);
+    }
+
+    @Test
+    public void testProduceNameScorePair1() {
+        NameScorePair nameRecordPair = FileReader.produceNameScorePair("Jake", 89.0, 1.0, 89.0);
+        String name = nameRecordPair.getName();
+        double score = nameRecordPair.getScore();
+        double lengthScore = nameRecordPair.getLengthScore();
+        double avgRankScore = nameRecordPair.getAvgRankScore();
+        assertEquals( name, "Jake");
+    }
+
+
 }

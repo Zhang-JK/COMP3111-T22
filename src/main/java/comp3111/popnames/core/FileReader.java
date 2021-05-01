@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * This class is used for reading data from the source file
  * @author ZHANG Jiekai, LIANG Houdong, CHENG Yiren
- * @version 1.1
+ * @version 1.3
  */
 public class FileReader {
 

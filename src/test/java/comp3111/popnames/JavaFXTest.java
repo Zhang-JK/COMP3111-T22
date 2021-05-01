@@ -42,8 +42,8 @@ public class JavaFXTest extends ApplicationTest {
 		String s2 = t.getText();
 		assertTrue(s1.equals(s2));
 	}
-	
 
+	/*
 	@Test
 	public void testButtonRankFalse() {
 		//clickOn("#tabTaskZero");
@@ -54,7 +54,7 @@ public class JavaFXTest extends ApplicationTest {
 		//sleep(1000);
 		String s2 = t.getText();
 		assertFalse(s1.equals(s2));
-	}
+	}*/
 
 	
 	@Test
