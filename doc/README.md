@@ -13,7 +13,7 @@ Click for navigating to the corresponding file/folder
 - [Meeting Record 3](Meeting-Notes/minute_5.pdf)
 
 ## Activity 2 - Source Code  
-- [Integrated PDF File]() for this part
+- [Integrated PDF File](Act_2_Src.pdf) for this part
 - [Screenshots](Data-Reporting-Screenshots) of the execution of the application showing sample inputs and outputs of your choice (Data-Reporting Task)
 - [Screenshots](Evidence-Based-Screenshots) of the execution of the application showing sample inputs and outputs of your choice (Evidence-Based Recommendation Task)
 - Report on the unit testing [Image File](unit_test.png), [HTML File](reports/tests/test/index.html)

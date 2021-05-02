@@ -1,6 +1,8 @@
 # COMP 3111 T22
 Team Repo: https://github.com/Zhang-JK/COMP3111-T22
 
+#### Click [HERE](./doc) to visit our Activity2 Documentation, including source code and documentation two parts.
+
 
 ## People
 ### 1. ZHANG Jiekai
