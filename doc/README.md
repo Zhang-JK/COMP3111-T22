@@ -18,6 +18,6 @@ Click for navigating to the corresponding file/folder
 - [Screenshots](Evidence-Based-Screenshots) of the execution of the application showing sample inputs and outputs of your choice (Evidence-Based Recommendation Task)
 - Report on the unit testing [JPG File](), [HTML File](../build/reports/tests/test/index.html)
 - Report on the coverage test [JPG File](), [HTML File](../build/jacocoHTML/index.html)
-- [Documentation](JavaDoc) on the implemented tasks
+- [Documentation](javadoc/index.html) on the implemented tasks
 - Supplementary Notes: nothing
 

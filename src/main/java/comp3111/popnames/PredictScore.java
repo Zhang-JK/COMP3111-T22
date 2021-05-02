@@ -10,6 +10,12 @@ import comp3111.popnames.core.OccurrenceRecord;
  * @version 1.0
  */
 public class PredictScore {
+	/**
+	 *
+	 * @param userName user's name
+	 * @param mateName mate's name
+	 * @return a string of score
+	 */
 	public String predict(String userName, String mateName) {
     	String score = "";
 		
@@ -22,7 +28,15 @@ public class PredictScore {
     		return score;
     	}
 	}
-	
+
+	/**
+	 *
+	 * @param mateName  mate's name
+	 * @param agePreference preference for age
+	 * @param mateGender the gender of the mate
+	 * @param userYOB  user's birth year
+	 * @return a string of score
+	 */
 	public String predict2(String mateName, String agePreference, String mateGender, int userYOB) {
 		String score = "0%";
 		FileReader tempReader = new FileReader();

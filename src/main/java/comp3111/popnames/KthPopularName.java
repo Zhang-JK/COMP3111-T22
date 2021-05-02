@@ -96,7 +96,7 @@ public class KthPopularName {
     /**
      * input a list of raw data and return a modified list with combined and sorted data
      * @param rawData a list of NameRecord with original data
-     * @param rawData a list of NameRecord with modified data
+     * @param modifiedData a list of NameRecord with modified data
      */
 
     public static void CombineEntries( List<NameRecord> rawData,  List<NameRecord> modifiedData  ) {

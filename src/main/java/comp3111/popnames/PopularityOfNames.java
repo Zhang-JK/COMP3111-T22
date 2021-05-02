@@ -66,7 +66,7 @@ public class PopularityOfNames {
 	}
 	
     /**
-     * return an ObservableListList of Map data for generating the table
+     * @return an ObservableListList of Map data for generating the table
      *
      */
     public ObservableList<Map> getMapList() {

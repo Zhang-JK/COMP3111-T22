@@ -45,6 +45,7 @@ public class Task2andTask5Test extends ApplicationTest {
         clickOn("#task2SubmitButton");
         sleep(1000);
         String s1 = t.getText();
+
         clickOn("#tabReport2");
         ((TextField)s.lookup("#task2Year1TextField")).setText("2000");
         ((TextField)s.lookup("#task2Year2TextField")).setText("2010");
@@ -52,20 +53,7 @@ public class Task2andTask5Test extends ApplicationTest {
         clickOn("#task2SubmitButton");
         sleep(1000);
         String s2 = t.getText();
-        /*
-        String ans = "\n" +
-                "* Christopher has hold the 10-th rank most often for a total of 3 times among names registered for baby boys born in the period from 2000 to 2010. The total number of occurrences of Christopher is 55107 which represents 26.42173% of total male births at the 10-th rank in the period from 2000 to 2010.\n" +
-                "\n" +
-                "(There may be other names that hold the 10-th rank for 3 times. Among all these names, Christopher has the largest total number of occurrences over the period.)";
 
-         */
-        /*
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n* ");
-        sb.append("Christopher has hold the 10-th rank most often for a total of 3 times among names registered for baby boys born in the period from 2000 to 2010. The total number of occurrences of Christopher is 55107 which represents 26.42173% of total male births at the 10-th rank in the period from 2000 to 2010.");
-        sb.append("\n\n");
-        sb.append("(There may be other names that hold the 10-th rank for  3 times. Among all these names, Christopher has the largest total number of occurrences over the period.");
-         */
         assertTrue(s1.equals(s2));
     }
 
@@ -77,6 +65,7 @@ public class Task2andTask5Test extends ApplicationTest {
         ((TextField)s.lookup("#task2KTextField")).setText("10");
         clickOn("#task2SubmitButton");
         sleep(1000);
+
         String result1 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(0)).getCellData(0).toString();
         String result2 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(1)).getCellData(0).toString();
         String result3 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(0)).getCellData(1).toString();
@@ -95,6 +84,7 @@ public class Task2andTask5Test extends ApplicationTest {
         ((TextField)s.lookup("#task5iAgeTextField")).setText("2000");
         clickOn("#task5SubmitButton");
         sleep(1000);
+
         String result1 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(0)).getCellData(0).toString();
         String result2 = ((TableColumn)((TableView)s.lookup("#outputTable2")).getColumns().get(1)).getCellData(0).toString();
         assertTrue(result1.equals("Jacob"));
@@ -115,6 +105,7 @@ public class Task2andTask5Test extends ApplicationTest {
         assertTrue(result1.equals("Jimmy"));
         assertTrue(result2.equals("Albert"));
     }
+
 
 
 }
