@@ -44,6 +44,7 @@ public class FileReader {
      * @param year2 target ending year
      * @param name name of interest
      * @param gender gender of the name want to research
+     * @return  a list of OccurrenceRecord of that name during the period
      */  
     public static List<OccurrenceRecord> getFileOfYearAndName(int year1, int year2, String name, String gender){
     	NumberFormat numberFormat = NumberFormat.getInstance();
@@ -83,6 +84,7 @@ public class FileReader {
      * @param agePreference the age preference of the user
      * @param mateGender gender of interest
      * @param userYOB year of birth of user
+     * @return a boolean variable indicating whether the two names are within 100 ranks distance
      */  
     public static boolean findPopularity(String mateName, String agePreference, String mateGender, int userYOB) {
     	boolean within100 = false;
@@ -217,6 +219,7 @@ public class FileReader {
      * @param score Compatible Score of this record
      * @param lengthScore Length Score of this record
      * @param avg_rankScore Average Rank Score of this record
+     * @return a produced NameScorePair containing input parameters
      */
     public static NameScorePair produceNameScorePair(String name, double score, double lengthScore, double avg_rankScore) {
         return new NameScorePair(name, score, lengthScore, avg_rankScore);

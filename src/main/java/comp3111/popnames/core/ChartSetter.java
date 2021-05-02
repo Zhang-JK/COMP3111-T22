@@ -90,14 +90,14 @@ public class ChartSetter {
     
     /**
      * Full bar chart generator
-     * You need to pass the raw data in List<String> for x and List<Number> for y
+     * You need to pass the raw data in a list of string for x and a list of number for y
      * @param chart the output chart
      * @param title the chart title
      * @param xTitle x-axis title/comment
      * @param yTitle y-axis title/comment
      * @param seriesTitle bar comment
-     * @param xData data for x-axis, should be List<String>
-     * @param yData data for y-axis, should be List<Number>
+     * @param xData data for x-axis, should be String List
+     * @param yData data for y-axis, should be Number List
      */
     static public void BarChartSetter(BarChart<String, Number> chart, String title, String xTitle, String yTitle, String seriesTitle,List<String> xData, List<Number> yData) {
         if(xData.size() != yData.size()) throw new RuntimeException();
@@ -139,11 +139,11 @@ public class ChartSetter {
 
     /**
      * Full version of pie chart generator
-     * You need to pass the raw data in List<String> and List<Number>
+     * You need to pass the raw data in a list of string and a list of number
      * @param chart the output chart
      * @param title the chart title
-     * @param xData data in List<String>, which shows the name of each part
-     * @param yData data in List<Number>, which shows the amount of each part
+     * @param xData data in String List, which shows the name of each part
+     * @param yData data in Number List, which shows the amount of each part
      */
     static public void PieChartSetter(PieChart chart, String title, List<String> xData, List<Number> yData) {
         if(xData.size() != yData.size()) throw new RuntimeException();
@@ -197,14 +197,14 @@ public class ChartSetter {
 
     /**
      * Full version of line chart generator
-     * You need to pass the raw data in List<String> and List<Integer>
+     * You need to pass the raw data in a list of string and a list of integer
      * @param chart the output chart
      * @param title the chart title
      * @param xTitle x-axis title/comment
      * @param yTitle y-axis title/comment
      * @param seriesTitle line comment
-     * @param xData data in List<String>, which shows the name of each point
-     * @param yData data in List<Integer>, which shows the number of each point
+     * @param xData data in String List, which shows the name of each point
+     * @param yData data in Integer List, which shows the number of each point
      */
     static public void LineChartSetter(LineChart<Integer, Integer> chart, String title, String xTitle, String yTitle, String seriesTitle, List<String> xData, List<Integer> yData) {
         if(xData.size() != yData.size()) throw new RuntimeException();
@@ -221,6 +221,10 @@ public class ChartSetter {
         chart.getData().addAll(series);
     }
 
+    /**
+     * an String array of column key, used to differentiate columns
+     *
+     */
     public static final String[] ColumnMapKey = {"key1", "key2", "key3", "key4", "key5"};
 
     /**
