@@ -1083,6 +1083,21 @@ public class Controller {
         task3Year2ErrorLabel.setVisible(hasError);
         hasErrorTask3 = hasError;
     }
+    
+    /**
+     * check the name input
+     */
+    @FXML
+    void task3NameCheck() {
+        String name = task3NameTextField.getText();
+        boolean hasError = false;
+        if (name.isBlank() || StringUtils.isNumeric(name)) {
+            task3NameErrorLabel.setText("Please Enter a Name");
+            hasError = true;
+        }
+        task3NameErrorLabel.setVisible(hasError);
+        hasErrorTask3 = hasError;
+    }
 
     /**
      *  Task Three
@@ -1095,6 +1110,7 @@ public class Controller {
     	
     	doTask3Year1Check();
         doTask3Year2Check();
+        task3NameCheck();
         if(hasErrorTask3) return;
 
         doTask3YearRelationCheck();
@@ -1506,17 +1522,28 @@ public class Controller {
         if(algorithm == "T6X1") {
         	isMatch = predictObject.predict(userName, mateName);
         	
-        	oReport += String.format("There's a study saying that people are perfect "
-        			+ "match with each other if their name lengths are the same.\n"
-        			+ "Otherwise they are not.\n"
-        			+ "So you two's compatible pair score is %s.", isMatch);
+        	oReport += String.format("You two's compatible pair score is %s.\n"
+        			+ "\n"
+        			+ "How it works?\n"
+        			+ "We make prediction based on the name length.\n"
+        			+ "- If you tow's name length are the same, you get full score.\n"
+        			+ "- Otherwise it's zero.\n"
+        			+ "\n"
+        			+ "Hope you enjoy this game!", isMatch);
         	textAreaConsole.setText(oReport);
         }
         
         else {
         	isMatch = predictObject.predict2(mateName, agePreference, mateGender, userYOB);
         
-    		oReport += String.format("The compatible score is %s", isMatch);
+    		oReport += String.format("The compatible score is %s\n"
+    				+ "\n"
+    				+ "How it works?\n"
+    				+ "- If the target name is the top 100 popular name in at least one year of the year which\n"
+    				+ "is earlier or later than the user's year of birth (based on user's age preference),you get full score.\n"
+    				+ "- Otherwise you get zero.\n"
+    				+ "\n"
+    				+ "Hope you enjoy this game!", isMatch);
         	
         	textAreaConsole.setText(oReport);
         }
