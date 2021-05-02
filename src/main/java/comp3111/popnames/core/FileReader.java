@@ -57,21 +57,24 @@ public class FileReader {
 			int genderCheck = gender.equals("M") ? 0 : 1;
 			int rank = getRankByYearAndName(name, i, genderCheck);
 			
-			for (CSVRecord rec : getFileParser(i)) {
-				int numBorn = Integer.parseInt(rec.get(2));
-				if (rec.get(1).equals(gender)) {
-					totalBirths += numBorn;
+			if(rank < 1001) {
+				for (CSVRecord rec : getFileParser(i)) {
+					int numBorn = Integer.parseInt(rec.get(2));
+					if (rec.get(1).equals(gender)) {
+						totalBirths += numBorn;
+					}
+					if (rec.get(0).equals(name)) {
+						occurrences = numBorn;
+					}
 				}
-				if (rec.get(0).equals(name)) {
-					occurrences = numBorn;
-				}
-			}
-			
-			numberFormat.setMaximumFractionDigits(2);  
-			percentage = numberFormat.format((float) occurrences / (float) totalBirths * 100);
-			percentage = percentage + "%";
-			
-			result.add(new OccurrenceRecord(i, rank, occurrences, percentage, totalBirths));
+				
+				numberFormat.setMaximumFractionDigits(2);  
+				percentage = numberFormat.format((float) occurrences / (float) totalBirths * 100);
+				percentage = percentage + "%";
+				
+				result.add(new OccurrenceRecord(i, rank, occurrences, percentage, totalBirths));
+			}		
+
     	}
     	
     	return result;

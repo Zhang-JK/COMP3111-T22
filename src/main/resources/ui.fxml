@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox onDragDetected="#dragSplitWindow" prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
+<VBox onDragDetected="#dragSplitWindow" prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="298.0" prefWidth="719.0">
       <children>
@@ -125,7 +125,7 @@
                            <children>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="719.0">
                                  <children>
-                                    <Label fx:id="task3Year1ErrorLabel" layoutX="113.0" layoutY="181.0" prefHeight="15.0" prefWidth="225.0" text="Wrong format" textFill="RED" visible="false">
+                                    <Label fx:id="task3Year1ErrorLabel" layoutX="113.0" layoutY="181.0" prefHeight="15.0" prefWidth="261.0" text="Wrong format" textFill="RED" visible="false">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
@@ -141,7 +141,12 @@
                                     <Text layoutX="321.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" />
                                     <Button fx:id="task3ResetButton" layoutX="546.0" layoutY="243.0" mnemonicParsing="false" onAction="#task3Reset" text="Reset" />
                                     <Button fx:id="task3SubmitButton" layoutX="625.0" layoutY="243.0" mnemonicParsing="false" onAction="#task3SubmitData" text="Submit" textFill="#b94a4a" />
-                                    <Label fx:id="task3Year2ErrorLabel" layoutX="113.0" layoutY="235.0" prefHeight="15.0" prefWidth="225.0" text="Wrong format" textFill="RED" visible="false">
+                                    <Label fx:id="task3Year2ErrorLabel" layoutX="113.0" layoutY="235.0" prefHeight="15.0" prefWidth="267.0" text="Wrong format" textFill="RED" visible="false">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="task3NameErrorLabel" layoutX="375.0" layoutY="173.0" prefHeight="15.0" prefWidth="225.0" text="Wrong format" textFill="RED" visible="false">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
