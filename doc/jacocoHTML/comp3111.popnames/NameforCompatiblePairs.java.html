@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NameforCompatiblePairs.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames</a> &gt; <span class="el_source">NameforCompatiblePairs.java</span></div><h1>NameforCompatiblePairs.java</h1><pre class="source lang-java linenums">package comp3111.popnames;
+
+import comp3111.popnames.core.FileReader;
+import comp3111.popnames.core.NameRecord;
+import comp3111.popnames.core.NameScorePair;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.text.DecimalFormat;
+import java.time.Year;
+import java.util.*;
+
+/**
+ * This class is for task5, predict name for compatible pairs
+ * @author LIANG Houdong
+ * @version 1.0
+ */
+<span class="fc" id="L18">public class NameforCompatiblePairs {</span>
+    /**
+     * the NameRecord of soulmate
+     */
+    private NameRecord pairName;
+
+    /**
+     * the backup soulmate NameRecords, as reference
+     */
+    private List&lt;NameRecord&gt; pairNameList;
+
+    /**
+     * the NameScorePair of soulmate
+     */
+    private NameScorePair pairNameScore;
+
+    /**
+     * the backup soulmate NameScorePairs, as reference
+     */
+    private List&lt;NameScorePair&gt;  nameScorePairList;
+
+    /**
+     * record for input iYOB
+     */
+    private int iYOB;
+
+    /**
+     * record for input iGenderMate
+     */
+    private String iGenderMate;
+
+
+    /**
+     * get input data from user input and generate the recommended name
+     * @param iName user's name
+     * @param iGender user's gender
+     * @param iYOB user's year of birth
+     * @param iGenderMate the gender of the soulmate that user wants to match
+     * @param iPreference the age preference of the soulmate that user wants to match
+     * @param isAlgo1 whether using T4X1 Algorithm
+     * @return whether get data is successful, the only case it is unsuccessful is when iName is not found in Database
+     */
+    public boolean setData(String iName, String iGender,int iYOB, String iGenderMate, String iPreference, boolean isAlgo1) {
+<span class="fc" id="L61">        boolean algo2Check = true;</span>
+<span class="fc" id="L62">        this.iYOB = iYOB;</span>
+<span class="fc" id="L63">        this.iGenderMate = iGenderMate;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if(isAlgo1)</span>
+<span class="fc" id="L65">            task5Algo1(iGenderMate, iYOB);</span>
+        else {
+<span class="fc" id="L67">            algo2Check = task5Algo2(iName, iGender, iYOB, iGenderMate, iPreference);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">            if(!algo2Check) return false;</span>
+        }
+<span class="fc" id="L70">        return true;</span>
+    }
+
+    /**
+     * T5X1 algorithm, based on the user's birth year and gender preference
+     * @param iGenderMate the gender of the soulmate that user wants to match
+     * @param iYOB user's year of birth
+     */
+    private void task5Algo1(String iGenderMate, int iYOB) {
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        pairNameList = FileReader.getTopNNamesByYear(iYOB, 8, (iGenderMate.equals(&quot;M&quot;) ? 0 : 1) );</span>
+<span class="fc" id="L80">        pairName = pairNameList.get(0);</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * T5X2 algorithm, compute compatible scores for other names
+     * @param iName user's name
+     * @param iGender user's gender
+     * @param iYOB user's year of birth
+     * @param iGenderMate the gender of the soulmate that user wants to match
+     * @param iPreference the age preference of the soulmate that user wants to match
+     * @return whether get data is successful
+     */
+    private boolean task5Algo2(String iName, String iGender,int iYOB, String iGenderMate, String iPreference) {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        int preferenceInt = iPreference.equals(&quot;Younger&quot;)?0:1;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        int genderInt = (iGender.equals(&quot;M&quot;)?0:1);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        int genderMateInt = (iGenderMate.equals(&quot;M&quot;)?0:1);</span>
+
+        //check whether iName can be found in database
+<span class="fc" id="L98">        int rankAtBirthYear = FileReader.getRankByYearAndName(iName, iYOB, genderInt);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if(rankAtBirthYear == 0) return false;</span>
+
+        //based on iAgePreference, set the corresponding lower and upper bounds for years
+        int lowerYearBound;
+        int upperYearBound;
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if(preferenceInt == 0){</span>
+<span class="nc" id="L105">            lowerYearBound = iYOB;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">            upperYearBound = (iYOB+10 &gt; 2019)? 2019:iYOB+10;}</span>
+        else{
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">            lowerYearBound = (iYOB-10 &lt; 1880)? 1880:iYOB-10;</span>
+<span class="fc" id="L109">            upperYearBound = iYOB;</span>
+        }
+
+<span class="fc" id="L112">        ArrayList&lt;NameRecord&gt; scoreComputeList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L113">        nameScorePairList  = new ArrayList&lt;&gt;();</span>
+
+        //lock the range of names we want to compute score for
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        for(int i = lowerYearBound; i&lt;= upperYearBound; i++){</span>
+
+<span class="fc" id="L118">            int rankAtIYear = FileReader.getRankByYearAndName(iName, i, genderInt);</span>
+<span class="fc" id="L119">            int totalNumRecord = FileReader.getNumRecordByYearAndGender(genderInt, i);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">            int lowerRankBound = (rankAtIYear-20 &lt; 1)? 1 : rankAtIYear-20;</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">            int upperRankBound = (rankAtIYear+20 &gt; totalNumRecord)? totalNumRecord : rankAtIYear+20;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            for(int j = lowerRankBound; j &lt;= upperRankBound; j++){</span>
+<span class="pc bpc" id="L123" title="1 of 4 branches missed.">                if( j == rankAtIYear &amp;&amp; genderInt == genderMateInt ) continue;;</span>
+<span class="fc" id="L124">                NameRecord pairRecord = FileReader.getNthNamesByYear(i, j, genderMateInt);</span>
+<span class="fc" id="L125">                String pairName = pairRecord.getName();</span>
+<span class="fc" id="L126">                boolean repeated = false;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                for(NameRecord rec: scoreComputeList){</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                    if(rec.getName().equals(pairName)){</span>
+<span class="fc" id="L129">                        repeated = true; break;</span>
+                    }
+<span class="fc" id="L131">                }</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                if(!repeated) scoreComputeList.add(pairRecord);</span>
+            }
+        }
+        //at this point, scoreComputeList should contain all NameRecords that appears at least once within 20 ranks from iName
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for(NameRecord rec : scoreComputeList){</span>
+            //first we get the name we want to compute the score
+<span class="fc" id="L139">            String pairName = rec.getName();</span>
+            //calculate the length score
+<span class="fc" id="L141">            int lengthDiff = Math.abs(pairName.length() - iName.length());</span>
+<span class="fc bfc" id="L142" title="All 8 branches covered.">            double lengthScore = (lengthDiff == 0)?1:((lengthDiff == 1)?0.7:( (lengthDiff == 2)?0.5:( (lengthDiff == 3)?0.2:0 ) ));</span>
+
+            //calculate the average rank score
+<span class="fc" id="L145">            double rankScoreSum = 0;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            for(int j = lowerYearBound; j &lt;= upperYearBound; j++ ){</span>
+<span class="fc" id="L147">                int iNameRank = FileReader.getRankByYearAndName(iName,j,genderInt);</span>
+<span class="fc" id="L148">                int iPairRank = FileReader.getRankByYearAndName(pairName,j,genderMateInt);</span>
+<span class="fc" id="L149">                int rankDiff = Math.abs(iNameRank-iPairRank);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">                if(rankDiff &lt;= 20) rankScoreSum += 100 - Math.pow((double)Math.abs(iNameRank-iPairRank)/2,2);</span>
+            }
+<span class="fc" id="L152">            double rankScore_avg = rankScoreSum/(upperYearBound-lowerYearBound+1);</span>
+
+            //generate a NameScorePair and add it into the list
+<span class="fc" id="L155">            NameScorePair new_pair = FileReader.produceNameScorePair(pairName, lengthScore*rankScore_avg, lengthScore, rankScore_avg);</span>
+<span class="fc" id="L156">            nameScorePairList.add(new_pair);</span>
+<span class="fc" id="L157">        }</span>
+
+        //sort the nameScorePairList by their score and put the first element into pairNameScore
+<span class="fc" id="L160">        Collections.sort(nameScorePairList, Collections.reverseOrder());</span>
+<span class="fc" id="L161">        pairNameScore = nameScorePairList.get(0);</span>
+<span class="fc" id="L162">        return true;</span>
+    }
+
+    /**
+     * get predicted name for compatible name for Algorithm T5X1
+     * @return recommend pair name
+     */
+    public NameRecord getPairName() {
+<span class="fc" id="L170">        return pairName;</span>
+    }
+
+    /**
+     * get predicted name for compatible name for Algorithm T5X1
+     * @return recommend pair name list
+     */
+    public NameScorePair getNameScorePair() {
+<span class="nc" id="L178">        return pairNameScore;</span>
+    }
+
+    /**
+     * get predicted name for compatible name for Algorithm T5X2
+     * @return recommend pair name list
+     */
+    public List&lt;NameRecord&gt; getPairNameList() {
+<span class="fc" id="L186">        return pairNameList;</span>
+    }
+
+    /**
+     * get predicted name for compatible name for Algorithm T5X2
+     * @return recommend pair name
+     */
+    public List&lt;NameScorePair&gt; getNameScorePairList() {
+<span class="fc" id="L194">        return nameScorePairList;</span>
+    }
+
+
+
+    /**
+     * get the summary to display for T5X1
+     * @return summary of the report
+     */
+    public String getSummaryAlgo1() {
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if(pairName == null) return &quot;Internal Error&quot;;</span>
+<span class="fc" id="L205">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L207">        sb.append(&quot;\n * &quot;);</span>
+<span class="fc" id="L208">        sb.append(&quot;The Predicted Soulmate Name is &quot;).append(pairName.getName()).append(&quot;.\n\n\n\n&quot;);</span>
+<span class="fc" id="L209">        sb.append(&quot;How it works?\n&quot;);</span>
+<span class="fc" id="L210">        sb.append(&quot;- The soulmate's name is the most popular name at user's year of birth.\n&quot;);</span>
+<span class="fc" id="L211">        sb.append(&quot;  (You can view other popular names in that year on the Table page and Bar Chart page)\n&quot;);</span>
+<span class="fc" id="L212">        sb.append(&quot;  (You can view the trend of giving name Jacob to new babies on the Line Chart page)\n\n&quot;);</span>
+<span class="fc" id="L213">        sb.append(&quot;Hope you enjoy it and why not try once more with another algorithm :)\n&quot;);</span>
+
+<span class="fc" id="L215">        return sb.toString();</span>
+    }
+
+    /**
+     * generate an ObservableListList of Map data for Algorithm T5X1
+     *
+     * @return an ObservableListList of Map data for generating the table
+     */
+    public ObservableList&lt;Map&gt; getMapListAlgo1() {
+
+<span class="fc" id="L225">        DecimalFormat format = new DecimalFormat(&quot;0.00000&quot;);</span>
+
+<span class="fc" id="L227">        ObservableList&lt;Map&gt; list = FXCollections.&lt;Map&gt;observableArrayList();</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">        int totalBirth = FileReader.getTotalBirthsByYear(iYOB, (iGenderMate.equals(&quot;M&quot;)?0:1) );</span>
+
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        for(NameRecord rec : pairNameList){</span>
+<span class="fc" id="L231">            Map&lt;String, String&gt; item = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L232">            item.put(&quot;key1&quot; , rec.getName());</span>
+<span class="fc" id="L233">            item.put(&quot;key2&quot; , String.valueOf(rec.getOccurrence()));</span>
+<span class="fc" id="L234">            item.put(&quot;key3&quot; , format.format((float)100*rec.getOccurrence()/totalBirth) + &quot;%&quot;);</span>
+<span class="fc" id="L235">            list.add(item);</span>
+<span class="fc" id="L236">        }</span>
+
+<span class="fc" id="L238">        return list;</span>
+    }
+
+    /**
+     * generate an ObservableListList of Map data for Algorithm T5X2
+     *
+     * @return an ObservableListList of Map data for generating the table
+     */
+    public ObservableList&lt;Map&gt; getMapListAlgo2() {
+
+<span class="fc" id="L248">        DecimalFormat format = new DecimalFormat(&quot;0.00000&quot;);</span>
+
+<span class="fc" id="L250">        ObservableList&lt;Map&gt; list = FXCollections.&lt;Map&gt;observableArrayList();</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">        int totalBirth = FileReader.getTotalBirthsByYear(iYOB, (iGenderMate.equals(&quot;M&quot;)?0:1) );</span>
+
+<span class="fc" id="L253">        int count = 0;</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">        for(NameScorePair rec : nameScorePairList){</span>
+<span class="fc" id="L255">            Map&lt;String, String&gt; item = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L256">            item.put(&quot;key1&quot; , rec.getName());</span>
+<span class="fc" id="L257">            item.put(&quot;key2&quot; , format.format(rec.getScore()));</span>
+<span class="fc" id="L258">            item.put(&quot;key3&quot; , String.valueOf(rec.getLengthScore()));</span>
+<span class="fc" id="L259">            item.put(&quot;key4&quot; , format.format(rec.getAvgRankScore()));</span>
+<span class="fc" id="L260">            list.add(item);</span>
+<span class="fc" id="L261">            count++;</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">            if(count == 10) break;</span>
+<span class="fc" id="L263">        }</span>
+
+<span class="fc" id="L265">        return list;</span>
+    }
+
+    /**
+     * generate a List of data for y Axis of Line Chart for Algorithm T5X1
+     *
+     * @return a List of data for generating the Line Chart's y Axis
+     */
+    public List&lt;Integer&gt; getYListAlgo1() {
+<span class="fc" id="L274">        List&lt;Integer&gt; occurrenceList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        for(int i = -3; i &lt;= 3; i++){</span>
+<span class="pc bpc" id="L276" title="2 of 4 branches missed.">            if(iYOB+i &lt; 1880 || iYOB+i &gt; 2019) continue;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">            occurrenceList.add( FileReader.getOccurrenceByYearAndName( pairName.getName(), iYOB+i, (iGenderMate.equals(&quot;M&quot;)?0:1) ) );</span>
+        }
+<span class="fc" id="L279">        return occurrenceList;</span>
+    }
+
+    /**
+     * generate a List of data for x Axis of Line Chart for Algorithm T5X1
+     *
+     * @return a List of data for generating the Line Chart's x Axis
+     */
+    public List&lt;String&gt; getXListAlgo1() {
+<span class="fc" id="L288">        List&lt;String&gt; yearList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        for(int i = -3; i &lt;= 3; i++){</span>
+<span class="pc bpc" id="L290" title="2 of 4 branches missed.">            if(iYOB+i &lt; 1880 || iYOB+i &gt; 2019) continue;</span>
+<span class="fc" id="L291">            yearList.add(String.valueOf(iYOB+i));</span>
+        }
+<span class="fc" id="L293">        return yearList;</span>
+    }
+
+
+    /**
+     * get the summary to display for T5X2
+     * @return summary of the report
+     */
+    public String getSummaryAlgo2() {
+<span class="fc" id="L302">        DecimalFormat format = new DecimalFormat(&quot;0.00000&quot;);</span>
+<span class="fc" id="L303">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L305">        sb.append(&quot;\n * &quot;);</span>
+<span class="fc" id="L306">        sb.append(&quot;The Predicted Soulmate Name is &quot;).append(pairNameScore.getName()).append(&quot;.\n&quot;);</span>
+<span class="fc" id="L307">        sb.append(&quot;The Compatible score of &quot;).append(pairNameScore.getName()).append(&quot; is &quot;).append(format.format(pairNameScore.getScore())).append(&quot;(out of 100)&quot;).append(&quot;.\n\n\n\n&quot;);</span>
+<span class="fc" id="L308">        sb.append(&quot;How it works?\n&quot;);</span>
+<span class="fc" id="L309">        sb.append(&quot;- We calculate compatible score between user's name and other names. The predicted soulmate name is the name that gets the highest compatible score.\n\n&quot;);</span>
+<span class="fc" id="L310">        sb.append(&quot;-- How is the compatible score computed?\n&quot;);</span>
+<span class="fc" id="L311">        sb.append(&quot; Compatible score = (length score) * (average popularity score during period P) \n\n&quot;);</span>
+<span class="fc" id="L312">        sb.append(&quot; Length score: if two names have a smaller length difference, then the length score is higher \n&quot;);</span>
+<span class="fc" id="L313">        sb.append(&quot;               length score = 1   if length difference = 0 \n&quot;);</span>
+<span class="fc" id="L314">        sb.append(&quot;               length score = 0.7 if length difference = 1 \n&quot;);</span>
+<span class="fc" id="L315">        sb.append(&quot;               length score = 0.5 if length difference = 2 \n&quot;);</span>
+<span class="fc" id="L316">        sb.append(&quot;               length score = 0.2 if length difference = 3 \n&quot;);</span>
+<span class="fc" id="L317">        sb.append(&quot;               length score = 0.0 if length difference &gt; 3 \n\n&quot;);</span>
+<span class="fc" id="L318">        sb.append(&quot; Popularity score: if two names have a smaller rank difference, which means they are similarly popular, then the popularity score is higher.\n&quot;);</span>
+<span class="fc" id="L319">        sb.append(&quot;                   popularity score = 100 - (x/2)^2 if rank difference = x, x ∈ [0,20] \n&quot;);</span>
+<span class="fc" id="L320">        sb.append(&quot;                   popularity score = 0 otherwise \n\n&quot;);</span>
+<span class="fc" id="L321">        sb.append(&quot; Period P =  [iYOB-10, iYOB] if age preference is \&quot;Older\&quot;\n&quot;);</span>
+<span class="fc" id="L322">        sb.append(&quot; Period P =  [iYOB, iYOB+10] if age preference is \&quot;Younger\&quot;\n&quot;);</span>
+<span class="fc" id="L323">        sb.append(&quot; We do not consider data out of the period because it is less likely for two people to become soulmate because of the generation gap.&quot;);</span>
+
+<span class="fc" id="L325">        return sb.toString();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

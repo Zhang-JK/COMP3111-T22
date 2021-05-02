@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames.core</a> &gt; <span class="el_source">FileReader.java</span></div><h1>FileReader.java</h1><pre class="source lang-java linenums">package comp3111.popnames.core;
+
+import edu.duke.FileResource;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * This class is used for reading data from the source file
+ * @author ZHANG Jiekai, LIANG Houdong, CHENG Yiren
+ * @version 1.3
+ */
+<span class="fc" id="L16">public class FileReader {</span>
+
+    /**
+     * To read the file line by line and get the CSV data
+     * @param year the target file
+     * @return the CSV data
+     */
+    private static CSVParser getFileParser(int year) {
+<span class="fc" id="L24">        FileResource fr = new FileResource(String.format(&quot;dataset/yob%s.csv&quot;, year));</span>
+<span class="fc" id="L25">        return fr.getCSVParser(false);</span>
+    }
+
+    /**
+     * Get all the data from a file return in the list
+     * @param year the target year to get the data
+     * @return all the data in a year's file, in form of list
+     */
+    public static List&lt;NameRecord&gt; getFileByYear(int year) {
+<span class="fc" id="L34">        List&lt;NameRecord&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc" id="L36">            result.add(new NameRecord(rec));</span>
+<span class="fc" id="L37">        }</span>
+<span class="fc" id="L38">        return result;</span>
+    }
+    
+    /**
+     * input data and find the occurrence list
+     * @param year1 target starting year
+     * @param year2 target ending year
+     * @param name name of interest
+     * @param gender gender of the name want to research
+     * @return  a list of OccurrenceRecord of that name during the period
+     */  
+    public static List&lt;OccurrenceRecord&gt; getFileOfYearAndName(int year1, int year2, String name, String gender){
+<span class="fc" id="L50">    	NumberFormat numberFormat = NumberFormat.getInstance();</span>
+<span class="fc" id="L51">    	List&lt;OccurrenceRecord&gt; result = new ArrayList&lt;&gt;();</span>
+    	
+<span class="fc bfc" id="L53" title="All 2 branches covered.">    	for(int i = year1; i&lt;= year2; i++) {</span>
+<span class="fc" id="L54">			int occurrences = 0;</span>
+<span class="fc" id="L55">			int totalBirths = 0;</span>
+<span class="fc" id="L56">			String percentage = &quot;&quot;;</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">			int genderCheck = gender.equals(&quot;M&quot;) ? 0 : 1;</span>
+<span class="fc" id="L58">			int rank = getRankByYearAndName(name, i, genderCheck);</span>
+			
+<span class="fc bfc" id="L60" title="All 2 branches covered.">			if(rank &lt; 1001) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">				for (CSVRecord rec : getFileParser(i)) {</span>
+<span class="fc" id="L62">					int numBorn = Integer.parseInt(rec.get(2));</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">					if (rec.get(1).equals(gender)) {</span>
+<span class="fc" id="L64">						totalBirths += numBorn;</span>
+					}
+<span class="fc bfc" id="L66" title="All 2 branches covered.">					if (rec.get(0).equals(name)) {</span>
+<span class="fc" id="L67">						occurrences = numBorn;</span>
+					}
+<span class="fc" id="L69">				}</span>
+				
+<span class="fc" id="L71">				numberFormat.setMaximumFractionDigits(2);  </span>
+<span class="fc" id="L72">				percentage = numberFormat.format((float) occurrences / (float) totalBirths * 100);</span>
+<span class="fc" id="L73">				percentage = percentage + &quot;%&quot;;</span>
+				
+<span class="fc" id="L75">				result.add(new OccurrenceRecord(i, rank, occurrences, percentage, totalBirths));</span>
+			}		
+
+    	}
+    	
+<span class="fc" id="L80">    	return result;</span>
+
+    }
+    
+    /**
+     * input data and find the whether there's one year the popularity of name is within 100
+     * @param mateName the name want to research the popularity
+     * @param agePreference the age preference of the user
+     * @param mateGender gender of interest
+     * @param userYOB year of birth of user
+     * @return a boolean variable indicating whether the two names are within 100 ranks distance
+     */  
+    public static boolean findPopularity(String mateName, String agePreference, String mateGender, int userYOB) {
+<span class="fc" id="L93">    	boolean within100 = false;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">    	int genderCheck = mateGender.equals(&quot;M&quot;) ? 0 : 1;</span>
+    	
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    	if(agePreference == &quot;younger&quot;) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">    		for (int i = userYOB - 1; i &gt;= 1880; i--) {</span>
+<span class="nc" id="L98">    			int rank = getRankByYearAndName(mateName, i, genderCheck);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">    			if(rank &lt;= 100) within100 = true;</span>
+    		}
+    	}
+    	
+    	else {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">    		for (int i = userYOB + 1; i &lt;= 2019; i++) {</span>
+<span class="fc" id="L105">    			int rank = getRankByYearAndName(mateName, i, genderCheck);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">    			if(rank &lt;= 100) within100 = true;</span>
+    		}
+    	}
+    	
+<span class="fc" id="L110">    	return within100;</span>
+    }
+
+    /**
+     * Find the top popular names in a year and in a gender
+     * @param year the target year to get the data
+     * @param n how many names do you want
+     * @param gender the target gender, 0 for Male, 1 for Female
+     * @return top N popular names in a list
+     */
+    public static List&lt;NameRecord&gt; getTopNNamesByYear(int year, int n, int gender) {
+<span class="fc" id="L121">        List&lt;NameRecord&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L122">        int counter = 0;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L124" title="All 4 branches covered.">            if (rec.get(1).equals(gender==1 ? &quot;F&quot; : &quot;M&quot;)) {</span>
+<span class="fc" id="L125">                result.add(new NameRecord(rec));</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">                if (counter == n-1) break;</span>
+<span class="fc" id="L127">                else counter++;</span>
+            }
+<span class="fc" id="L129">        }</span>
+<span class="fc" id="L130">        return result;</span>
+    }
+
+    /**
+     * Find the top Nth popular names in a year and in a gender
+     * @param year the target year to get the data
+     * @param n rank of the name that you want
+     * @param gender the target gender, 0 for Male, 1 for Female
+     * @return Nth popular names in a NameRecord
+     */
+    public static NameRecord getNthNamesByYear(int year, int n, int gender) {
+<span class="fc" id="L141">        int counter = 0;</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">            if (rec.get(1).equals(gender==1 ? &quot;F&quot; : &quot;M&quot;)) {</span>
+<span class="fc" id="L144">                counter++;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                if (counter &lt; n) continue;</span>
+<span class="fc" id="L146">                NameRecord result = new NameRecord(rec);</span>
+<span class="fc" id="L147">                return result;</span>
+            }
+<span class="fc" id="L149">        }</span>
+<span class="nc" id="L150">        return null;</span>
+    }
+
+
+
+    /**
+     * get the total number of births of a year and gender
+     * @param year the target year to get the data
+     * @param gender the target gender, 0 for Male, 1 for Female
+     * @return total number of births
+     */
+    public static int getTotalBirthsByYear(int year, int gender) {
+<span class="fc" id="L162">        int counter = 0;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L164" title="All 4 branches covered.">            if (rec.get(1).equals(gender==1 ? &quot;F&quot; : &quot;M&quot;))</span>
+<span class="fc" id="L165">                counter += Integer.parseInt(rec.get(2));</span>
+<span class="fc" id="L166">        }</span>
+<span class="fc" id="L167">        return counter;</span>
+    }
+
+    /**
+     * Input a name and get its rank in a certain year
+     * @param name the name to search
+     * @param year the target year
+     * @param gender the target gender
+     * @return rank, 0 for NOT FOUND
+     */
+    public static int getRankByYearAndName(String name, int year, int gender) {
+<span class="fc" id="L178">        int rank = 0;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L180" title="All 4 branches covered.">            if (rec.get(1).equals(gender==1 ? &quot;F&quot; : &quot;M&quot;)) {</span>
+<span class="fc" id="L181">                rank++;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">                if(rec.get(0).equals(name)) return rank;</span>
+            }
+<span class="fc" id="L184">        }</span>
+<span class="fc" id="L185">        return 0;</span>
+    }
+
+    /**
+     * Input a name and get its occurrence in a certain year
+     * @param name the name to search
+     * @param year the target year
+     * @param gender the target gender
+     * @return occurrence, 0 for NOT FOUND
+     */
+    public static int getOccurrenceByYearAndName(String name, int year, int gender) {
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L197" title="All 4 branches covered.">            if (rec.get(1).equals(gender==1 ? &quot;F&quot; : &quot;M&quot;)) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                if(rec.get(0).equals(name)) return Integer.parseInt(rec.get(2));</span>
+            }
+<span class="fc" id="L200">        }</span>
+<span class="fc" id="L201">        return 0;</span>
+    }
+
+
+    /**
+     * Input a gender and get the number of records in a certain year
+     * @param gender the gender to search
+     * @param year the target year
+     * @return number of records
+     */
+    public static int getNumRecordByYearAndGender(int gender, int year) {
+<span class="fc" id="L212">        int numRecord = 0;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L214" title="All 4 branches covered.">            if (rec.get(1).equals(gender==1 ? &quot;F&quot; : &quot;M&quot;)) numRecord++;</span>
+<span class="fc" id="L215">        }</span>
+<span class="fc" id="L216">        return numRecord;</span>
+    }
+
+    /**
+     * Work as a proxy to create a NameScorePairObject for the outside class
+     * @param name the gender to search
+     * @param score Compatible Score of this record
+     * @param lengthScore Length Score of this record
+     * @param avg_rankScore Average Rank Score of this record
+     * @return a produced NameScorePair containing input parameters
+     */
+    public static NameScorePair produceNameScorePair(String name, double score, double lengthScore, double avg_rankScore) {
+<span class="fc" id="L228">        return new NameScorePair(name, score, lengthScore, avg_rankScore);</span>
+    }
+
+    /**
+     * find a name begin with a certain string
+     * @param beginning the beginning string
+     * @param year which year
+     * @param gender 0 for male and 1 for girl
+     * @return a list of names
+     */
+    public static List&lt;NameRecord&gt; getNameBeginWith(String beginning, int year, int gender) {
+<span class="fc" id="L239">        List&lt;NameRecord&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L241" title="All 6 branches covered.">            if(rec.get(1).equals(gender==0 ? &quot;M&quot; : &quot;F&quot;) &amp;&amp; rec.get(0).toLowerCase().substring(0, 1).equals(beginning))</span>
+<span class="fc" id="L242">                result.add(new NameRecord(rec));</span>
+<span class="fc" id="L243">        }</span>
+<span class="fc" id="L244">        return result;</span>
+    }
+
+    /**
+     * find a name begin with a certain string and end with another
+     * @param beginning the beginning string
+     * @param ending the ending string
+     * @param year which year
+     * @param gender 0 for male and 1 for girl
+     * @return a list of names
+     */
+    public static List&lt;NameRecord&gt; getNameBeginEndWith(String beginning, String ending, int year, int gender) {
+<span class="fc" id="L256">        List&lt;NameRecord&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L258" title="All 4 branches covered.">            if(rec.get(1).equals(gender==0 ? &quot;M&quot; : &quot;F&quot;) &amp;&amp;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">                    rec.get(0).toLowerCase().substring(0, beginning.length()).equals(beginning) &amp;&amp;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">                    rec.get(0).toLowerCase().substring(rec.get(0).length() - ending.length(), rec.get(0).length()).equals(ending) )</span>
+<span class="fc" id="L261">                result.add(new NameRecord(rec));</span>
+<span class="fc" id="L262">        }</span>
+<span class="fc" id="L263">        return result;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

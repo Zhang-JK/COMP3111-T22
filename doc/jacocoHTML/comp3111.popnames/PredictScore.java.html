@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PredictScore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames</a> &gt; <span class="el_source">PredictScore.java</span></div><h1>PredictScore.java</h1><pre class="source lang-java linenums">package comp3111.popnames;
+
+import comp3111.popnames.core.FileReader;
+import comp3111.popnames.core.NameRecord;
+import comp3111.popnames.core.OccurrenceRecord;
+
+/**
+ * This class is for task6, predict the compatible score
+ * @author CHENG Yiren
+ * @version 1.0
+ */
+<span class="fc" id="L12">public class PredictScore {</span>
+	/**
+	 *
+	 * @param userName user's name
+	 * @param mateName mate's name
+	 * @return a string of score
+	 */
+	public String predict(String userName, String mateName) {
+<span class="fc" id="L20">    	String score = &quot;&quot;;</span>
+		
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">		if(userName.length() == mateName.length()) {</span>
+<span class="fc" id="L23">			score = &quot;100%&quot;;</span>
+<span class="fc" id="L24">			return score;</span>
+		}
+    	else {
+<span class="nc" id="L27">    		score = &quot;0%&quot;;</span>
+<span class="nc" id="L28">    		return score;</span>
+    	}
+	}
+
+	/**
+	 *
+	 * @param mateName  mate's name
+	 * @param agePreference preference for age
+	 * @param mateGender the gender of the mate
+	 * @param userYOB  user's birth year
+	 * @return a string of score
+	 */
+	public String predict2(String mateName, String agePreference, String mateGender, int userYOB) {
+<span class="fc" id="L41">		String score = &quot;0%&quot;;</span>
+<span class="fc" id="L42">		FileReader tempReader = new FileReader();</span>
+		
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if(tempReader.findPopularity(mateName, agePreference, mateGender, userYOB)) score = &quot;100%&quot;;</span>
+		
+<span class="fc" id="L46">		return score;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

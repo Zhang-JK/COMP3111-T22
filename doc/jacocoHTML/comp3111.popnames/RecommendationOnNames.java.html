@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecommendationOnNames.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames</a> &gt; <span class="el_source">RecommendationOnNames.java</span></div><h1>RecommendationOnNames.java</h1><pre class="source lang-java linenums">package comp3111.popnames;
+
+import comp3111.popnames.core.FileReader;
+import comp3111.popnames.core.NameRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * This class is for task4, recommend names
+ *
+ * @author ZHANG Jiekai
+ * @version 1.0
+ */
+<span class="fc" id="L18">public class RecommendationOnNames {</span>
+    /**
+     * total number of male births
+     */
+    private int maleTotalBirth;
+    /**
+     * total number of female births
+     */
+    private int femaleTotalBirth;
+    /**
+     * the recommend boy name
+     */
+    private NameRecord boyName;
+    /**
+     * the recommend girl name
+     */
+    private NameRecord girlName;
+    /**
+     * the backup recommend boy names, as reference
+     */
+    private List&lt;NameRecord&gt; boyRecommendList;
+    /**
+     * the backup recommend girl names, as reference
+     */
+    private List&lt;NameRecord&gt; girlRecommendList;
+
+    /**
+     * get input data from user input and generate the recommended name
+     *
+     * @param dadName  dad's name
+     * @param momName  mom's name
+     * @param dadYob   dad's year of birth
+     * @param momYob   mom's year of birth
+     * @param isAlgo1  whether using T4X1 Algorithm
+     * @param nameType additional information if use T4X2, the type of the name
+     *                 0 for T4X1, 1 for popular, 2 for unique
+     */
+    public void setData(String dadName, String momName, int dadYob, int momYob, boolean isAlgo1, int nameType) {
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">        if (dadYob &lt; 1880 || dadYob &gt; 2019) return;</span>
+<span class="pc bpc" id="L57" title="2 of 4 branches missed.">        if (momYob &lt; 1880 || momYob &gt; 2019) return;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (boyRecommendList != null) boyRecommendList.clear();</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (girlRecommendList != null) girlRecommendList.clear();</span>
+<span class="fc" id="L60">        maleTotalBirth = FileReader.getTotalBirthsByYear(dadYob, 0);</span>
+<span class="fc" id="L61">        femaleTotalBirth = FileReader.getTotalBirthsByYear(momYob, 1);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (isAlgo1)</span>
+<span class="fc" id="L63">            task4Algo1(dadYob, momYob);</span>
+        else
+<span class="fc" id="L65">            task4Algo2(dadName, momName, dadYob, momYob, nameType);</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * T4X1 algorithm, based on the dad and mom's year of birth to recommend
+     * the most popular name at that time
+     *
+     * @param dadYob dad's year of birth
+     * @param momYob mom's year of birth
+     */
+    private void task4Algo1(int dadYob, int momYob) {
+<span class="fc" id="L76">        boyRecommendList = FileReader.getTopNNamesByYear(dadYob, 8, 0);</span>
+<span class="fc" id="L77">        girlRecommendList = FileReader.getTopNNamesByYear(momYob, 8, 1);</span>
+<span class="fc" id="L78">        boyName = boyRecommendList.get(0);</span>
+<span class="fc" id="L79">        girlName = girlRecommendList.get(0);</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * first find names begin with one's and end with another
+     * if do not exist, find names that only begin with
+     * if still not exist, find popular names
+     *
+     * @param dadName  dad's name
+     * @param momName  mom's name
+     * @param dadYob   dad's year of birth
+     * @param momYob   mom's year of birth
+     * @param nameType 1 for popular 2 for unique
+     */
+    private void task4Algo2(String dadName, String momName, int dadYob, int momYob, int nameType) {
+<span class="fc" id="L94">        boyRecommendList = FileReader.getNameBeginEndWith(dadName.toLowerCase().substring(0, 1), momName.toLowerCase().substring(0, 1), dadYob, 0);</span>
+<span class="fc" id="L95">        girlRecommendList = FileReader.getNameBeginEndWith(momName.toLowerCase().substring(0, 1), dadName.toLowerCase().substring(0, 1), momYob, 1);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (boyRecommendList.size() &lt; 3)</span>
+<span class="fc" id="L97">            boyRecommendList = FileReader.getNameBeginWith(dadName.toLowerCase().substring(0, 1), dadYob, 0);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (girlRecommendList.size() &lt; 3)</span>
+<span class="fc" id="L99">            girlRecommendList = FileReader.getNameBeginWith(momName.toLowerCase().substring(0, 1), momYob, 1);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (boyRecommendList.size() &lt; 3)</span>
+<span class="nc" id="L101">            boyRecommendList = FileReader.getTopNNamesByYear(dadYob, 8, 0);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (girlRecommendList.size() &lt; 3)</span>
+<span class="fc" id="L103">            girlRecommendList = FileReader.getTopNNamesByYear(momYob, 8, 1);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (nameType == 1) {</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (boyRecommendList.size() &gt; 8) boyRecommendList = boyRecommendList.subList(0, 8);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">            if (girlRecommendList.size() &gt; 8) girlRecommendList = girlRecommendList.subList(0, 8);</span>
+<span class="fc" id="L107">            boyName = boyRecommendList.get(0);</span>
+<span class="fc" id="L108">            girlName = girlRecommendList.get(0);</span>
+        } else {
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">            if (boyRecommendList.size() &gt; 4)</span>
+<span class="fc" id="L111">                boyRecommendList = boyRecommendList.subList(boyRecommendList.size() / 2, Math.min(boyRecommendList.size(), boyRecommendList.size() / 2 + 8));</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if (girlRecommendList.size() &gt; 4)</span>
+<span class="nc" id="L113">                girlRecommendList = girlRecommendList.subList(girlRecommendList.size() / 2, Math.min(girlRecommendList.size(), girlRecommendList.size() / 2 + 8));</span>
+<span class="fc" id="L114">            boyName = boyRecommendList.get(0);</span>
+<span class="fc" id="L115">            girlName = girlRecommendList.get(0);</span>
+        }
+<span class="fc" id="L117">    }</span>
+
+    /**
+     * get recommend name
+     *
+     * @return recommend boy name
+     */
+    public NameRecord getBoyName() {
+<span class="fc" id="L125">        return boyName;</span>
+    }
+
+    /**
+     * get recommend name
+     *
+     * @return recommend girl name
+     */
+    public NameRecord getGirlName() {
+<span class="fc" id="L134">        return girlName;</span>
+    }
+
+    /**
+     * get recommend names
+     *
+     * @return recommend boy name list
+     */
+    public List&lt;NameRecord&gt; getBoyRecommendList() {
+<span class="fc" id="L143">        return boyRecommendList;</span>
+    }
+
+    /**
+     * get recommend names
+     *
+     * @return recommend girl name list
+     */
+    public List&lt;NameRecord&gt; getGirlRecommendList() {
+<span class="fc" id="L152">        return girlRecommendList;</span>
+    }
+
+    /**
+     * get the summary to display for T4X1
+     *
+     * @return summary of the report
+     */
+    public String getSummaryAlgo1() {
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (boyName == null) return &quot;Internal Error&quot;;</span>
+<span class="fc" id="L162">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L164">        sb.append(&quot;\n * &quot;);</span>
+<span class="fc" id="L165">        sb.append(&quot;The Recommend Name for Boy is &quot;).append(getBoyName().getName()).append(&quot;.\n\n * &quot;);</span>
+<span class="fc" id="L166">        sb.append(&quot;The Recommend Name for Girl is &quot;).append(getGirlName().getName()).append(&quot;.\n\n\n\n&quot;);</span>
+<span class="fc" id="L167">        sb.append(&quot;How it works?\n&quot;);</span>
+<span class="fc" id="L168">        sb.append(&quot;We used our data base to find a popular name at the year of parents' birth.\n&quot;);</span>
+<span class="fc" id="L169">        sb.append(&quot;- Boy's name is from the most popular boy name at dad's year of birth.\n&quot;);</span>
+<span class="fc" id="L170">        sb.append(&quot;- Girl's name is from the most popular girl name at mom's year of birth.\n&quot;);</span>
+<span class="fc" id="L171">        sb.append(&quot;  (You can also view other recommended names and their relationship on Chart pages)\n\n&quot;);</span>
+<span class="fc" id="L172">        sb.append(&quot;Hope you enjoy it and why not try once more with another algorithm ;)\n&quot;);</span>
+
+<span class="fc" id="L174">        return sb.toString();</span>
+    }
+
+    /**
+     * get the summary to display for T4X2
+     *
+     * @return summary of the report
+     */
+    public String getSummaryAlgo2() {
+<span class="pc bpc" id="L183" title="2 of 4 branches missed.">        if (boyName == null || girlName == null) return &quot;Internal Error&quot;;</span>
+<span class="fc" id="L184">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L186">        sb.append(&quot;\n * &quot;);</span>
+<span class="fc" id="L187">        sb.append(&quot;The Recommend Name for Boy is &quot;).append(boyName.getName()).append(&quot;.\n\n * &quot;);</span>
+<span class="fc" id="L188">        sb.append(&quot;The Recommend Name for Girl is &quot;).append(girlName.getName()).append(&quot;.\n\n\n&quot;);</span>
+<span class="fc" id="L189">        sb.append(&quot;How it works?\n&quot;);</span>
+<span class="fc" id="L190">        sb.append(&quot;We find a name that begin and end with the first letter of parents' name.\n&quot;);</span>
+<span class="fc" id="L191">        sb.append(&quot;For popular, we will select the top names.\nAnd for unique we will select a not common name.\n&quot;);</span>
+<span class="fc" id="L192">        sb.append(&quot;- Boy's name is selected from dad's birth year.\n    It begins with dad name's first letter and ends with mom name's first letter.\n&quot;);</span>
+<span class="fc" id="L193">        sb.append(&quot;- Girl's name is selected from mom's birth year.\n    It begins with mom name's first letter and ends with dad name's first letter.\n&quot;);</span>
+<span class="fc" id="L194">        sb.append(&quot;- If the name do not exists\n    We will only select the name begin with the first letter in parents' name.\n&quot;);</span>
+<span class="fc" id="L195">        sb.append(&quot;  (You can also view other recommended names and their relationship on Chart pages)\n&quot;);</span>
+<span class="fc" id="L196">        sb.append(&quot;  (They will tell you how popular or unique the name is.)\n\n&quot;);</span>
+<span class="fc" id="L197">        sb.append(&quot;Hope you enjoy it and why not try once more with another algorithm ;)\n&quot;);</span>
+
+<span class="fc" id="L199">        return sb.toString();</span>
+    }
+
+    /**
+     * get table for setting the table chart
+     *
+     * @param gender 0 for male, 1 for female
+     * @return a map for table view
+     */
+    public ObservableList&lt;Map&gt; getMapList(int gender) {
+<span class="fc" id="L209">        ObservableList&lt;Map&gt; list = FXCollections.observableArrayList();</span>
+
+<span class="fc bfc" id="L211" title="All 4 branches covered.">        for (NameRecord rec : (gender == 0 ? boyRecommendList : girlRecommendList)) {</span>
+<span class="fc" id="L212">            Map&lt;String, Object&gt; item = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L213">            String name = rec.getName();</span>
+<span class="fc" id="L214">            item.put(&quot;key1&quot;, rec.getName());</span>
+<span class="fc" id="L215">            item.put(&quot;key2&quot;, rec.getOccurrence());</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">            item.put(&quot;key3&quot;, String.format(&quot;%.5f&quot;, (float) rec.getOccurrence() / (float) (gender == 0 ? maleTotalBirth : femaleTotalBirth)));</span>
+<span class="fc" id="L217">            list.add(item);</span>
+<span class="fc" id="L218">        }</span>
+
+<span class="fc" id="L220">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

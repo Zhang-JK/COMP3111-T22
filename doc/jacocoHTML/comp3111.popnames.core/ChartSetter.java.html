@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartSetter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames.core</a> &gt; <span class="el_source">ChartSetter.java</span></div><h1>ChartSetter.java</h1><pre class="source lang-java linenums">package comp3111.popnames.core;
+
+import com.sun.javafx.collections.ImmutableObservableList;
+import com.sun.javafx.collections.ObservableListWrapper;
+import javafx.beans.value.ObservableListValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * This class is used for generating charts and tables
+ * @author ZHANG Jiekai LIANG Houdong
+ * @version 1.1
+ */
+<span class="nc" id="L29">public class ChartSetter {</span>
+
+    /**
+     * A bar chart generator using name record
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param nameRecords the data to show (the name and its occurrences)
+     */
+    static public void BarChartSetter(BarChart&lt;String, Number&gt; chart, String title, String xTitle, String yTitle, String seriesTitle, List&lt;NameRecord&gt; nameRecords) {
+<span class="fc" id="L41">        List&lt;String&gt; xData = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L42">        List&lt;Number&gt; yData = new ArrayList&lt;Number&gt;();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (NameRecord rec : nameRecords) {</span>
+<span class="fc" id="L44">            xData.add(rec.getName());</span>
+<span class="fc" id="L45">            yData.add(rec.getOccurrence());</span>
+<span class="fc" id="L46">        }</span>
+<span class="fc" id="L47">        BarChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * A bar chart generator using occurrence record
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param record the data to show (year, occurrence)
+     */
+    static public void BarChartSetter2(BarChart&lt;String, Number&gt; chart, String title, String xTitle, String yTitle, String seriesTitle, List&lt;OccurrenceRecord&gt; record) {
+<span class="fc" id="L60">        List&lt;String&gt; xData = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L61">        List&lt;Number&gt; yData = new ArrayList&lt;Number&gt;();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (OccurrenceRecord rec : record) {</span>
+<span class="fc" id="L63">            xData.add(String.valueOf(rec.getYear()));</span>
+<span class="fc" id="L64">            yData.add(rec.getOccurrence());</span>
+<span class="fc" id="L65">        }</span>
+<span class="fc" id="L66">        BarChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * A bar chart generator using NameScorePair
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param pairs the data to show (year, occurrence)
+     */
+    static public void BarChartSetter3(BarChart&lt;String, Number&gt; chart, String title, String xTitle, String yTitle, String seriesTitle, List&lt;NameScorePair&gt; pairs) {
+<span class="fc" id="L79">        List&lt;String&gt; xData = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L80">        List&lt;Number&gt; yData = new ArrayList&lt;Number&gt;();</span>
+<span class="fc" id="L81">        int count = 0;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        for (NameScorePair rec : pairs) {</span>
+<span class="fc" id="L83">            xData.add(String.valueOf(rec.getName()));</span>
+<span class="fc" id="L84">            yData.add(rec.getScore());</span>
+<span class="fc" id="L85">            count++;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if(count == 10) break;;</span>
+<span class="fc" id="L87">        }</span>
+<span class="fc" id="L88">        BarChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);</span>
+<span class="fc" id="L89">    }</span>
+    
+    /**
+     * Full bar chart generator
+     * You need to pass the raw data in a list of string for x and a list of number for y
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param xData data for x-axis, should be String List
+     * @param yData data for y-axis, should be Number List
+     */
+    static public void BarChartSetter(BarChart&lt;String, Number&gt; chart, String title, String xTitle, String yTitle, String seriesTitle,List&lt;String&gt; xData, List&lt;Number&gt; yData) {
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if(xData.size() != yData.size()) throw new RuntimeException();</span>
+<span class="fc" id="L104">        chart.getData().clear();</span>
+<span class="fc" id="L105">        chart.layout();</span>
+<span class="fc" id="L106">        chart.setTitle(title);</span>
+<span class="fc" id="L107">        chart.getXAxis().setLabel(xTitle);</span>
+<span class="fc" id="L108">        chart.getYAxis().setLabel(yTitle);</span>
+
+<span class="fc" id="L110">        XYChart.Series series = new XYChart.Series();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        for(int i = 0; i &lt; xData.size(); i++) {</span>
+<span class="fc" id="L112">            XYChart.Data&lt;String, Number&gt; data = new XYChart.Data(xData.get(i), yData.get(i));</span>
+<span class="fc" id="L113">            series.getData().add(data);</span>
+//            data.nodeProperty().addListener((observable, oldValue, newValue) -&gt; {
+//                if (newValue != null) {
+//                    System.out.println(newValue);
+//                }
+//            });
+        }
+<span class="fc" id="L120">        series.setName(seriesTitle);</span>
+<span class="fc" id="L121">        chart.getData().addAll(series);</span>
+<span class="fc" id="L122">    }</span>
+  
+    /**
+     * A pie chart generator using name record
+     * @param chart the output chart
+     * @param title the chart title
+     * @param nameRecords data to display (name and its occurrences)
+     */
+    static public void PieChartSetter(PieChart chart, String title, List&lt;NameRecord&gt; nameRecords) {
+<span class="fc" id="L131">        List&lt;String&gt; xData = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L132">        List&lt;Number&gt; yData = new ArrayList&lt;Number&gt;();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (NameRecord rec : nameRecords) {</span>
+<span class="fc" id="L134">            xData.add(rec.getName());</span>
+<span class="fc" id="L135">            yData.add(rec.getOccurrence());</span>
+<span class="fc" id="L136">        }</span>
+<span class="fc" id="L137">        PieChartSetter(chart, title, xData, yData);</span>
+<span class="fc" id="L138">    }</span>
+
+    /**
+     * Full version of pie chart generator
+     * You need to pass the raw data in a list of string and a list of number
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xData data in String List, which shows the name of each part
+     * @param yData data in Number List, which shows the amount of each part
+     */
+    static public void PieChartSetter(PieChart chart, String title, List&lt;String&gt; xData, List&lt;Number&gt; yData) {
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if(xData.size() != yData.size()) throw new RuntimeException();</span>
+<span class="fc" id="L150">        ObservableList&lt;PieChart.Data&gt; pieChartData = FXCollections.observableArrayList();</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        for(int i=0; i&lt;xData.size(); i++)</span>
+<span class="fc" id="L152">            pieChartData.add(new PieChart.Data(xData.get(i), yData.get(i).doubleValue()));</span>
+
+<span class="fc" id="L154">        chart.getData().clear();</span>
+<span class="fc" id="L155">        chart.setData(pieChartData);</span>
+<span class="fc" id="L156">        chart.setTitle(title);</span>
+
+<span class="fc" id="L158">        final Label caption = new Label(&quot;TESTING&quot;);</span>
+<span class="fc" id="L159">        caption.setTextFill(Color.DARKORANGE);</span>
+<span class="fc" id="L160">        caption.setStyle(&quot;-fx-font: 12;&quot;);</span>
+<span class="fc" id="L161">        caption.setVisible(false);</span>
+
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        for (final PieChart.Data data : chart.getData()) {</span>
+<span class="fc" id="L164">            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,</span>
+<span class="fc" id="L165">                    new EventHandler&lt;MouseEvent&gt;() {</span>
+                        @Override public void handle(MouseEvent e) {
+//                            System.out.println(e.getSceneX());
+//                            System.out.println(e.getSceneY());
+//                            System.out.println(String.valueOf(data.getPieValue()));
+<span class="nc" id="L170">                            caption.setTranslateX(e.getSceneX());</span>
+<span class="nc" id="L171">                            caption.setTranslateY(e.getSceneY());</span>
+<span class="nc" id="L172">                            caption.setText(String.valueOf(data.getPieValue()));</span>
+<span class="nc" id="L173">                            caption.setVisible(true);</span>
+<span class="nc" id="L174">                        }</span>
+                    });
+<span class="fc" id="L176">        }</span>
+<span class="fc" id="L177">    }</span>
+
+    /**
+     * A bar chart generator using occurrence record
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle bar comment
+     * @param record the data to show (year, occurrence)
+     */
+    static public void LineChartSetter(LineChart&lt;Integer, Integer&gt; chart, String title, String xTitle, String yTitle, String seriesTitle, List&lt;OccurrenceRecord&gt; record) {
+<span class="fc" id="L189">        List&lt;String&gt; xData = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L190">        List&lt;Integer&gt; yData = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        for (OccurrenceRecord rec : record) {</span>
+<span class="fc" id="L192">            xData.add(String.valueOf(rec.getYear()));</span>
+<span class="fc" id="L193">            yData.add(rec.getOccurrence());</span>
+<span class="fc" id="L194">        }</span>
+<span class="fc" id="L195">        LineChartSetter(chart, title, xTitle, yTitle, seriesTitle, xData, yData);</span>
+<span class="fc" id="L196">    }</span>
+
+    /**
+     * Full version of line chart generator
+     * You need to pass the raw data in a list of string and a list of integer
+     * @param chart the output chart
+     * @param title the chart title
+     * @param xTitle x-axis title/comment
+     * @param yTitle y-axis title/comment
+     * @param seriesTitle line comment
+     * @param xData data in String List, which shows the name of each point
+     * @param yData data in Integer List, which shows the number of each point
+     */
+    static public void LineChartSetter(LineChart&lt;Integer, Integer&gt; chart, String title, String xTitle, String yTitle, String seriesTitle, List&lt;String&gt; xData, List&lt;Integer&gt; yData) {
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if(xData.size() != yData.size()) throw new RuntimeException();</span>
+<span class="fc" id="L211">        chart.getData().clear();</span>
+<span class="fc" id="L212">        chart.setTitle(title);</span>
+<span class="fc" id="L213">        chart.getXAxis().setLabel(xTitle);</span>
+<span class="fc" id="L214">        chart.getYAxis().setLabel(yTitle);</span>
+
+<span class="fc" id="L216">        XYChart.Series series = new XYChart.Series();</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        for(int i = 0; i &lt; xData.size(); i++) {</span>
+<span class="fc" id="L218">            series.getData().add(new XYChart.Data(xData.get(i), yData.get(i)));</span>
+        }
+<span class="fc" id="L220">        series.setName(seriesTitle);</span>
+<span class="fc" id="L221">        chart.getData().addAll(series);</span>
+<span class="fc" id="L222">    }</span>
+
+    /**
+     * an String array of column key, used to differentiate columns
+     *
+     */
+<span class="fc" id="L228">    public static final String[] ColumnMapKey = {&quot;key1&quot;, &quot;key2&quot;, &quot;key3&quot;, &quot;key4&quot;, &quot;key5&quot;};</span>
+
+    /**
+     * Full version of table generator
+     * You need to pass a list of data in Map structure
+     * @param table the output table
+     * @param columnNum the number of columns
+     * @param columnName an array of column names
+     * @param dataMap an ObservableList of Map contains data you want to display
+     */
+    static public void TableSetter(TableView table, int columnNum, String[] columnName, ObservableList&lt;Map&gt; dataMap) {
+<span class="fc" id="L239">        table.getColumns().clear();</span>
+<span class="fc" id="L240">        ArrayList&lt; TableColumn&lt;Map,String&gt; &gt; columnList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        for(int i = 0; i &lt; columnNum; i++){</span>
+<span class="fc" id="L242">          TableColumn&lt;Map, String&gt; dataColumn = new TableColumn&lt;&gt;(columnName[i]);</span>
+<span class="fc" id="L243">          dataColumn.setCellValueFactory(new MapValueFactory&lt;&gt;(ColumnMapKey[i]));</span>
+<span class="fc" id="L244">          columnList.add(dataColumn);</span>
+<span class="fc" id="L245">          table.getColumns().add(dataColumn);</span>
+        }
+<span class="fc" id="L247">        table.getItems().setAll(dataMap);</span>
+
+<span class="fc" id="L249">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

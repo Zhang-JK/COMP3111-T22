@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OccurrenceRecord.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames.core</a> &gt; <span class="el_source">OccurrenceRecord.java</span></div><h1>OccurrenceRecord.java</h1><pre class="source lang-java linenums">package comp3111.popnames.core;
+
+import org.apache.commons.csv.CSVRecord;
+
+/**
+ * This class is used for storing data with year, rank, percentage, and occurrence.
+ * @author CHENG Yiren
+ * @version 1.0
+ */
+public class OccurrenceRecord {
+	int year;			//year of this record
+	int rank;			//rank of this record
+	int occurrence;		//number of occurrence
+	String percentage;	//percentage of the total number of names
+	int totalBirths;	//total births of the year
+	
+    /**
+     * Create an object by input its year, rank, occurrence, and percentage
+     * @param year year of the record
+     * @param rank rank of the record
+     * @param occurrence number of occurrence of this name
+     * @param percentage percentage of the total names of the year
+     * @param totalBirths total births of that year
+     */
+<span class="fc" id="L25">	OccurrenceRecord(int year, int rank, int occurrence, String percentage, int totalBirths){</span>
+<span class="fc" id="L26">		this.year = year;</span>
+<span class="fc" id="L27">		this.occurrence = occurrence;</span>
+<span class="fc" id="L28">		this.rank = rank;</span>
+<span class="fc" id="L29">		this.percentage = percentage;</span>
+<span class="fc" id="L30">		this.totalBirths = totalBirths;</span>
+<span class="fc" id="L31">	}</span>
+	
+    /**
+     * get the rank of this record
+     * @return rank of this record
+     */	
+	public int getRank() {
+<span class="fc" id="L38">		return rank;</span>
+	}
+	
+    /**
+     * get the year of this record
+     * @return year of this record
+     */	
+	public int getYear() {
+<span class="fc" id="L46">		return year;</span>
+	}
+	
+    /**
+     * get the occurrence of this record
+     * @return occurrence of this record
+     */	
+	public int getOccurrence() {
+<span class="fc" id="L54">		return occurrence;</span>
+	}
+	
+    /**
+     * get the percentage of this record
+     * @return percentage of this record
+     */	
+	public String getPercentage() {
+<span class="fc" id="L62">		return percentage;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

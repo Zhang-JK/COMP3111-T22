@@ -57,8 +57,8 @@ public class Task3AndTask6Test extends ApplicationTest {
 		((TextField)s.lookup("#task3NameTextField")).setText("Mike");
 		clickOn("#task3SubmitButton");
 		sleep(1000);
-		String result1 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(1)).getCellData(1).toString();
-		assertTrue(result1.equals("1131"));
+		String result1 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(1)).getCellData(0).toString();
+		assertTrue(result1.equals("953"));
 	}
 	
 	@Test

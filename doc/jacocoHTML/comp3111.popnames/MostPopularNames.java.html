@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MostPopularNames.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames</a> &gt; <span class="el_source">MostPopularNames.java</span></div><h1>MostPopularNames.java</h1><pre class="source lang-java linenums">package comp3111.popnames;
+
+import comp3111.popnames.core.FileReader;
+import comp3111.popnames.core.NameRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * This class is for task1, find the most popular names
+ * @author ZHANG Jiekai
+ * @version 1.1
+ */
+<span class="fc" id="L18">public class MostPopularNames {</span>
+    /**
+     * record for male's most popular names
+     */
+    private List&lt;NameRecord&gt; maleList;
+    /**
+     * record for female's most popular names
+     */
+    private List&lt;NameRecord&gt; femaleList;
+    /**
+     * total number of male burns in that year
+     */
+    private  int totalMaleNumber;
+    /**
+     * total number of female burns in that year
+     */
+    private  int totalFemaleNumber;
+    /**
+     * which year is
+     */
+    private int year;
+
+    /**
+     * input data and find the name list
+     * @param year target year
+     * @param n top n names in popularity
+     * @return if data is valid
+     */
+    public boolean setData(int year, int n) {
+<span class="pc bpc" id="L47" title="2 of 4 branches missed.">        if (n &lt; 1 || n &gt; 10) return false;</span>
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">        if (year &lt; 1880 || year &gt; 2019) return false;</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if(maleList != null) maleList.clear();</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if(femaleList != null) femaleList.clear();</span>
+<span class="fc" id="L51">        maleList = FileReader.getTopNNamesByYear(year, n, 0);</span>
+<span class="fc" id="L52">        femaleList = FileReader.getTopNNamesByYear(year, n, 1);</span>
+<span class="fc" id="L53">        totalMaleNumber = FileReader.getTotalBirthsByYear(year, 0);</span>
+<span class="fc" id="L54">        totalFemaleNumber = FileReader.getTotalBirthsByYear(year, 1);</span>
+<span class="fc" id="L55">        this.year = year;</span>
+<span class="fc" id="L56">        return true;</span>
+    }
+
+    /**
+     * get the summary to display
+     * @return summary of the report
+     */
+    public String getSummary() {
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if(maleList.size() == 0) return null;</span>
+<span class="fc" id="L65">        DecimalFormat format = new DecimalFormat(&quot;0.00000&quot;);</span>
+<span class="fc" id="L66">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L67">        sb.append(&quot;\n* &quot;);</span>
+<span class="fc" id="L68">        sb.append(maleList.get(0).getName()).append(&quot; is the most popular name with the number of occurrences of &quot;);</span>
+<span class="fc" id="L69">        sb.append(maleList.get(0).getOccurrence()).append(&quot;, which represents &quot;);</span>
+<span class="fc" id="L70">        sb.append(format.format((float) maleList.get(0).getOccurrence() / totalMaleNumber)).append(&quot;% of total male births in &quot;).append(this.year);</span>
+<span class="fc" id="L71">        sb.append(&quot;.\n\n* &quot;);</span>
+<span class="fc" id="L72">        sb.append(femaleList.get(0).getName()).append(&quot; is the most popular name with the number of occurrences of &quot;);</span>
+<span class="fc" id="L73">        sb.append(femaleList.get(0).getOccurrence()).append(&quot;, which represents &quot;);</span>
+<span class="fc" id="L74">        sb.append(format.format((float) femaleList.get(0).getOccurrence() / totalFemaleNumber)).append(&quot;% of total female births in &quot;).append(this.year);</span>
+<span class="fc" id="L75">        sb.append(&quot;.\n&quot;);</span>
+<span class="fc" id="L76">        return sb.toString();</span>
+    }
+
+    /**
+     * get male's most popular names
+     * @return male's most popular name list
+     */
+    public List&lt;NameRecord&gt; getMaleList() {
+<span class="fc" id="L84">        return maleList;</span>
+    }
+
+    /**
+     * get female's most popular names
+     * @return female's most popular name list
+     */
+    public List&lt;NameRecord&gt; getFemaleList() {
+<span class="fc" id="L92">        return femaleList;</span>
+    }
+
+    /**
+     * get table for setting the table chart
+     * @param gender 0 for male, 1 for female
+     * @return a map for table view
+     */
+    public ObservableList&lt;Map&gt; getMapList(int gender) {
+<span class="fc" id="L101">        ObservableList&lt;Map&gt; list = FXCollections.&lt;Map&gt;observableArrayList();</span>
+
+<span class="fc bfc" id="L103" title="All 4 branches covered.">        for(NameRecord rec : (gender==0 ? maleList : femaleList)) {</span>
+<span class="fc" id="L104">            Map&lt;String, Object&gt; item = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L105">            String name = rec.getName();</span>
+<span class="fc" id="L106">            item.put(&quot;key1&quot; , rec.getName());</span>
+<span class="fc" id="L107">            item.put(&quot;key2&quot; , rec.getOccurrence());</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            item.put(&quot;key3&quot; , String.format(&quot;%.5f&quot; ,(float)rec.getOccurrence() / (float)(gender==0 ? totalMaleNumber : totalFemaleNumber) ) );</span>
+<span class="fc" id="L109">            list.add(item);</span>
+<span class="fc" id="L110">        }</span>
+
+<span class="fc" id="L112">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

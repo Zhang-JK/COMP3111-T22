@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KthPopularName.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames</a> &gt; <span class="el_source">KthPopularName.java</span></div><h1>KthPopularName.java</h1><pre class="source lang-java linenums">package comp3111.popnames;
+
+import comp3111.popnames.core.FileReader;
+import comp3111.popnames.core.NameRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.text.DecimalFormat;
+import java.util.*;
+
+/**
+ * This class is for task2, find the k-th most popular name
+ * @author LIANG Houdong
+ * @version 1.0
+ */
+
+<span class="fc" id="L17">public class KthPopularName {</span>
+
+    /**
+     * record for k-th most popular names (raw data)
+     */
+    private List&lt;NameRecord&gt; rawList;
+    /**
+     * record for k-th most popular names (combined and sorted)
+     */
+    private List&lt;NameRecord&gt; modifiedList;
+
+    /**
+     * record for total k-th popular name occurrences over that period
+     */
+    private int totalNameOccurrence;
+    /**
+     * record for input year1
+     */
+    private int year1;
+    /**
+     * record for input year2
+     */
+    private int year2;
+    /**
+     * record for input k
+     */
+    private int k;
+    /**
+     * record for input gender
+     */
+    private String gender;
+
+
+    /**
+     * input data and find the name list
+     * @param year1 starting year
+     * @param year2 ending year
+     * @param k k-th names in popularity
+     * @param gender targeted gender
+     * @return if data is valid, 0 for obvious invalid input,
+     *         1 means k-th names do not always exist, 2 for valid input
+     */
+    public int setData(int year1, int year2, int k, String gender) {
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">        if (year1 &lt; 1880 || year1 &gt; 2019) return 0;</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">        if (year2 &lt; 1880 || year2 &gt; 2019) return 0;</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (year2 &lt; year1) return 0;</span>
+<span class="fc" id="L63">        this.year1 = year1; this.year2 = year2; this.k = k; this.gender = gender;</span>
+<span class="fc" id="L64">        boolean kValid = ValidateKInput(k);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if(!kValid) return 1;</span>
+<span class="fc" id="L66">        rawList = new ArrayList&lt;NameRecord&gt;();</span>
+<span class="fc" id="L67">        modifiedList = new ArrayList&lt;NameRecord&gt;();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for(int i = year1; i &lt;= year2; i++){</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            rawList.add( FileReader.getNthNamesByYear(i, k, (gender.equals(&quot;M&quot;)? 0 : 1) ) );</span>
+        }
+<span class="fc" id="L71">        totalNameOccurrence = 0;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        for(NameRecord rec : rawList){</span>
+<span class="fc" id="L73">            totalNameOccurrence += rec.getOccurrence();</span>
+<span class="fc" id="L74">        }</span>
+<span class="fc" id="L75">        CombineEntries(rawList, modifiedList);</span>
+<span class="fc" id="L76">        Collections.sort(modifiedList, Collections.reverseOrder());</span>
+<span class="fc" id="L77">        return 2;</span>
+    }
+
+
+    /**
+     * check whether all the k-th popular names over that period exist
+     * @param k k-th names in popularity
+     * @return if k is valid
+     */
+    public boolean ValidateKInput(int k){
+<span class="fc" id="L87">        boolean isValid = true;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for(int i = year1; i &lt;= year2; i++) {</span>
+<span class="pc bpc" id="L89" title="2 of 4 branches missed.">            if (FileReader.getNthNamesByYear(i, k, (gender.equals(&quot;M&quot;) ? 0 : 1)) == null) {</span>
+<span class="nc" id="L90">                isValid = false; break;</span>
+            }
+        }
+<span class="fc" id="L93">        return isValid;</span>
+    }
+
+    /**
+     * input a list of raw data and return a modified list with combined and sorted data
+     * @param rawData a list of NameRecord with original data
+     * @param modifiedData a list of NameRecord with modified data
+     */
+
+    public static void CombineEntries( List&lt;NameRecord&gt; rawData,  List&lt;NameRecord&gt; modifiedData  ) {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        for (int i = 0; i &lt; rawData.size(); i++) {</span>
+<span class="fc" id="L104">            boolean found = false;</span>
+<span class="fc" id="L105">            String newName = rawData.get(i).getName();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            for (int j = 0; j &lt; modifiedData.size(); j++) {</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">                if ( modifiedData.get(j).getName().equals(newName) ) {</span>
+<span class="fc" id="L108">                    int sumOccurence = modifiedData.get(j).getOccurrence() + rawData.get(i).getOccurrence();</span>
+<span class="fc" id="L109">                    modifiedData.get(j).setOccurrence(sumOccurence);</span>
+<span class="fc" id="L110">                    found = true;</span>
+                }
+            }
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            if (!found) {</span>
+<span class="fc" id="L114">                modifiedData.add(rawData.get(i));</span>
+            }
+        }
+<span class="fc" id="L117">    }</span>
+
+    /**
+     * get the summary to display
+     * @return summary of the report
+     */
+    public String getSummary() {
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if(rawList.size() == 0) return null;</span>
+<span class="fc" id="L125">        DecimalFormat format = new DecimalFormat(&quot;0.00000&quot;);</span>
+<span class="fc" id="L126">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L128">        int maxFrequency = 0;</span>
+<span class="fc" id="L129">        String targetName = &quot;&quot;;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (NameRecord rec: modifiedList){</span>
+<span class="fc" id="L131">            String recName = rec.getName();</span>
+<span class="fc" id="L132">            int frequency = 0;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            for(NameRecord rec2:rawList)</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                if(rec2.getName().equals(recName)) frequency++;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            if(frequency &gt; maxFrequency){</span>
+<span class="fc" id="L136">                maxFrequency = frequency;</span>
+<span class="fc" id="L137">                targetName = recName;</span>
+            }
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">        int totalOccurrence = 0;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        for (NameRecord rec : modifiedList){</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            if(rec.getName().equals(targetName)) totalOccurrence += rec.getOccurrence();</span>
+<span class="fc" id="L143">        }</span>
+
+<span class="fc" id="L145">        sb.append(&quot;\n* &quot;);</span>
+<span class="fc" id="L146">        sb.append(targetName).append(&quot; has hold the &quot;);sb.append(k);</span>
+<span class="fc" id="L147">        sb.append(&quot;-th rank most often for a total of &quot;); sb.append(maxFrequency);</span>
+<span class="fc" id="L148">        sb.append(&quot; times among names registered for baby &quot;);</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        sb.append( (gender.equals(&quot;M&quot;) ? &quot;boys&quot; :&quot;girls&quot;) );sb.append(&quot; born in the period from &quot;);</span>
+<span class="fc" id="L150">        sb.append(year1);sb.append(&quot; to &quot;);sb.append(year2);</span>
+<span class="fc" id="L151">        sb.append(&quot;. The total number of occurrences of &quot;);</span>
+<span class="fc" id="L152">        sb.append(targetName);</span>
+<span class="fc" id="L153">        sb.append(&quot; is &quot;);sb.append(totalOccurrence);sb.append(&quot; which represents &quot;);</span>
+<span class="fc" id="L154">        sb.append(format.format( (float) 100*totalOccurrence/totalNameOccurrence ));</span>
+<span class="fc" id="L155">        sb.append(&quot;% of total &quot;);</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        sb.append((gender.equals(&quot;M&quot;))?&quot;male&quot;:&quot;female&quot;);</span>
+<span class="fc" id="L157">        sb.append(&quot; births at the &quot;);</span>
+<span class="fc" id="L158">        sb.append(k); sb.append(&quot;-th rank in the period from &quot;);</span>
+<span class="fc" id="L159">        sb.append(year1); sb.append(&quot; to &quot;);sb.append(year2);</span>
+<span class="fc" id="L160">        sb.append(&quot;.\n\n&quot;);</span>
+<span class="fc" id="L161">        sb.append(&quot;(There may be other names that hold the &quot;);sb.append(k);</span>
+<span class="fc" id="L162">        sb.append(&quot;-th rank for &quot;); sb.append(maxFrequency);</span>
+<span class="fc" id="L163">        sb.append(&quot; times. Among all these names, &quot;); sb.append(targetName);</span>
+<span class="fc" id="L164">        sb.append(&quot; has the largest total number of occurrences over the period.)&quot;);</span>
+<span class="fc" id="L165">        return sb.toString();</span>
+    }
+
+    /**
+     * generate an an ObservableListList of Map data
+     * @return an ObservableListList of Map data for generating the table
+     */
+
+    public ObservableList&lt;Map&gt; getMapList() {
+
+<span class="fc" id="L175">        DecimalFormat format = new DecimalFormat(&quot;0.00000&quot;);</span>
+
+<span class="fc" id="L177">        ObservableList&lt;Map&gt; list = FXCollections.&lt;Map&gt;observableArrayList();</span>
+
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        for(NameRecord rec : modifiedList){</span>
+<span class="fc" id="L180">            Map&lt;String, Object&gt; item = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L181">            String name = rec.getName();</span>
+<span class="fc" id="L182">            int frequency = 0;</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">            for(NameRecord rec2 : rawList){</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">                if(rec2.getName().equals(name)) frequency++;</span>
+<span class="fc" id="L185">            }</span>
+<span class="fc" id="L186">            item.put(&quot;key1&quot; , name);</span>
+<span class="fc" id="L187">            item.put(&quot;key2&quot; , frequency);</span>
+<span class="fc" id="L188">            item.put(&quot;key3&quot; , rec.getOccurrence());</span>
+<span class="fc" id="L189">            item.put(&quot;key4&quot; , format.format((float)100*rec.getOccurrence()/totalNameOccurrence)+&quot;%&quot;);</span>
+<span class="fc" id="L190">            list.add(item);</span>
+<span class="fc" id="L191">        }</span>
+<span class="fc" id="L192">        Map&lt;String, Object&gt; finalItem = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L193">        finalItem.put(&quot;key1&quot; , &quot;Total&quot;);</span>
+<span class="fc" id="L194">        finalItem.put(&quot;key2&quot; , year2-year1+1);</span>
+<span class="fc" id="L195">        finalItem.put(&quot;key3&quot; , totalNameOccurrence);</span>
+<span class="fc" id="L196">        finalItem.put(&quot;key4&quot; , &quot;100%&quot;);</span>
+<span class="fc" id="L197">        list.add(finalItem);</span>
+<span class="fc" id="L198">        return list;</span>
+    }
+
+    /**
+     * get the rawList
+     * @return k-th most popular name list with raw data
+     */
+    public List&lt;NameRecord&gt; getRawList() {
+<span class="nc" id="L206">        return rawList;</span>
+    }
+
+    /**
+     * get the modifiedList
+     * @return k-th most popular name list with combined and sorted data
+     */
+    public List&lt;NameRecord&gt; getModifiedList() {
+<span class="fc" id="L214">        return modifiedList;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NameScorePair.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames.core</a> &gt; <span class="el_source">NameScorePair.java</span></div><h1>NameScorePair.java</h1><pre class="source lang-java linenums">package comp3111.popnames.core;
+/**
+ * This class is used for storing a pair of name and score for task #5.
+ * @author LIANG Houdong
+ * @version 1.0
+ */
+public class NameScorePair implements Comparable&lt;NameScorePair&gt; {
+
+    String name; // Name of this record
+    double score; // Compatible Score of this record
+    double lengthScore; // Length Score of this record
+    double avg_rankScore; // Average Rank Score of this record
+
+    /**
+     * Create an object by input its name and score
+     * @param name Name of this record
+     * @param score Compatible Score of this record
+     * @param lengthScore Length Score of this record
+     * @param avg_rankScore Average Rank Score of this record
+     */
+<span class="fc" id="L21">    NameScorePair(String name, double score, double lengthScore, double avg_rankScore){</span>
+<span class="fc" id="L22">        this.name = name;</span>
+<span class="fc" id="L23">        this.score = score;</span>
+<span class="fc" id="L24">        this.lengthScore = lengthScore;</span>
+<span class="fc" id="L25">        this.avg_rankScore = avg_rankScore;</span>
+<span class="fc" id="L26">    }</span>
+
+
+    /**
+     * get the name of this record
+     * @return Name of this record
+     */
+    public String getName() {
+<span class="fc" id="L34">        return name;</span>
+    }
+
+    /**
+     * get the compatible score of this record
+     * @return compatible score of this record
+     */
+    public double getScore() {
+<span class="fc" id="L42">        return score;</span>
+    }
+
+    /**
+     * get the length score of this record
+     * @return length score of this record
+     */
+    public double getLengthScore() {
+<span class="fc" id="L50">        return lengthScore;</span>
+    }
+
+    /**
+     * get the average rank score of this record
+     * @return  average rank score of this record
+     */
+    public double getAvgRankScore() {
+<span class="fc" id="L58">        return avg_rankScore;</span>
+    }
+
+    /**
+     * function that implements the surface, define the comparision criterion for two NameScorePairs
+     */
+    public int compareTo(NameScorePair name2){
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (score == name2.score) return 0;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        else if (score &gt; name2.score) return 1;</span>
+<span class="fc" id="L67">        else return -1;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

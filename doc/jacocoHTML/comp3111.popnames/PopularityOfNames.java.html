@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PopularityOfNames.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames</a> &gt; <span class="el_source">PopularityOfNames.java</span></div><h1>PopularityOfNames.java</h1><pre class="source lang-java linenums">package comp3111.popnames;
+
+import comp3111.popnames.core.FileReader;
+import comp3111.popnames.core.NameRecord;
+import comp3111.popnames.core.OccurrenceRecord;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * This class is for task3, find the popularity of a name in the input period
+ * @author CHENG Yiren
+ * @version 1.0
+ */
+<span class="fc" id="L20">public class PopularityOfNames {</span>
+<span class="fc" id="L21">	String report = &quot;&quot;;</span>
+	private List&lt;OccurrenceRecord&gt; popularityList;
+<span class="fc" id="L23">	NumberFormat numberFormat = NumberFormat.getInstance();</span>
+<span class="fc" id="L24">	int maxRank = 0;</span>
+<span class="fc" id="L25">	int maxYear = 0;</span>
+<span class="fc" id="L26">	int maxOccurrence = 0;</span>
+	String percentage;
+	
+    /**
+     * input data and find the occurrence list
+     * @param year1 target starting year
+     * @param year2 target ending year
+     * @param name name of interest
+     * @param gender gender of the name want to research
+     */
+	public void setData(int year1, int year2, String name, String gender) {
+<span class="fc" id="L37">		popularityList = FileReader.getFileOfYearAndName(year1, year2, name, gender);</span>
+<span class="fc" id="L38">	}</span>
+	
+    /**
+     * get the list of the name occurrences in the year period
+     * @return list of occurrences
+     */
+	public List&lt;OccurrenceRecord&gt; getList(){
+<span class="fc" id="L45">		return popularityList;</span>
+	}
+	
+    /**
+     * find the year the popularity of the name is the highest and set the data
+     */
+	public void findMaxYear() {
+<span class="fc" id="L52">		OccurrenceRecord firstObject = popularityList.get(0);</span>
+<span class="fc" id="L53">		maxRank = firstObject.getRank();</span>
+<span class="fc" id="L54">		maxYear = firstObject.getYear();</span>
+<span class="fc" id="L55">		maxOccurrence = firstObject.getOccurrence();</span>
+<span class="fc" id="L56">		percentage = firstObject.getPercentage();</span>
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		for(OccurrenceRecord rec : popularityList) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if(maxRank &gt; rec.getRank()) {</span>
+<span class="nc" id="L60">				maxRank = rec.getRank();</span>
+<span class="nc" id="L61">				maxYear = rec.getYear();</span>
+<span class="nc" id="L62">				maxOccurrence = rec.getOccurrence();</span>
+<span class="nc" id="L63">				percentage = rec.getPercentage();</span>
+			}
+<span class="fc" id="L65">		}</span>
+<span class="fc" id="L66">	}</span>
+	
+    /**
+     * @return an ObservableListList of Map data for generating the table
+     *
+     */
+    public ObservableList&lt;Map&gt; getMapList() {
+
+<span class="fc" id="L74">        DecimalFormat format = new DecimalFormat(&quot;0.000&quot;);</span>
+
+<span class="fc" id="L76">        ObservableList&lt;Map&gt; list = FXCollections.&lt;Map&gt;observableArrayList();</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for(OccurrenceRecord rec : this.popularityList){</span>
+<span class="fc" id="L79">            Map&lt;String, Object&gt; item = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L80">            int year = rec.getYear();</span>
+<span class="fc" id="L81">            int rank = rec.getRank();</span>
+<span class="fc" id="L82">            int occurrence = rec.getOccurrence();</span>
+<span class="fc" id="L83">            String percentage = rec.getPercentage();</span>
+            
+<span class="fc" id="L85">            item.put(&quot;key1&quot; , year);</span>
+<span class="fc" id="L86">            item.put(&quot;key2&quot; , rank);</span>
+<span class="fc" id="L87">            item.put(&quot;key3&quot; , occurrence);</span>
+<span class="fc" id="L88">            item.put(&quot;key4&quot; , percentage);</span>
+<span class="fc" id="L89">            list.add(item);</span>
+<span class="fc" id="L90">        }</span>
+<span class="fc" id="L91">        return list;</span>
+    }
+	
+    /**
+     * get the rank
+     * @return rank
+     */	
+	public int getRank() {
+<span class="fc" id="L99">		return maxRank;</span>
+	}
+	
+    /**
+     * get the year
+     * @return year 
+     */	
+	public int getYear() {
+<span class="fc" id="L107">		return maxYear;</span>
+	}
+	
+    /**
+     * get the occurrence
+     * @return occurrence
+     */	
+	public int getOccurrence() {
+<span class="fc" id="L115">		return maxOccurrence;</span>
+	}
+	
+    /**
+     * get the percentage
+     * @return percentage
+     */	
+	public String getPercentage() {
+<span class="fc" id="L123">		return percentage;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
