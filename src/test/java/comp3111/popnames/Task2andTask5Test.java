@@ -86,7 +86,7 @@ public class Task2andTask5Test extends ApplicationTest {
         sleep(1000);
 
         String result1 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(0)).getCellData(0).toString();
-        String result2 = ((TableColumn)((TableView)s.lookup("#outputTable2")).getColumns().get(1)).getCellData(0).toString();
+        String result2 = ((TableColumn)((TableView)s.lookup("#outputTable1")).getColumns().get(1)).getCellData(0).toString();
         assertTrue(result1.equals("Jacob"));
         assertTrue(result2.equals("34465"));
     }
