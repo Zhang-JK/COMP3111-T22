@@ -17,7 +17,7 @@ Click for navigating to the corresponding file/folder
 - [Screenshots](Data-Reporting-Screenshots) of the execution of the application showing sample inputs and outputs of your choice (Data-Reporting Task)
 - [Screenshots](Evidence-Based-Screenshots) of the execution of the application showing sample inputs and outputs of your choice (Evidence-Based Recommendation Task)
 - Report on the unit testing [Image File](unit_test.png), [HTML File](reports/tests/test/index.html)
-- Report on the coverage test [Image File](coverage_intellij.png), [HTML File](jacocoHTML/index.html)
+- Report on the coverage test [Image File](coverage.png), [HTML File](jacocoHTML/index.html)
 - [Documentation](javadoc/index.html) on the implemented tasks
 - Supplementary Notes: nothing
 
