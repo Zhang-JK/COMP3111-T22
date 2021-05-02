@@ -516,6 +516,11 @@ public class Controller {
         task2KErrorLabel.setVisible(false);
         task2GenderChoiceBox.setValue(genderChoice.get(0));
         // task3
+        task3Year1TextField.clear();
+        task3Year2TextField.clear();
+        task3NameTextField.clear();
+        task3Year1ErrorLabel.setVisible(false);
+        task3Year2ErrorLabel.setVisible(false);
         // task4
         p4AlgoChoiceBox.setValue(p4AlgorithmChoice.get(0));
         p4DadName.clear();
@@ -538,6 +543,7 @@ public class Controller {
         task5iPreferenceChoiceBox.setValue(ageChoice.get(0));
         task5iGenderChoiceBox.setValue(genderChoice.get(0));
         task5iGenderMateChoiceBox.setValue(genderChoice.get(0));
+        //task6
         task6UserName.clear();
         task6MateName.clear();
         task6SelfYOB.clear();
